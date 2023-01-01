@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+  # Postgres
+  postgres:
+    image: postgres:12
+    environment:
+      POSTGRES_MULTIPLE_DATABASES: itcommunity_dev
+      POSTGRES_USER: postgres_user
+      POSTGRES_PASSWORD: p0stgr3sp4ssw0rd
+      PGDATA: /data/postgres
+    volumes:
+      - ../docker/postgres:/docker-entrypoint-initdb.d
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  pgweb-workflow:
+    image: sosedoff/pgweb
+    ports:
+      - "8081:8081"
+    environment:
+      - DATABASE_URL=postgres://postgres_user:p0stgr3sp4ssw0rd@postgres:5432/itcommunity_dev?sslmode=disable
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  # RabbitMQ
+  rabbitmq:
+    image: docker.io/bitnami/rabbitmq:3.9
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_USERNAME=rabbitmq_user
+      - RABBITMQ_PASSWORD=r4bb1tp4ssw0rd
+    volumes:
+      - 'rabbitmq:/bitnami'
+    restart: unless-stopped
+
+  # Redis
+  redis:
+    image: bitnami/redis:6.2
+    environment:
+      - REDIS_PASSWORD=r3d1sp4ssw0rd
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=local:redis:6379:0:r3d1sp4ssw0rd
+      - HTTP_USER=redis_user
+      - HTTP_PASSWORD=asdf1234
+    ports:
+      - "8085:8081"
+    depends_on:
+      - redis
+    restart: unless-stopped
+
+volumes:
+  postgres:
+  rabbitmq:
+
+
+
