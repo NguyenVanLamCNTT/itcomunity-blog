@@ -9,9 +9,10 @@ services:
       POSTGRES_USER: postgres_user
       POSTGRES_PASSWORD: p0stgr3sp4ssw0rd
       PGDATA: /data/postgres
+      POSTGRES_DB: itcommunity_dev
     volumes:
-      - ../docker/postgres:/docker-entrypoint-initdb.d
-      - postgres:/data/postgres
+      - postgres:/var/lib/postgresql/data
+      - ./db/init-db.sh:/docker-entrypoint-initdb.d/init-db.sh
     ports:
       - "5432:5432"
     restart: unless-stopped
@@ -59,7 +60,18 @@ services:
     depends_on:
       - redis
     restart: unless-stopped
-
+  api:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      # Only will build development stage from our dockerfile
+      target: development
+    volumes:
+      - .:/usr/src/app
+    # Run a command against the development stage of the image
+    command: npm run start:dev
+    ports:
+      - 5000:5000
 volumes:
   postgres:
   rabbitmq:
