@@ -12,7 +12,8 @@ export class V000AddUserTable1672577822902 implements MigrationInterface {
                         name: "id",
                         type: "int",
                         isPrimary: true,
-                        generatedIdentity: "ALWAYS"
+                        generatedIdentity: "BY DEFAULT",
+                        isGenerated: true
                     },
                     {
                         name: "created",

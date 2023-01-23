@@ -9,6 +9,7 @@ export default () => ({
     },
     jwt: {
       secret: process.env.SECRET_TOKEN,
-      expiresIn: process.env.EXPIRESIN_TOKEN
+      expiresInAccessToken: process.env.EXPIRESIN_ACCESS_TOKEN,
+      expiresInRefreshToken: process.env.EXPIRESIN_REFRESH_TOKEN
     },
 });
