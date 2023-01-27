@@ -13,4 +13,8 @@ export class UserRepository {
     async create(user: UserEntity) {
         await this.usersRepository.save(user);
     }
+
+    async findByEmail(email: string) {
+        return await this.usersRepository.findOne({where: {email}});
+    }
 }

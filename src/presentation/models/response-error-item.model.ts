@@ -5,4 +5,8 @@ export class ResponseErrorItem {
     reason: string;
     @ApiProperty()
     message: string;
+
+    constructor(partial: Partial<ResponseErrorItem>) {
+        Object.assign(this, partial);
+    }
 }
