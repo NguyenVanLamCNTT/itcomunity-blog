@@ -12,4 +12,15 @@ export default () => ({
     expiresInAccessToken: process.env.EXPIRESIN_ACCESS_TOKEN,
     expiresInRefreshToken: process.env.EXPIRESIN_REFRESH_TOKEN,
   },
+  email: {
+    host: process.env.MAIL_HOST,
+    user: process.env.MAIL_USER,
+    password: process.env.MAIL_PASSWORD,
+    from: process.env.MAIL_FROM,
+  },
+  redis: {
+    host: process.env.REDIS_HOST,
+    port: process.env.REDIS_PORT,
+    password: process.env.REDIS_PASSWORD,
+  },
 });

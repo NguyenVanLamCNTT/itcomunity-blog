@@ -6,6 +6,8 @@ import {
 import { UserDomainService } from 'src/domain/services';
 import { JwtUtil } from 'src/infrastructure/utilities';
 import {
+  ConfirmOTPRequestModel,
+  ConfirmOTPResponseModel,
   LoginUserRequestModel,
   LoginUserResponseModel,
   RegisterUserRequestModel,
@@ -14,12 +16,14 @@ import {
 } from 'src/presentation/models';
 import { RequestCorrelation } from 'src/utility';
 import * as bcrypt from 'bcrypt';
+import { MailerService } from '@nestjs-modules/mailer/dist';
 
 @Injectable({})
 export class AuthService {
   constructor(
     private jwtUtil: JwtUtil,
     private userDomainService: UserDomainService,
+    private mailerService: MailerService,
   ) {}
 
   async register(request: RegisterUserRequestModel) {
@@ -63,6 +67,24 @@ export class AuthService {
         accessToken,
         refreshToken,
       },
+    });
+  }
+
+  async sendOTPComfirm(request: ConfirmOTPRequestModel) {
+    const otp = Math.floor(Math.random() * (999999 - 100000)) + 100000;
+    const res = await this.mailerService.sendMail({
+      to: request.email,
+      subject: 'IT Community blog OTP confirm!',
+      template: './otp-confirm',
+      context: {
+        name: request.fullname,
+        otp: otp,
+      },
+    });
+    console.log(res);
+    return new ConfirmOTPResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: true },
     });
   }
 }
