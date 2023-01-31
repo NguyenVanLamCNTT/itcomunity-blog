@@ -1,8 +1,7 @@
-
 export class RegisterUserCommandResultModel {
-    success: boolean;
+  success: boolean;
 
-    constructor(partial: Partial<RegisterUserCommandResultModel>) {
-        Object.assign(this, partial);
-    }
+  constructor(partial: Partial<RegisterUserCommandResultModel>) {
+    Object.assign(this, partial);
+  }
 }

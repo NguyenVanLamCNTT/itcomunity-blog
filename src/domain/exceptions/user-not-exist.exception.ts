@@ -1,8 +1,8 @@
 import { ErrorStatusConstants, MessageConstants } from '../constants';
 import { BaseException } from './base.exception';
 
-export class EmailExistException extends BaseException {
+export class UserNotExistException extends BaseException {
   constructor() {
-    super(MessageConstants.EMAIL_EXIST, ErrorStatusConstants.EMAIL_EXIST);
+    super(MessageConstants.USER_NOT_EXIST, ErrorStatusConstants.USER_NOT_EXIST);
   }
 }

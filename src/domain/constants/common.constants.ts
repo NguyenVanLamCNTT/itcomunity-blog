@@ -1,4 +1,1 @@
-
-export class CommonConstants {
-
-}
+export class CommonConstants {}

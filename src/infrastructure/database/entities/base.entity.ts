@@ -1,15 +1,18 @@
-import {Column, PrimaryGeneratedColumn, CreateDateColumn} from 'typeorm';
+import { Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 
-export class BaseEntity{
-  @PrimaryGeneratedColumn('identity', { name: 'id', generatedIdentity: 'BY DEFAULT' })
+export class BaseEntity {
+  @PrimaryGeneratedColumn('identity', {
+    name: 'id',
+    generatedIdentity: 'BY DEFAULT',
+  })
   id!: number;
 
-  @CreateDateColumn({nullable: true})
+  @CreateDateColumn({ nullable: true })
   created: Date;
 
-  @CreateDateColumn({nullable: true})
+  @CreateDateColumn({ nullable: true })
   modified: Date;
 
-  @Column({name: 'is_deleted'})
+  @Column({ name: 'is_deleted' })
   isDeleted: boolean;
 }

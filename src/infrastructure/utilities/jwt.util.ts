@@ -1,25 +1,35 @@
-import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { JwtService } from "@nestjs/jwt";
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class JwtUtil {
-    constructor(private jwtService: JwtService, private configService: ConfigService){}
+  constructor(
+    private jwtService: JwtService,
+    private configService: ConfigService,
+  ) {}
 
-    generateAccessToken(payload: any): string {
+  generateAccessToken(payload: any): string {
+    return this.jwtService.sign(payload, {
+      expiresIn: this.configService.get('jwt.expiresInAccessToken'),
+    });
+  }
 
-        return this.jwtService.sign(payload, {expiresIn: this.configService.get('jwt.expiresInAccessToken')});
-    }
+  generateRefreshToken(payload: any): string {
+    return this.jwtService.sign(payload, {
+      expiresIn: this.configService.get('jwt.expiresInRefreshToken'),
+    });
+  }
 
-    generateRefreshToken(payload: any): string {
-        return this.jwtService.sign(payload, {expiresIn: this.configService.get('jwt.expiresInRefreshToken')});
-    }
+  generateTokenRemember(payload: any): string {
+    return this.jwtService.sign(payload);
+  }
 
-    async generatePassword(plainPassword: string) {
-        const saltOrRounds = 10;
-        const password = await bcrypt.hash(plainPassword, saltOrRounds);
+  async generatePassword(plainPassword: string) {
+    const saltOrRounds = 10;
+    const password = await bcrypt.hash(plainPassword, saltOrRounds);
 
-        return password;
-    }
+    return password;
+  }
 }

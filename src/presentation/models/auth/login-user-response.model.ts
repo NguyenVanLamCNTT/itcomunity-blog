@@ -3,16 +3,17 @@ import { ResponseModel } from '../response.model';
 
 class Response {
   @ApiProperty()
-  success: boolean;
+  accessToken: string;
+  @ApiProperty()
+  refreshToken: string;
 }
-
-export class RegisterUserResponseModel extends ResponseModel<Response> {
+export class LoginUserResponseModel extends ResponseModel<Response> {
   @ApiProperty({
     type: Response,
   })
   data: Response;
 
-  constructor(partial: Partial<RegisterUserResponseModel>) {
+  constructor(partial: Partial<LoginUserResponseModel>) {
     super();
     Object.assign(this, partial);
   }

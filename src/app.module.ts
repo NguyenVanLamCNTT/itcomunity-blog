@@ -8,7 +8,7 @@ import { AuthModule, UserModule } from './presentation/modules';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [configuration]
+      load: [configuration],
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -32,7 +32,7 @@ import { AuthModule, UserModule } from './presentation/modules';
     }),
     //modules
     UserModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [],
   providers: [],

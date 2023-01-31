@@ -15,32 +15,32 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 
 @Module({
-    imports: [
-        TypeOrmModule.forFeature([UserEntity]),
-        PassportModule,
-        ConfigModule.forRoot({
-          load: [configuration]
-        }),
-        JwtModule.registerAsync({
-          imports: [ConfigModule],
-          useFactory: (config: ConfigService) => {
-            return {
-              secret: config.get('jwt.secret'),
-            };
-          },
-          inject: [ConfigService],
-        }),
-    ],
-    controllers: [AuthController],
-    providers: [
-        UserRepository,
-        UserQuery, 
-        RegisterUserCommand,
-        UserDomainService,
-        AuthService,
-        JwtUtil,
-        RequestCorrelation,
-    ],
-    exports: [TypeOrmModule]
+  imports: [
+    TypeOrmModule.forFeature([UserEntity]),
+    PassportModule,
+    ConfigModule.forRoot({
+      load: [configuration],
+    }),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: (config: ConfigService) => {
+        return {
+          secret: config.get('jwt.secret'),
+        };
+      },
+      inject: [ConfigService],
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [
+    UserRepository,
+    UserQuery,
+    RegisterUserCommand,
+    UserDomainService,
+    AuthService,
+    JwtUtil,
+    RequestCorrelation,
+  ],
+  exports: [TypeOrmModule],
 })
 export class AuthModule {}

@@ -1,14 +1,14 @@
-import { Gender } from "src/domain/enums";
+import { Gender } from 'src/domain/enums';
 
 export class RegisterUserCommandInputModel {
-    username: string;
-    fullName: string;
-    password: string;
-    email: string;
-    age: number;
-    gender: Gender;
+  username: string;
+  fullName: string;
+  password: string;
+  email: string;
+  age: number;
+  gender: Gender;
 
-    constructor(partial: Partial<RegisterUserCommandInputModel>) {
-        Object.assign(this, partial);
-    }
+  constructor(partial: Partial<RegisterUserCommandInputModel>) {
+    Object.assign(this, partial);
+  }
 }

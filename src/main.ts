@@ -13,11 +13,11 @@ async function bootstrap() {
 
   // swagger
   const config = new DocumentBuilder()
-  .setTitle('ITCommunity API')
-  .setDescription('')
-  .setVersion('1.0')
-  .addBearerAuth()
-  .build();
+    .setTitle('ITCommunity API')
+    .setDescription('')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/swagger', app, document);
 
