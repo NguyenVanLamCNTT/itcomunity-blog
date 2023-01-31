@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import {
   IncorrectPassword,
   UserNotExistException,
@@ -12,11 +12,12 @@ import {
   LoginUserResponseModel,
   RegisterUserRequestModel,
   RegisterUserResponseModel,
-  ResponseModel,
 } from 'src/presentation/models';
 import { RequestCorrelation } from 'src/utility';
 import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer/dist';
+import { Cache } from 'cache-manager';
+import { SendEmailConstants } from 'src/domain/constants';
 
 @Injectable({})
 export class AuthService {
@@ -24,6 +25,7 @@ export class AuthService {
     private jwtUtil: JwtUtil,
     private userDomainService: UserDomainService,
     private mailerService: MailerService,
+    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   async register(request: RegisterUserRequestModel) {
@@ -74,14 +76,14 @@ export class AuthService {
     const otp = Math.floor(Math.random() * (999999 - 100000)) + 100000;
     const res = await this.mailerService.sendMail({
       to: request.email,
-      subject: 'IT Community blog OTP confirm!',
-      template: './otp-confirm',
+      subject: SendEmailConstants.SUBJECT_SEND_OTP,
+      template: SendEmailConstants.NAME_FILE_TEMPLATE,
       context: {
         name: request.fullname,
         otp: otp,
       },
     });
-    console.log(res);
+    await this.cacheManager.set(request.email, otp);
     return new ConfirmOTPResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: { success: true },
