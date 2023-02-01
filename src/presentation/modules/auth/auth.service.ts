@@ -1,6 +1,7 @@
 import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import {
   IncorrectPassword,
+  OTPInvalidException,
   UserNotExistException,
 } from 'src/domain/exceptions';
 import { UserDomainService } from 'src/domain/services';
@@ -12,6 +13,8 @@ import {
   LoginUserResponseModel,
   RegisterUserRequestModel,
   RegisterUserResponseModel,
+  ValidateOTPRequestModel,
+  ValidateOTPResponseModel,
 } from 'src/presentation/models';
 import { RequestCorrelation } from 'src/utility';
 import * as bcrypt from 'bcrypt';
@@ -87,6 +90,19 @@ export class AuthService {
     return new ConfirmOTPResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: { success: true },
+    });
+  }
+
+  async validateOTP(request: ValidateOTPRequestModel) {
+    const otp = await this.cacheManager.get(request.email);
+    if (!otp || otp !== request.otp) {
+      throw new OTPInvalidException();
+    }
+    return new ValidateOTPResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        success: true,
+      },
     });
   }
 }

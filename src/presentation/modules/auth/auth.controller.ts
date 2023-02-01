@@ -8,10 +8,11 @@ import {
   LoginUserResponseModel,
   RegisterUserRequestModel,
   RegisterUserResponseModel,
+  ValidateOTPRequestModel,
+  ValidateOTPResponseModel,
 } from 'src/presentation/models';
 import { AuthService } from './auth.service';
 
-@ApiBearerAuth()
 @ApiTags('api/auth')
 @Controller('api/auth')
 export class AuthController {
@@ -48,5 +49,16 @@ export class AuthController {
   })
   async sendOTP(@Body() body: ConfirmOTPRequestModel) {
     return await this.authService.sendOTPComfirm(body);
+  }
+
+  @Post('validate-otp')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: ValidateOTPResponseModel,
+    isArray: false,
+  })
+  async validateOtp(@Body() body: ValidateOTPRequestModel) {
+    return await this.authService.validateOTP(body);
   }
 }
