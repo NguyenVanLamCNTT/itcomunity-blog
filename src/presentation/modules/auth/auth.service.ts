@@ -71,6 +71,9 @@ export class AuthService {
       data: {
         accessToken,
         refreshToken,
+        isConfirmEmail: user.isConfirmEmail,
+        isAdmin: user.isAdmin,
+        lastLogin: user.lastLogin,
       },
     });
   }
@@ -98,6 +101,7 @@ export class AuthService {
     if (!otp || otp !== request.otp) {
       throw new OTPInvalidException();
     }
+    await this.userDomainService.confirmEmailUser(request.email);
     return new ValidateOTPResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: {

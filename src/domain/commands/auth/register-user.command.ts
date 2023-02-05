@@ -31,7 +31,7 @@ export class RegisterUserCommand
       throw new EmailExistException();
     }
     const entity = new UserEntity(input);
-    await this.userRepository.create(entity);
+    await this.userRepository.save(entity);
 
     return new RegisterUserCommandResultModel({ success: true });
   }

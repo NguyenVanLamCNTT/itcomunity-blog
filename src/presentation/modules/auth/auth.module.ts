@@ -4,7 +4,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RegisterUserCommand } from 'src/domain/commands';
+import {
+  RegisterUserCommand,
+  UpdateConfirmEmailUserCommand,
+} from 'src/domain/commands';
 import { UserQuery } from 'src/domain/queries';
 import { UserDomainService } from 'src/domain/services';
 import { UserEntity } from 'src/infrastructure/database/entities';
@@ -77,6 +80,7 @@ import { SendEmailConstants } from 'src/domain/constants';
     UserRepository,
     UserQuery,
     RegisterUserCommand,
+    UpdateConfirmEmailUserCommand,
     UserDomainService,
     AuthService,
     JwtUtil,

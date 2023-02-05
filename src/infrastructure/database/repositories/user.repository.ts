@@ -12,7 +12,7 @@ export class UserRepository {
     return await this.usersRepository.find();
   }
 
-  async create(user: UserEntity) {
+  async save(user: UserEntity) {
     await this.usersRepository.save(user);
   }
 

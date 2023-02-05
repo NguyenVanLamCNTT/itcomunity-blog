@@ -1,6 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { RegisterUserCommand } from '../commands';
-import { RegisterUserCommandInputModel } from '../models';
+import {
+  RegisterUserCommand,
+  UpdateConfirmEmailUserCommand,
+} from '../commands';
+import {
+  RegisterUserCommandInputModel,
+  UpdateConfirmEmailUserInputModel,
+} from '../models';
 import { UserQuery } from '../queries';
 
 @Injectable()
@@ -8,6 +14,7 @@ export class UserDomainService {
   constructor(
     private userQuery: UserQuery,
     private registerUserCommand: RegisterUserCommand,
+    private updateConfirmEmailUserCommand: UpdateConfirmEmailUserCommand,
   ) {}
 
   async getAllUser() {
@@ -26,5 +33,12 @@ export class UserDomainService {
   async getUserByEmailOrUsername(textSearch: string) {
     const user = await this.userQuery.getUserByEmailOrUsername(textSearch);
     return user;
+  }
+
+  async confirmEmailUser(email: string) {
+    const result = await this.updateConfirmEmailUserCommand.execute(
+      new UpdateConfirmEmailUserInputModel({ email }),
+    );
+    return result.success;
   }
 }

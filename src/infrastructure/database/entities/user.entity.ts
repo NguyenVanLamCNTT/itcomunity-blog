@@ -37,4 +37,10 @@ export class UserEntity extends BaseEntity {
 
   @Column({ name: 'likes_number' })
   likesNumber: number;
+
+  @Column({ name: 'is_confirm_email' })
+  isConfirmEmail: boolean;
+
+  @Column({ name: 'is_admin' })
+  isAdmin: boolean;
 }

@@ -6,6 +6,12 @@ class Response {
   accessToken: string;
   @ApiProperty()
   refreshToken: string;
+  @ApiProperty()
+  isConfirmEmail: boolean;
+  @ApiProperty()
+  isAdmin: boolean;
+  @ApiProperty()
+  lastLogin: Date;
 }
 export class LoginUserResponseModel extends ResponseModel<Response> {
   @ApiProperty({
