@@ -17,7 +17,8 @@ export class V004AddPostsTable1673088217710 implements MigrationInterface {
             name: 'id',
             type: 'int',
             isPrimary: true,
-            generatedIdentity: 'ALWAYS',
+            generatedIdentity: 'BY DEFAULT',
+            isGenerated: true,
           },
           {
             name: 'created',
@@ -54,14 +55,17 @@ export class V004AddPostsTable1673088217710 implements MigrationInterface {
           {
             name: 'view_number',
             type: 'int',
+            default: 0,
           },
           {
             name: 'book_mark_number',
             type: 'int',
+            default: 0,
           },
           {
             name: 'comment_number',
             type: 'int',
+            default: 0,
           },
           {
             name: 'image_thumbnail',
@@ -70,6 +74,7 @@ export class V004AddPostsTable1673088217710 implements MigrationInterface {
           {
             name: 'is_trending',
             type: 'boolean',
+            default: false,
           },
         ],
       }),

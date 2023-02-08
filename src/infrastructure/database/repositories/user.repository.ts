@@ -25,4 +25,8 @@ export class UserRepository {
       where: [{ email: textSearch }, { username: textSearch }],
     });
   }
+
+  async findById(id: number) {
+    return await this.usersRepository.findOne({ where: { id } });
+  }
 }

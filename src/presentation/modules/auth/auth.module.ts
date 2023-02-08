@@ -21,6 +21,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { CacheModule } from '@nestjs/common/cache';
 import * as redisStore from 'cache-manager-redis-store';
 import { SendEmailConstants } from 'src/domain/constants';
+import { JwtStrategy } from './auth.strategy';
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserEntity]),
@@ -85,6 +86,7 @@ import { SendEmailConstants } from 'src/domain/constants';
     AuthService,
     JwtUtil,
     RequestCorrelation,
+    JwtStrategy,
   ],
   exports: [TypeOrmModule],
 })

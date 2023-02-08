@@ -17,7 +17,8 @@ export class V003AddSeriesTable1673087685523 implements MigrationInterface {
             name: 'id',
             type: 'int',
             isPrimary: true,
-            generatedIdentity: 'ALWAYS',
+            generatedIdentity: 'BY DEFAULT',
+            isGenerated: true,
           },
           {
             name: 'created',
@@ -54,18 +55,22 @@ export class V003AddSeriesTable1673087685523 implements MigrationInterface {
           {
             name: 'view_number',
             type: 'int',
+            default: 0,
           },
           {
             name: 'book_mark_number',
             type: 'int',
+            default: 0,
           },
           {
             name: 'comment_number',
             type: 'int',
+            default: 0,
           },
           {
             name: 'is_trending',
             type: 'boolean',
+            default: false,
           },
         ],
       }),

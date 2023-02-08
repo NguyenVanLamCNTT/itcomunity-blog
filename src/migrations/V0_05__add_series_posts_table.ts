@@ -19,7 +19,8 @@ export class V005AddSeriesPostsTable1673088835395
             name: 'id',
             type: 'int',
             isPrimary: true,
-            generatedIdentity: 'ALWAYS',
+            generatedIdentity: 'BY DEFAULT',
+            isGenerated: true,
           },
           {
             name: 'created',

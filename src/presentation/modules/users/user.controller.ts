@@ -1,6 +1,14 @@
-import { Controller, Get, HttpStatus, Req, Res } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger/dist';
 import { Request, Response } from 'express';
+import { JwtAuthGuard } from '../auth/auth.guard';
 import { UserService } from './user.service';
 
 @ApiBearerAuth()
@@ -10,6 +18,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('')
+  @UseGuards(JwtAuthGuard)
   async getUserDeltail(@Req() req: Request, @Res() res: Response) {
     try {
       const user = await this.userService.getAllUser();
