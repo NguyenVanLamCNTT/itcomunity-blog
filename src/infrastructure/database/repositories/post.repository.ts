@@ -11,4 +11,8 @@ export class PostRepository {
   async save(post: PostEntity) {
     await this.postRepository.save(post);
   }
+
+  async findById(id: number) {
+    return await this.postRepository.findOne({ where: { id } });
+  }
 }
