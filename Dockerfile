@@ -10,9 +10,11 @@ COPY --chown=node:node package*.json ./
 
 RUN npm ci
 
-COPY --chown=node:node . .
+# COPY --chown=node:node . .
+RUN chown -R node.node /usr/src/app
+COPY . .
 
-USER node
+CMD ["npm", "run", "start"]
 
 # BUILD FOR PRODUCTION
 
@@ -39,6 +41,5 @@ USER node
 FROM node:16.14.2-alpine3.15 As production
 
 COPY --chown=node:node --from=build /usr/src/app/node_modules ./node_modules
-COPY --chown=node:node --from=build /usr/src/app/dist ./dist
 
 CMD [ "node", "dist/main.js" ]
