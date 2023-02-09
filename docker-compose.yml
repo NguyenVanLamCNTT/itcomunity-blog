@@ -60,6 +60,7 @@ services:
     depends_on:
       - redis
     restart: unless-stopped
+    
   api:
     build:
       dockerfile: Dockerfile
