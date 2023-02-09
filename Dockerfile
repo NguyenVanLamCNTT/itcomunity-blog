@@ -6,12 +6,7 @@ FROM node:16.14.2-alpine3.15 As development
 # Create app directory
 WORKDIR /usr/src/app
 
-RUN npm i -g @nestjs/cli
-
 COPY --chown=node:node package*.json ./
-COPY package.json /usr/src/app/package.json 
-
-RUN npm i
 
 RUN npm ci
 
