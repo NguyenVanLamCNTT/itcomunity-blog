@@ -33,7 +33,7 @@ export class PostEntity extends BaseEntity {
   @Column({ name: 'is_trending' })
   isTrending: boolean;
 
-  @ManyToOne((type) => UserEntity, (user) => user.posts)
+  @ManyToOne((type) => UserEntity, (user) => user.posts, { eager: true })
   @JoinColumn({ name: 'author_user_id', referencedColumnName: 'id' })
   author: UserEntity;
 }

@@ -1,12 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { PostEntity } from 'src/infrastructure/database/entities';
+import { GetAllPostRequestModel } from 'src/presentation/models';
 import { CreatePostCommand, RemovePostCommand } from '../commands';
 import { CreatePostInputModel, RemovePostInputModel } from '../models';
+import { PostQuery } from '../queries';
 
 @Injectable()
 export class PostDomainService {
   constructor(
     private createPostCommand: CreatePostCommand,
     private removePostCommand: RemovePostCommand,
+    private postQuery: PostQuery,
   ) {}
 
   async createPost(input: CreatePostInputModel): Promise<boolean> {
@@ -17,5 +21,13 @@ export class PostDomainService {
   async removePost(input: RemovePostInputModel): Promise<boolean> {
     const result = await this.removePostCommand.execute(input);
     return result.success;
+  }
+
+  async findAll(pageable: GetAllPostRequestModel): Promise<PostEntity[]> {
+    return await this.postQuery.findAll(
+      pageable.page,
+      pageable.perPage,
+      pageable.sort,
+    );
   }
 }

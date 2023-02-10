@@ -4,6 +4,7 @@ import { PostDomainService } from 'src/domain/services';
 import {
   CreatePostRequestModel,
   CreatePostResponseModel,
+  GetAllPostRequestModel,
 } from 'src/presentation/models';
 import { RemovePostResponseModel } from 'src/presentation/models/post/remove-post-response.model';
 import { RequestCorrelation } from 'src/utility';
@@ -38,5 +39,9 @@ export class PostService {
       id: RequestCorrelation.getRequestId(),
       data: { success: result },
     });
+  }
+
+  async getAll(pageable: GetAllPostRequestModel) {
+    return await this.postDomainService.findAll(pageable);
   }
 }

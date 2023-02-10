@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreatePostCommand, RemovePostCommand } from 'src/domain/commands';
+import { PostQuery } from 'src/domain/queries';
 import { PostDomainService } from 'src/domain/services';
 import { PostEntity, UserEntity } from 'src/infrastructure/database/entities';
 import {
@@ -20,6 +21,7 @@ import { PostService } from './post.service';
     PostDomainService,
     CreatePostCommand,
     RemovePostCommand,
+    PostQuery,
   ],
   exports: [TypeOrmModule],
 })

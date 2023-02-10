@@ -8,11 +8,13 @@ import {
   Post,
   Req,
   UseGuards,
+  Query,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreatePostRequestModel,
   CreatePostResponseModel,
+  GetAllPostRequestModel,
 } from 'src/presentation/models';
 import { RemovePostResponseModel } from 'src/presentation/models/post/remove-post-response.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
@@ -48,5 +50,12 @@ export class PostController {
   })
   delete(@Param('id') id: number) {
     return this.postService.delete(id);
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  async getAll(@Query() pageable: GetAllPostRequestModel) {
+    return this.postService.getAll(pageable);
   }
 }
