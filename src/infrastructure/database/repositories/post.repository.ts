@@ -22,7 +22,7 @@ export class PostRepository {
       const direction = sort.split(',')[1] === 'asc' ? 'ASC' : 'DESC';
       return await this.postRepository
         .createQueryBuilder('posts')
-
+        .where('posts.isDeleted = :status', { status: false })
         .innerJoin('posts.author', 'user')
         .addSelect('user.id')
         .addSelect('user.fullName')
@@ -35,7 +35,7 @@ export class PostRepository {
 
     return await this.postRepository
       .createQueryBuilder('posts')
-
+      .where('posts.isDeleted = :status', { status: false })
       .innerJoin('posts.author', 'user')
       .addSelect('user.id')
       .addSelect('user.fullName')
