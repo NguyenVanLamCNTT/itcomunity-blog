@@ -56,6 +56,7 @@
     "bcrypt": "^5.1.0",
     "cache-manager": "^5.1.4",
     "cache-manager-redis-store": "^2.0.0",
+    "firebase-admin": "^11.5.0",
     "handlebars": "^4.7.7",
     "nodemailer": "^6.9.1",
     "passport": "^0.6.0",

@@ -1,6 +1,6 @@
 import { Body, Controller, HttpCode } from '@nestjs/common';
 import { Post } from '@nestjs/common/decorators/http/request-mapping.decorator';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   ConfirmOTPRequestModel,
   ConfirmOTPResponseModel,

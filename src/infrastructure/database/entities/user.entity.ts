@@ -45,6 +45,6 @@ export class UserEntity extends BaseEntity {
   @Column({ name: 'is_admin' })
   isAdmin: boolean;
 
-  @OneToMany((type) => PostEntity, (post) => post.author)
+  @OneToMany(() => PostEntity, (post) => post.author)
   posts: PostEntity[];
 }

@@ -1,1 +1,3 @@
-export class CommonConstants {}
+export class CommonConstants {
+  public static TOKEN_FIREBASE = 'itcommunity';
+}
