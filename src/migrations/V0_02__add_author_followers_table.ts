@@ -19,7 +19,8 @@ export class V002AddAuthorFollowersTable1673084226574
             name: 'id',
             type: 'int',
             isPrimary: true,
-            generatedIdentity: 'ALWAYS',
+            generatedIdentity: 'BY DEFAULT',
+            isGenerated: true,
           },
           {
             name: 'created',

@@ -80,7 +80,7 @@ export class AuthService {
 
   async sendOTPComfirm(request: ConfirmOTPRequestModel) {
     const otp = Math.floor(Math.random() * (999999 - 100000)) + 100000;
-    const res = await this.mailerService.sendMail({
+    await this.mailerService.sendMail({
       to: request.email,
       subject: SendEmailConstants.SUBJECT_SEND_OTP,
       template: SendEmailConstants.NAME_FILE_TEMPLATE,

@@ -1,5 +1,6 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { PostEntity } from './post.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity extends BaseEntity {
@@ -43,4 +44,7 @@ export class UserEntity extends BaseEntity {
 
   @Column({ name: 'is_admin' })
   isAdmin: boolean;
+
+  @OneToMany(() => PostEntity, (post) => post.author)
+  posts: PostEntity[];
 }
