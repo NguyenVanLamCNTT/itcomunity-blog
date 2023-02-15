@@ -56,9 +56,9 @@ export class AuthService {
       throw new UserNotExistException();
     }
 
-    if (!user.isConfirmEmail) {
-      throw new UserHasNotConfirmEmailException();
-    }
+    // if (!user.isConfirmEmail) {
+    //   throw new UserHasNotConfirmEmailException();
+    // }
     const isMatch = await bcrypt.compare(request.password, user.password);
 
     if (!isMatch) {

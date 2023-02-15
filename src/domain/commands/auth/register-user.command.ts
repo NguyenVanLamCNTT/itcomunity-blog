@@ -47,7 +47,6 @@ export class RegisterUserCommand
           )
         ];
     }
-    console.log(avatar);
 
     const entity = new UserEntity({
       ...input,
