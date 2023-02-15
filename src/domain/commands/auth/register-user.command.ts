@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { CommonConstants } from 'src/domain/constants';
 import { Gender } from 'src/domain/enums';
 import {
   EmailExistException,
@@ -30,7 +31,28 @@ export class RegisterUserCommand
     if (user) {
       throw new EmailExistException();
     }
-    const entity = new UserEntity(input);
+    let avatar = '';
+    if (input.gender !== Gender.FEMALE) {
+      avatar =
+        CommonConstants.ARRAY_IMAGE_AVATAR_MALE[
+          Math.floor(
+            Math.random() * CommonConstants.ARRAY_IMAGE_AVATAR_MALE.length,
+          )
+        ];
+    } else {
+      avatar =
+        CommonConstants.ARRAY_IMAGE_AVATAR_FEMALE[
+          Math.floor(
+            Math.random() * CommonConstants.ARRAY_IMAGE_AVATAR_FEMALE.length,
+          )
+        ];
+    }
+    console.log(avatar);
+
+    const entity = new UserEntity({
+      ...input,
+      avatar,
+    });
     await this.userRepository.save(entity);
 
     return new RegisterUserCommandResultModel({ success: true });

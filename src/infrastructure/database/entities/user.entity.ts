@@ -47,4 +47,10 @@ export class UserEntity extends BaseEntity {
 
   @OneToMany(() => PostEntity, (post) => post.author)
   posts: PostEntity[];
+
+  @Column({ name: 'avatar' })
+  avatar: string;
+
+  @Column({ name: 'about' })
+  about: string;
 }

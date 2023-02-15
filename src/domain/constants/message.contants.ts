@@ -5,4 +5,5 @@ export class MessageConstants {
   public static INCORRECT_PASSWORD = 'Incorrect password!';
   public static OTP_INVALID = 'OTP invalid!';
   public static POST_NOT_EXIST = 'Post not exist!';
+  public static USER_HAS_NOT_CONFIRMED_EMAIL = 'User has not confirmed email!';
 }
