@@ -2,6 +2,7 @@ import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import {
   IncorrectPassword,
   OTPInvalidException,
+  UserHasNotConfirmEmailException,
   UserNotExistException,
 } from 'src/domain/exceptions';
 import { UserDomainService } from 'src/domain/services';
@@ -54,6 +55,10 @@ export class AuthService {
     if (!user) {
       throw new UserNotExistException();
     }
+
+    if (!user.isConfirmEmail) {
+      throw new UserHasNotConfirmEmailException();
+    }
     const isMatch = await bcrypt.compare(request.password, user.password);
 
     if (!isMatch) {
@@ -80,16 +85,23 @@ export class AuthService {
 
   async sendOTPComfirm(request: ConfirmOTPRequestModel) {
     const otp = Math.floor(Math.random() * (999999 - 100000)) + 100000;
+    const user = await this.userDomainService.getUserByEmailOrUsername(
+      request.username,
+    );
+    if (!user) {
+      throw new UserNotExistException();
+    }
+
     await this.mailerService.sendMail({
-      to: request.email,
+      to: user.email,
       subject: SendEmailConstants.SUBJECT_SEND_OTP,
       template: SendEmailConstants.NAME_FILE_TEMPLATE,
       context: {
-        name: request.fullname,
+        name: user.fullName,
         otp: otp,
       },
     });
-    await this.cacheManager.set(request.email, otp);
+    await this.cacheManager.set(user.email, otp);
     return new ConfirmOTPResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: { success: true },

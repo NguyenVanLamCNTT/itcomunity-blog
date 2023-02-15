@@ -4,6 +4,7 @@ export class ErrorStatusConstants {
   public static OTP_INVALID = '400002';
   //403 Forbidden
   public static INCORRECT_PASSWORD = '403001';
+  public static USER_HAS_NOT_CONFIRMED_EMAIL = '403002';
   //404 Not found
   public static USER_NOT_EXIST = '404001';
   public static POST_NOT_EXIST = '404002';
