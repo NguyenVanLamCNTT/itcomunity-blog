@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Pagination } from 'nestjs-typeorm-paginate/dist/pagination';
 import { PostEntity } from 'src/infrastructure/database/entities';
 import { GetAllPostRequestModel } from 'src/presentation/models';
 import { CreatePostCommand, RemovePostCommand } from '../commands';
@@ -23,11 +24,17 @@ export class PostDomainService {
     return result.success;
   }
 
-  async findAll(pageable: GetAllPostRequestModel): Promise<PostEntity[]> {
+  async findAll(
+    pageable: GetAllPostRequestModel,
+  ): Promise<Pagination<PostEntity>> {
     return await this.postQuery.findAll(
       pageable.page,
       pageable.perPage,
       pageable.sort,
     );
+  }
+
+  async findById(id: number): Promise<PostEntity> {
+    return await this.postQuery.findById(id);
   }
 }
