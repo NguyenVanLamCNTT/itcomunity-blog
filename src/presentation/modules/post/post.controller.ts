@@ -15,6 +15,8 @@ import {
   CreatePostRequestModel,
   CreatePostResponseModel,
   GetAllPostRequestModel,
+  GetAllPostResponseModel,
+  GetDetailPostResponseModel,
 } from 'src/presentation/models';
 import { RemovePostResponseModel } from 'src/presentation/models/post/remove-post-response.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
@@ -53,9 +55,40 @@ export class PostController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllPostResponseModel,
+    isArray: false,
+  })
   async getAll(@Query() pageable: GetAllPostRequestModel) {
     return this.postService.getAll(pageable);
+  }
+
+  @Get(':id')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetDetailPostResponseModel,
+    isArray: false,
+  })
+  async getById(@Param('id') id: number) {
+    return this.postService.getById(id);
+  }
+
+  @Get('users/user-follow')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllPostResponseModel,
+    isArray: false,
+  })
+  @UseGuards(JwtAuthGuard)
+  async getAllByUserFollow(
+    @Query() pageable: GetAllPostRequestModel,
+    @Req() req: any,
+  ) {
+    const userId = req.user['userId'];
+    return this.postService.getAllByUserFollow(pageable, userId);
   }
 }

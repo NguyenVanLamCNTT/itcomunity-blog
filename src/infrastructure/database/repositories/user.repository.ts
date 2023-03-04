@@ -27,6 +27,9 @@ export class UserRepository {
   }
 
   async findById(id: number) {
-    return await this.usersRepository.findOne({ where: { id } });
+    return await this.usersRepository.findOne({
+      where: { id },
+      relations: ['topics'],
+    });
   }
 }

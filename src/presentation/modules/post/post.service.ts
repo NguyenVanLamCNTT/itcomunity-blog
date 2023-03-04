@@ -5,8 +5,11 @@ import {
   CreatePostRequestModel,
   CreatePostResponseModel,
   GetAllPostRequestModel,
+  GetAllPostResponseModel,
+  GetDetailPostResponseModel,
+  PostResponse,
+  RemovePostResponseModel,
 } from 'src/presentation/models';
-import { RemovePostResponseModel } from 'src/presentation/models/post/remove-post-response.model';
 import { RequestCorrelation } from 'src/utility';
 
 @Injectable({})
@@ -21,6 +24,7 @@ export class PostService {
         imageUrl: requestModel.imageUrl,
         keywords: requestModel.keywords,
         name: requestModel.name,
+        topics: requestModel.topics,
       }),
     );
 
@@ -42,6 +46,62 @@ export class PostService {
   }
 
   async getAll(pageable: GetAllPostRequestModel) {
-    return await this.postDomainService.findAll(pageable);
+    const data = await this.postDomainService.findAll(pageable);
+    return new GetAllPostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new PostResponse({
+            ...item,
+          });
+        }),
+      },
+    });
+  }
+
+  async getById(id: number) {
+    const data = await this.postDomainService.findById(id);
+    return new GetDetailPostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        ...data,
+        author: {
+          id: data.author.id,
+          avatar: data.author.avatar,
+          email: data.author.email,
+          followersNumber: data.author.followersNumber,
+          fullName: data.author.fullName,
+          gender: data.author.gender,
+          likesNumber: data.author.likesNumber,
+          postsNumber: data.author.postsNumber,
+          username: data.author.username,
+        },
+      },
+    });
+  }
+
+  async getAllByUserFollow(pageable: GetAllPostRequestModel, userId: number) {
+    const data = await this.postDomainService.findByUserFollowTopic(
+      pageable,
+      userId,
+    );
+    return new GetAllPostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new PostResponse({
+            ...item,
+          });
+        }),
+      },
+    });
   }
 }

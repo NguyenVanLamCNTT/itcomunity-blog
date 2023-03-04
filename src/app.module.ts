@@ -7,6 +7,7 @@ import {
   AuthModule,
   DMSModule,
   PostModule,
+  TopicModule,
   UserModule,
 } from './presentation/modules';
 
@@ -40,6 +41,7 @@ import {
     AuthModule,
     PostModule,
     DMSModule,
+    TopicModule,
   ],
   controllers: [],
   providers: [],

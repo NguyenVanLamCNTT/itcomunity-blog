@@ -5,7 +5,7 @@ export class BaseEntity {
     name: 'id',
     generatedIdentity: 'BY DEFAULT',
   })
-  id!: number;
+  id: number;
 
   @CreateDateColumn({ nullable: true })
   created: Date;

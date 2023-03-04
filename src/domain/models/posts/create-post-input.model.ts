@@ -4,6 +4,7 @@ export class CreatePostInputModel {
   userId: number;
   imageUrl: string;
   name: string;
+  topics: number[];
 
   constructor(partial: Partial<CreatePostInputModel>) {
     Object.assign(this, partial);
