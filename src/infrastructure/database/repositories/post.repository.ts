@@ -10,7 +10,7 @@ export class PostRepository {
   ) {}
 
   async save(post: PostEntity) {
-    await this.postRepository.save(post);
+    return await this.postRepository.save(post);
   }
 
   async findById(id: number) {

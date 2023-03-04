@@ -55,7 +55,6 @@ export class PostController {
   }
 
   @Get()
-  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   @ApiResponse({
     status: 200,
@@ -67,7 +66,6 @@ export class PostController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
   @HttpCode(200)
   @ApiResponse({
     status: 200,

@@ -8,6 +8,7 @@ export class ErrorStatusConstants {
   //404 Not found
   public static USER_NOT_EXIST = '404001';
   public static POST_NOT_EXIST = '404002';
+  public static TOPIC_NOT_EXIST = '404003';
   //409 Conflict
   public static EMAIL_EXIST = '409001';
 }

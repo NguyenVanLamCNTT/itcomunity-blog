@@ -24,6 +24,7 @@ export class PostService {
         imageUrl: requestModel.imageUrl,
         keywords: requestModel.keywords,
         name: requestModel.name,
+        topics: requestModel.topics,
       }),
     );
 

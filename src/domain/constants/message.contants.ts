@@ -6,4 +6,5 @@ export class MessageConstants {
   public static OTP_INVALID = 'OTP invalid!';
   public static POST_NOT_EXIST = 'Post not exist!';
   public static USER_HAS_NOT_CONFIRMED_EMAIL = 'User has not confirmed email!';
+  public static TOPIC_NOT_EXIST = 'Topic not exist!';
 }
