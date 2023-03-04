@@ -7,12 +7,14 @@ import {
   PostEntity,
   TopicEntity,
   TopicPostEntity,
+  TopicUserEntity,
   UserEntity,
 } from 'src/infrastructure/database/entities';
 import {
   PostRepository,
   TopicPostRepository,
   TopicRepository,
+  TopicUserRepository,
   UserRepository,
 } from 'src/infrastructure/database/repositories';
 import { PostController } from './post.controller';
@@ -25,6 +27,7 @@ import { PostService } from './post.service';
       PostEntity,
       TopicEntity,
       TopicPostEntity,
+      TopicUserEntity,
     ]),
   ],
   controllers: [PostController],
@@ -38,6 +41,7 @@ import { PostService } from './post.service';
     PostQuery,
     TopicRepository,
     TopicPostRepository,
+    TopicUserRepository,
   ],
   exports: [TypeOrmModule],
 })

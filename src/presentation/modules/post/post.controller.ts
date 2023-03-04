@@ -75,4 +75,20 @@ export class PostController {
   async getById(@Param('id') id: number) {
     return this.postService.getById(id);
   }
+
+  @Get('users/user-follow')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllPostResponseModel,
+    isArray: false,
+  })
+  @UseGuards(JwtAuthGuard)
+  async getAllByUserFollow(
+    @Query() pageable: GetAllPostRequestModel,
+    @Req() req: any,
+  ) {
+    const userId = req.user['userId'];
+    return this.postService.getAllByUserFollow(pageable, userId);
+  }
 }

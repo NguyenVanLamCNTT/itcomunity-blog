@@ -44,4 +44,39 @@ export class PostRepository {
 
     return await paginate<PostEntity>(query, { page, limit: perPage });
   }
+
+  async findAllByTopicIds(
+    page: number,
+    perPage: number,
+    sort: string,
+    postIds: number[],
+  ) {
+    if (sort) {
+      const filed = sort.split(',')[0];
+      const direction = sort.split(',')[1] === 'asc' ? 'ASC' : 'DESC';
+      const query = this.postRepository
+        .createQueryBuilder('posts')
+        .where('posts.isDeleted = :status', { status: false })
+        .where('posts.id In (:postIds)', { postIds })
+        .innerJoin('posts.author', 'user')
+        .addSelect('user.id')
+        .addSelect('user.fullName')
+        .addSelect('user.username')
+        .orderBy(`posts.${filed}`, direction);
+
+      return await paginate<PostEntity>(query, { page, limit: perPage });
+    }
+
+    const query = this.postRepository
+      .createQueryBuilder('posts')
+      .where('posts.isDeleted = :status', { status: false })
+      // .where('posts.id IN (:postIds)', {postIds})
+      .innerJoin('posts.author', 'user')
+      .addSelect('user.id')
+      .addSelect('user.fullName')
+      .addSelect('user.username')
+      .orderBy(`posts.created`, 'DESC');
+
+    return await paginate<PostEntity>(query, { page, limit: perPage });
+  }
 }

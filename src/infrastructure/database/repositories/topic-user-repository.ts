@@ -12,4 +12,11 @@ export class TopicUserRepository {
   async save(entity: TopicUserEntity) {
     await this.topicUserRepository.save(entity);
   }
+
+  async findByUserId(userId: number) {
+    return await this.topicUserRepository.find({
+      relations: ['user', 'topic'],
+      where: { user: { id: userId } },
+    });
+  }
 }

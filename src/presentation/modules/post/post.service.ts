@@ -83,4 +83,25 @@ export class PostService {
       },
     });
   }
+
+  async getAllByUserFollow(pageable: GetAllPostRequestModel, userId: number) {
+    const data = await this.postDomainService.findByUserFollowTopic(
+      pageable,
+      userId,
+    );
+    return new GetAllPostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new PostResponse({
+            ...item,
+          });
+        }),
+      },
+    });
+  }
 }

@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { TopicEntity, TopicPostEntity } from '../entities';
 
 export class TopicPostRepository {
@@ -11,5 +11,12 @@ export class TopicPostRepository {
 
   async save(entity: TopicPostEntity) {
     await this.topicPostRepository.save(entity);
+  }
+
+  async findByTopicIds(topicIds: number[]) {
+    return await this.topicPostRepository.find({
+      relations: ['topic', 'post'],
+      where: { topic: { id: In(topicIds) } },
+    });
   }
 }

@@ -37,4 +37,16 @@ export class PostDomainService {
   async findById(id: number): Promise<PostEntity> {
     return await this.postQuery.findById(id);
   }
+
+  async findByUserFollowTopic(
+    pageable: GetAllPostRequestModel,
+    userId: number,
+  ) {
+    return await this.postQuery.findAllByTopics(
+      pageable.page,
+      pageable.perPage,
+      pageable.sort,
+      userId,
+    );
+  }
 }
