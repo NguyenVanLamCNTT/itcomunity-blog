@@ -23,7 +23,11 @@ async function bootstrap() {
   });
 
   // cors
-  app.enableCors();
+  app.enableCors({
+    origin: true,
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  });
 
   // swagger
   const config = new DocumentBuilder()
