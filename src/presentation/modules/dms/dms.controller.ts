@@ -3,10 +3,14 @@ import {
   HttpCode,
   Post,
   UploadedFile,
+  UploadedFiles,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
   ApiBody,
@@ -38,10 +42,10 @@ export class DMSControler {
     },
   })
   @Post('upload')
-  @UseInterceptors(FileInterceptor('upload'))
+  @UseInterceptors(FileFieldsInterceptor([{ name: 'upload', maxCount: 1 }]))
   @UseGuards(JwtAuthGuard)
   @HttpCode(200)
-  async upload(@UploadedFile('upload') upload: any) {
-    return await this.dmsService.upload(upload);
+  async uploadDMS(@UploadedFiles() files: { upload?: any }) {
+    return await this.dmsService.upload(files.upload[0]);
   }
 }
