@@ -30,7 +30,7 @@ export class DMSControler {
     schema: {
       type: 'object',
       properties: {
-        file: {
+        upload: {
           type: 'string',
           format: 'binary',
         },
@@ -38,10 +38,10 @@ export class DMSControler {
     },
   })
   @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('upload'))
   @UseGuards(JwtAuthGuard)
   @HttpCode(200)
-  async upload(@UploadedFile('file') file: any) {
-    return await this.dmsService.upload(file);
+  async upload(@UploadedFile('upload') upload: any) {
+    return await this.dmsService.upload(upload);
   }
 }
