@@ -15,7 +15,11 @@ export class FirebaseUtil {
       },
     });
 
-    blobWriter.on('error', () => undefined);
+    blobWriter.on('error', (error) => {
+      console.log(error);
+
+      return undefined;
+    });
 
     blobWriter.on('finish', () => undefined);
 
