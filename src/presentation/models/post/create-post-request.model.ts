@@ -9,6 +9,8 @@ export class CreatePostRequestModel {
   imageUrl: string;
   @ApiProperty()
   name: string;
+  @ApiProperty()
+  status: string;
   @ApiProperty({ type: Number, isArray: true })
   topics: number[];
 }

@@ -25,6 +25,7 @@ export class PostService {
         keywords: requestModel.keywords,
         name: requestModel.name,
         topics: requestModel.topics,
+        status: requestModel.status,
       }),
     );
 

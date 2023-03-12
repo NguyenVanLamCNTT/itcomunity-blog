@@ -37,6 +37,7 @@ export class CreatePostCommand
       author: user,
       imageThumbnail: input.imageUrl,
       name: input.name,
+      status: input.status,
     });
     const post = await this.postRepository.save(entity);
     await this.addPostToTopic(input.topics, post);

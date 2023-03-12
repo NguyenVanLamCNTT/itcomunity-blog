@@ -5,3 +5,4 @@ export * from './response.model';
 export * from './post';
 export * from './dms';
 export * from './topic';
+export * from './series';
