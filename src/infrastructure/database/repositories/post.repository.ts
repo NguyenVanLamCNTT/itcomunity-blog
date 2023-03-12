@@ -28,6 +28,7 @@ export class PostRepository {
         .addSelect('user.id')
         .addSelect('user.fullName')
         .addSelect('user.username')
+        .addSelect('user.avatar')
         .orderBy(`posts.${filed}`, direction);
 
       return await paginate<PostEntity>(query, { page, limit: perPage });
@@ -40,6 +41,7 @@ export class PostRepository {
       .addSelect('user.id')
       .addSelect('user.fullName')
       .addSelect('user.username')
+      .addSelect('user.avatar')
       .orderBy(`posts.created`, 'DESC');
 
     return await paginate<PostEntity>(query, { page, limit: perPage });

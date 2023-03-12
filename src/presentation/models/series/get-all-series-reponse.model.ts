@@ -12,15 +12,14 @@ class Author {
   @ApiProperty()
   avatar: string;
 }
-export class PostResponse {
+
+export class SeriesResponse {
   @ApiProperty()
   id: number;
   @ApiProperty()
   name: string;
   @ApiProperty()
-  keywords: string[];
-  @ApiProperty()
-  content: string;
+  description: string;
   @ApiProperty()
   viewNumber: number;
   @ApiProperty()
@@ -28,26 +27,24 @@ export class PostResponse {
   @ApiProperty()
   commentNumber: number;
   @ApiProperty()
-  imageThumbnail: string;
-  @ApiProperty()
   isTrending: boolean;
   @ApiProperty({ type: Author })
   author: Author;
-
-  constructor(partial: Partial<PostResponse>) {
+  constructor(partial: Partial<SeriesResponse>) {
     Object.assign(this, partial);
   }
 }
+
 class Data extends BaseGetAllResponseModel {
-  @ApiProperty({ type: PostResponse, isArray: true })
-  items: PostResponse[];
+  @ApiProperty({ type: SeriesResponse, isArray: true })
+  items: SeriesResponse[];
 }
 
-export class GetAllPostResponseModel extends ResponseModel<Data> {
-  @ApiProperty({ type: Data })
+export class GetAllSeriesResponseModel extends ResponseModel<Data> {
+  @ApiProperty()
   data: Data;
 
-  constructor(partial: Partial<GetAllPostResponseModel>) {
+  constructor(partial: Partial<GetAllSeriesResponseModel>) {
     super();
     Object.assign(this, partial);
   }

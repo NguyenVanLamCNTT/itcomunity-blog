@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -11,6 +13,8 @@ import {
   CreateSeriesRequestModel,
   CreateSeriesResponseModel,
 } from 'src/presentation/models';
+import { GetAllSeriesResponseModel } from 'src/presentation/models/series/get-all-series-reponse.model';
+import { GetAllSeriesRequestModel } from 'src/presentation/models/series/get-all-series-request.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { SeriesService } from './series.service';
 
@@ -31,5 +35,16 @@ export class SeriesController {
   async create(@Body() body: CreateSeriesRequestModel, @Req() req: any) {
     const userId = req.user['userId'];
     return await this.service.create(body, userId);
+  }
+
+  @Get()
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllSeriesResponseModel,
+    isArray: false,
+  })
+  async getAll(@Query() pageable: GetAllSeriesRequestModel) {
+    return this.service.getAll(pageable);
   }
 }

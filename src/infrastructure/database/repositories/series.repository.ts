@@ -25,6 +25,7 @@ export class SeriesRepository {
         .addSelect('user.id')
         .addSelect('user.fullName')
         .addSelect('user.username')
+        .addSelect('user.avatar')
         .orderBy(`series.${filed}`, direction);
 
       return await paginate<SeriesEntity>(query, { page, limit: perPage });
@@ -37,7 +38,9 @@ export class SeriesRepository {
       .innerJoin('series.author', 'user')
       .addSelect('user.id')
       .addSelect('user.fullName')
-      .addSelect('user.username');
+      .addSelect('user.avatar')
+      .addSelect('user.username')
+      .orderBy(`series.created`, 'DESC');
 
     return await paginate<SeriesEntity>(query, { page, limit: perPage });
   }
