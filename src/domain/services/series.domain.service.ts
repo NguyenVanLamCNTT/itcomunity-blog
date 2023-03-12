@@ -18,4 +18,8 @@ export class SeriesDomainService {
   async getAll(page: number, perPage: number, sort: string) {
     return await this.seriesQuery.getAll(page, perPage, sort);
   }
+
+  async getId(id: number) {
+    return await this.seriesQuery.getById(id);
+  }
 }

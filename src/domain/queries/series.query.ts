@@ -8,4 +8,8 @@ export class SeriesQuery {
   async getAll(page: number, perPage: number, sort: string) {
     return await this.seriesRepository.findAll(page, perPage, sort);
   }
+
+  async getById(id: number) {
+    return await this.seriesRepository.findById(id);
+  }
 }

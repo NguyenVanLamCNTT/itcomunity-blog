@@ -3,12 +3,12 @@ import { SeriesDomainService } from 'src/domain/services/series.domain.service';
 import {
   CreateSeriesRequestModel,
   CreateSeriesResponseModel,
-} from 'src/presentation/models';
-import {
+  GetAllSeriesRequestModel,
   GetAllSeriesResponseModel,
+  GetDetailSeriesResponseModel,
   SeriesResponse,
-} from 'src/presentation/models/series/get-all-series-reponse.model';
-import { GetAllSeriesRequestModel } from 'src/presentation/models/series/get-all-series-request.model';
+} from 'src/presentation/models';
+
 import { RequestCorrelation } from 'src/utility';
 
 @Injectable({})
@@ -46,6 +46,27 @@ export class SeriesService {
             ...item,
           });
         }),
+      },
+    });
+  }
+
+  async getById(id: number) {
+    const data = await this.seriesDomainService.getId(id);
+    return new GetDetailSeriesResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        ...data,
+        author: {
+          id: data.author.id,
+          avatar: data.author.avatar,
+          email: data.author.email,
+          followersNumber: data.author.followersNumber,
+          fullName: data.author.fullName,
+          gender: data.author.gender,
+          likesNumber: data.author.likesNumber,
+          postsNumber: data.author.postsNumber,
+          username: data.author.username,
+        },
       },
     });
   }

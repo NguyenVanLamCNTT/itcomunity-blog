@@ -44,4 +44,8 @@ export class SeriesRepository {
 
     return await paginate<SeriesEntity>(query, { page, limit: perPage });
   }
+
+  async findById(id: number) {
+    return await this.seriesRepository.findOne({ where: { id } });
+  }
 }

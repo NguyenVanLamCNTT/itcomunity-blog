@@ -3,15 +3,17 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreateSeriesRequestModel,
   CreateSeriesResponseModel,
+  GetDetailSeriesResponseModel,
 } from 'src/presentation/models';
 import { GetAllSeriesResponseModel } from 'src/presentation/models/series/get-all-series-reponse.model';
 import { GetAllSeriesRequestModel } from 'src/presentation/models/series/get-all-series-request.model';
@@ -46,5 +48,17 @@ export class SeriesController {
   })
   async getAll(@Query() pageable: GetAllSeriesRequestModel) {
     return this.service.getAll(pageable);
+  }
+
+  @Get(':id')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetDetailSeriesResponseModel,
+    isArray: false,
+  })
+  @ApiParam({ name: 'id', required: true })
+  async getById(@Param('id') id: number) {
+    return this.service.getById(id);
   }
 }
