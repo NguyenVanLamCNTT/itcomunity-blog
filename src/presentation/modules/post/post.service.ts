@@ -58,6 +58,12 @@ export class PostService {
         items: data.items.map((item) => {
           return new PostResponse({
             ...item,
+            author: {
+              id: item.author.id,
+              avatar: item.author.avatar,
+              fullName: item.author.fullName,
+              username: item.author.username,
+            },
           });
         }),
       },
@@ -100,6 +106,35 @@ export class PostService {
         items: data.items.map((item) => {
           return new PostResponse({
             ...item,
+          });
+        }),
+      },
+    });
+  }
+
+  async getAllBySeries(seriesId: number, pageable: GetAllPostRequestModel) {
+    const data = await this.postDomainService.findBySeries(
+      seriesId,
+      pageable.page,
+      pageable.perPage,
+      pageable.sort,
+    );
+    return new GetAllPostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new PostResponse({
+            ...item,
+            author: {
+              id: item.author.id,
+              avatar: item.author.avatar,
+              fullName: item.author.fullName,
+              username: item.author.username,
+            },
           });
         }),
       },

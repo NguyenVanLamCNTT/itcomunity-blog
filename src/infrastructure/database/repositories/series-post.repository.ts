@@ -11,4 +11,8 @@ export class SeriesPostRepository {
   async save(entity: SeriesPostEntity) {
     await this.repository.save(entity);
   }
+
+  async findBySeriesId(seriesId: number) {
+    return await this.repository.find({ where: { series: { id: seriesId } } });
+  }
 }

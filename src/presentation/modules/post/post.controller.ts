@@ -91,4 +91,18 @@ export class PostController {
     const userId = req.user['userId'];
     return this.postService.getAllByUserFollow(pageable, userId);
   }
+
+  @Get('series/:seriesId')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllPostResponseModel,
+    isArray: false,
+  })
+  async getAllBySeries(
+    @Param('seriesId') seriesId: number,
+    @Query() pageable: GetAllPostRequestModel,
+  ) {
+    return await this.postService.getAllBySeries(seriesId, pageable);
+  }
 }

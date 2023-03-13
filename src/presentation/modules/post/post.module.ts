@@ -5,6 +5,7 @@ import { PostQuery } from 'src/domain/queries';
 import { PostDomainService } from 'src/domain/services';
 import {
   PostEntity,
+  SeriesPostEntity,
   TopicEntity,
   TopicPostEntity,
   TopicUserEntity,
@@ -12,6 +13,7 @@ import {
 } from 'src/infrastructure/database/entities';
 import {
   PostRepository,
+  SeriesPostRepository,
   TopicPostRepository,
   TopicRepository,
   TopicUserRepository,
@@ -28,6 +30,7 @@ import { PostService } from './post.service';
       TopicEntity,
       TopicPostEntity,
       TopicUserEntity,
+      SeriesPostEntity,
     ]),
   ],
   controllers: [PostController],
@@ -42,6 +45,7 @@ import { PostService } from './post.service';
     TopicRepository,
     TopicPostRepository,
     TopicUserRepository,
+    SeriesPostRepository,
   ],
   exports: [TypeOrmModule],
 })

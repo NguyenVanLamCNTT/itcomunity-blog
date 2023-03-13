@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { PostEntity } from '../entities';
 
 export class PostRepository {
@@ -18,33 +18,25 @@ export class PostRepository {
   }
 
   async findAll(page: number, perPage: number, sort: string) {
-    if (sort) {
-      const filed = sort.split(',')[0];
-      const direction = sort.split(',')[1] === 'asc' ? 'ASC' : 'DESC';
-      const query = this.postRepository
-        .createQueryBuilder('posts')
-        .where('posts.isDeleted = :status', { status: false })
-        .innerJoin('posts.author', 'user')
-        .addSelect('user.id')
-        .addSelect('user.fullName')
-        .addSelect('user.username')
-        .addSelect('user.avatar')
-        .orderBy(`posts.${filed}`, direction);
+    const sortBy = sort ? sort.split(',')[0] : 'created';
+    const sortDir = sort
+      ? sort.split(',')[1] === 'asc'
+        ? 'ASC'
+        : 'DESC'
+      : 'DESC';
 
-      return await paginate<PostEntity>(query, { page, limit: perPage });
-    }
-
-    const query = this.postRepository
-      .createQueryBuilder('posts')
-      .where('posts.isDeleted = :status', { status: false })
-      .innerJoin('posts.author', 'user')
-      .addSelect('user.id')
-      .addSelect('user.fullName')
-      .addSelect('user.username')
-      .addSelect('user.avatar')
-      .orderBy(`posts.created`, 'DESC');
-
-    return await paginate<PostEntity>(query, { page, limit: perPage });
+    return await paginate<PostEntity>(
+      this.postRepository,
+      {
+        page: page,
+        limit: perPage,
+      },
+      {
+        where: { isDeleted: false },
+        relations: ['author'],
+        order: { [sortBy]: sortDir.toLocaleUpperCase() },
+      },
+    );
   }
 
   async findAllByTopicIds(
@@ -80,5 +72,32 @@ export class PostRepository {
       .orderBy(`posts.created`, 'DESC');
 
     return await paginate<PostEntity>(query, { page, limit: perPage });
+  }
+
+  async findInIds(
+    postIds: number[],
+    page: number,
+    perPage: number,
+    sort: string,
+  ) {
+    const sortBy = sort ? sort.split(',')[0] : 'created';
+    const sortDir = sort
+      ? sort.split(',')[1] === 'asc'
+        ? 'ASC'
+        : 'DESC'
+      : 'DESC';
+
+    return await paginate<PostEntity>(
+      this.postRepository,
+      {
+        page: page,
+        limit: perPage,
+      },
+      {
+        where: { isDeleted: false, id: In(postIds) },
+        relations: ['author'],
+        order: { [sortBy]: sortDir.toLocaleUpperCase() },
+      },
+    );
   }
 }
