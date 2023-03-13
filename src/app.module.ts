@@ -10,6 +10,7 @@ import {
   TopicModule,
   UserModule,
 } from './presentation/modules';
+import { SeriesModule } from './presentation/modules/series';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import {
     PostModule,
     DMSModule,
     TopicModule,
+    SeriesModule,
   ],
   controllers: [],
   providers: [],

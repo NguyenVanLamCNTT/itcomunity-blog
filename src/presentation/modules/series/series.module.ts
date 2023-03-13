@@ -1,10 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CreatePostCommand, RemovePostCommand } from 'src/domain/commands';
+import {
+  AddNewSeriesCommand,
+  CreatePostCommand,
+  RemovePostCommand,
+} from 'src/domain/commands';
 import { PostQuery } from 'src/domain/queries';
+import { SeriesQuery } from 'src/domain/queries/series.query';
 import { PostDomainService } from 'src/domain/services';
+import { SeriesDomainService } from 'src/domain/services/series.domain.service';
 import {
   PostEntity,
+  SeriesEntity,
   SeriesPostEntity,
   TopicEntity,
   TopicPostEntity,
@@ -14,13 +21,14 @@ import {
 import {
   PostRepository,
   SeriesPostRepository,
+  SeriesRepository,
   TopicPostRepository,
   TopicRepository,
   TopicUserRepository,
   UserRepository,
 } from 'src/infrastructure/database/repositories';
-import { PostController } from './post.controller';
-import { PostService } from './post.service';
+import { SeriesController } from './series.controller';
+import { SeriesService } from './series.service';
 
 @Module({
   imports: [
@@ -30,14 +38,14 @@ import { PostService } from './post.service';
       TopicEntity,
       TopicPostEntity,
       TopicUserEntity,
+      SeriesEntity,
       SeriesPostEntity,
     ]),
   ],
-  controllers: [PostController],
+  controllers: [SeriesController],
   providers: [
     UserRepository,
     PostRepository,
-    PostService,
     PostDomainService,
     CreatePostCommand,
     RemovePostCommand,
@@ -45,8 +53,13 @@ import { PostService } from './post.service';
     TopicRepository,
     TopicPostRepository,
     TopicUserRepository,
+    SeriesService,
+    SeriesRepository,
+    SeriesQuery,
+    SeriesDomainService,
+    AddNewSeriesCommand,
     SeriesPostRepository,
   ],
   exports: [TypeOrmModule],
 })
-export class PostModule {}
+export class SeriesModule {}

@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { BaseGetAllResponseModel } from '../base-get-all-response.model';
 import { ResponseModel } from '../response.model';
 
 class Author {
@@ -10,27 +11,15 @@ class Author {
   username: string;
   @ApiProperty()
   avatar: string;
-  @ApiProperty()
-  email: string;
-  @ApiProperty()
-  followersNumber: number;
-  @ApiProperty()
-  gender: string;
-  @ApiProperty()
-  likesNumber: number;
-  @ApiProperty()
-  postsNumber: number;
 }
 
-export class PostDetail {
+export class SeriesResponse {
   @ApiProperty()
   id: number;
   @ApiProperty()
   name: string;
   @ApiProperty()
-  keywords: string[];
-  @ApiProperty()
-  content: string;
+  description: string;
   @ApiProperty()
   viewNumber: number;
   @ApiProperty()
@@ -38,16 +27,24 @@ export class PostDetail {
   @ApiProperty()
   commentNumber: number;
   @ApiProperty()
-  imageThumbnail: string;
-  @ApiProperty()
   isTrending: boolean;
   @ApiProperty({ type: Author })
   author: Author;
+  constructor(partial: Partial<SeriesResponse>) {
+    Object.assign(this, partial);
+  }
 }
-export class GetDetailPostResponseModel extends ResponseModel<PostDetail> {
+
+class Data extends BaseGetAllResponseModel {
+  @ApiProperty({ type: SeriesResponse, isArray: true })
+  items: SeriesResponse[];
+}
+
+export class GetAllSeriesResponseModel extends ResponseModel<Data> {
   @ApiProperty()
-  data: PostDetail;
-  constructor(partial: Partial<GetDetailPostResponseModel>) {
+  data: Data;
+
+  constructor(partial: Partial<GetAllSeriesResponseModel>) {
     super();
     Object.assign(this, partial);
   }

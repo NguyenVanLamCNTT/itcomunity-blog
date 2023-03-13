@@ -1,6 +1,7 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { PostEntity } from './post.entity';
+import { SeriesEntity } from './series.entity';
 
 @Entity({ name: 'user' })
 export class UserEntity extends BaseEntity {
@@ -53,4 +54,7 @@ export class UserEntity extends BaseEntity {
 
   @Column({ name: 'about' })
   about: string;
+
+  @OneToMany(() => SeriesEntity, (series) => series.author)
+  series: SeriesEntity[];
 }

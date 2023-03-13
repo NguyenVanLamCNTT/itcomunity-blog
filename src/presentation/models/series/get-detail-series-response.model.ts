@@ -22,15 +22,13 @@ class Author {
   postsNumber: number;
 }
 
-export class PostDetail {
+class ResponseData {
   @ApiProperty()
   id: number;
   @ApiProperty()
   name: string;
   @ApiProperty()
-  keywords: string[];
-  @ApiProperty()
-  content: string;
+  description: string;
   @ApiProperty()
   viewNumber: number;
   @ApiProperty()
@@ -38,16 +36,19 @@ export class PostDetail {
   @ApiProperty()
   commentNumber: number;
   @ApiProperty()
-  imageThumbnail: string;
-  @ApiProperty()
   isTrending: boolean;
-  @ApiProperty({ type: Author })
+  @ApiProperty()
+  status: string;
+  @ApiProperty({ type: String, isArray: true })
+  keywords: string[];
+  @ApiProperty()
   author: Author;
 }
-export class GetDetailPostResponseModel extends ResponseModel<PostDetail> {
+
+export class GetDetailSeriesResponseModel extends ResponseModel<ResponseData> {
   @ApiProperty()
-  data: PostDetail;
-  constructor(partial: Partial<GetDetailPostResponseModel>) {
+  data: ResponseData;
+  constructor(partial: Partial<GetDetailSeriesResponseModel>) {
     super();
     Object.assign(this, partial);
   }

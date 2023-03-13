@@ -49,4 +49,13 @@ export class PostDomainService {
       userId,
     );
   }
+
+  async findBySeries(
+    seriesId: number,
+    page: number,
+    perPage: number,
+    sort: string,
+  ) {
+    return await this.postQuery.findAllBySeries(seriesId, page, perPage, sort);
+  }
 }

@@ -18,7 +18,7 @@ export class PostResponse {
   @ApiProperty()
   name: string;
   @ApiProperty()
-  keyworks: string[];
+  keywords: string[];
   @ApiProperty()
   content: string;
   @ApiProperty()
