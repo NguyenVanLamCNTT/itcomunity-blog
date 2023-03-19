@@ -12,4 +12,8 @@ export class UserQuery {
   async getUserByEmailOrUsername(textSearch: string) {
     return await this.userRepository.findByEmailOrUsername(textSearch);
   }
+
+  async getById(id: number) {
+    return await this.userRepository.findById(id);
+  }
 }
