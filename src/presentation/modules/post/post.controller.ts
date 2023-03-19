@@ -14,6 +14,8 @@ import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   CreatePostRequestModel,
   CreatePostResponseModel,
+  CreatePostWithChatGPTRequestModel,
+  CreatePostWithChatGPTResponseModel,
   GetAllPostRequestModel,
   GetAllPostResponseModel,
   GetDetailPostResponseModel,
@@ -104,5 +106,17 @@ export class PostController {
     @Query() pageable: GetAllPostRequestModel,
   ) {
     return await this.postService.getAllBySeries(seriesId, pageable);
+  }
+
+  @Post('/chat-gpt/post')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: CreatePostWithChatGPTResponseModel,
+    isArray: false,
+  })
+  async createPostWithChatGPT(@Body() body: CreatePostWithChatGPTRequestModel) {
+    return await this.postService.createPostWithChatGPT(body);
   }
 }

@@ -1,9 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostInputModel, RemovePostInputModel } from 'src/domain/models';
 import { PostDomainService } from 'src/domain/services';
+import { GPTUtil } from 'src/infrastructure/utilities';
 import {
   CreatePostRequestModel,
   CreatePostResponseModel,
+  CreatePostWithChatGPTRequestModel,
+  CreatePostWithChatGPTResponseModel,
   GetAllPostRequestModel,
   GetAllPostResponseModel,
   GetDetailPostResponseModel,
@@ -14,7 +17,10 @@ import { RequestCorrelation } from 'src/utility';
 
 @Injectable({})
 export class PostService {
-  constructor(private postDomainService: PostDomainService) {}
+  constructor(
+    private postDomainService: PostDomainService,
+    private gptUtil: GPTUtil,
+  ) {}
 
   async create(requestModel: CreatePostRequestModel, userId: number) {
     const result = await this.postDomainService.createPost(
@@ -138,6 +144,14 @@ export class PostService {
           });
         }),
       },
+    });
+  }
+
+  async createPostWithChatGPT(req: CreatePostWithChatGPTRequestModel) {
+    const text = await this.gptUtil.getModelAnswer(req.question);
+    return new CreatePostWithChatGPTResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { text: text },
     });
   }
 }
