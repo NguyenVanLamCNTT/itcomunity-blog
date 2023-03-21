@@ -28,4 +28,8 @@ export class TopicRepository {
   async findById(id: number) {
     return await this.topicRepository.findOne({ where: { id } });
   }
+
+  async save(entity: TopicEntity) {
+    return await this.topicRepository.save(entity);
+  }
 }

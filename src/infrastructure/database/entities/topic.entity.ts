@@ -18,4 +18,6 @@ export class TopicEntity extends BaseEntity {
   postNumber: number;
   @Column({ name: 'is_trending' })
   isTrending: boolean;
+  @Column({ name: 'image' })
+  image: string;
 }
