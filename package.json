@@ -60,6 +60,7 @@
     "handlebars": "^4.7.7",
     "nestjs-typeorm-paginate": "^4.0.3",
     "nodemailer": "^6.9.1",
+    "openai": "^3.2.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",
     "pg": "^8.8.0",

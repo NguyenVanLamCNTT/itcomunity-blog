@@ -41,4 +41,8 @@ export class UserDomainService {
     );
     return result.success;
   }
+
+  async getById(id: number) {
+    return await this.userQuery.getById(id);
+  }
 }

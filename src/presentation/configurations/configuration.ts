@@ -29,4 +29,8 @@ export default () => ({
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
     storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
   },
+  gpt: {
+    apiKey: process.env.API_KEY_GPT,
+    organnizationId: process.env.Organization_ID_GPT,
+  },
 });

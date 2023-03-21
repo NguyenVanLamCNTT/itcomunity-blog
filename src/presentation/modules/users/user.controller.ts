@@ -1,13 +1,15 @@
 import {
   Controller,
   Get,
+  HttpCode,
   HttpStatus,
   Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger/dist';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { Request, Response } from 'express';
+import { GetInfoUserResponseModel } from 'src/presentation/models';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { UserService } from './user.service';
 
@@ -27,5 +29,18 @@ export class UserController {
       console.log(error);
       return res.status(500).json({ error: error });
     }
+  }
+
+  @Get('me/info')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetInfoUserResponseModel,
+    isArray: false,
+  })
+  async getInfo(@Req() req: any) {
+    const userId = req.user['userId'];
+    return await this.userService.getInfo(userId);
   }
 }

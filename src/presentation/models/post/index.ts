@@ -4,3 +4,5 @@ export * from './get-all-post-request.model';
 export * from './get-all-post-response.model';
 export * from './remove-post-response.model';
 export * from './get-detail-post-response.model';
+export * from './create-post-with-chat-gpt-request.model';
+export * from './create-post-with-chat-gpt-response.model';

@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CreatePostCommand, RemovePostCommand } from 'src/domain/commands';
 import { PostQuery } from 'src/domain/queries';
@@ -19,6 +20,8 @@ import {
   TopicUserRepository,
   UserRepository,
 } from 'src/infrastructure/database/repositories';
+import { GPTUtil } from 'src/infrastructure/utilities/gpt.util';
+import configuration from 'src/presentation/configurations/configuration';
 import { PostController } from './post.controller';
 import { PostService } from './post.service';
 
@@ -32,6 +35,9 @@ import { PostService } from './post.service';
       TopicUserEntity,
       SeriesPostEntity,
     ]),
+    ConfigModule.forRoot({
+      load: [configuration],
+    }),
   ],
   controllers: [PostController],
   providers: [
@@ -46,6 +52,7 @@ import { PostService } from './post.service';
     TopicPostRepository,
     TopicUserRepository,
     SeriesPostRepository,
+    GPTUtil,
   ],
   exports: [TypeOrmModule],
 })
