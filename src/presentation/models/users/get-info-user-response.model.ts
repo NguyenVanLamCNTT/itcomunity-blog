@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { type } from 'os';
 import { ResponseModel } from '../response.model';
 
 class InfoData {
@@ -27,7 +28,7 @@ class InfoData {
 }
 
 export class GetInfoUserResponseModel extends ResponseModel<InfoData> {
-  @ApiProperty()
+  @ApiProperty({ type: InfoData })
   data: InfoData;
   constructor(partial: Partial<GetInfoUserResponseModel>) {
     super();

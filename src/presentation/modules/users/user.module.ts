@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   RegisterUserCommand,
   UpdateConfirmEmailUserCommand,
+  UpdateInfoUserCommand,
 } from 'src/domain/commands';
 import { UserQuery } from 'src/domain/queries';
 import { UserDomainService } from 'src/domain/services';
@@ -21,6 +22,7 @@ import { UserService } from './user.service';
     UserService,
     RegisterUserCommand,
     UpdateConfirmEmailUserCommand,
+    UpdateInfoUserCommand,
   ],
   exports: [TypeOrmModule],
 })

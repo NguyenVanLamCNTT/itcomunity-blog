@@ -41,6 +41,8 @@ export class CreatePostCommand
     });
     const post = await this.postRepository.save(entity);
     await this.addPostToTopic(input.topics, post);
+    user.postsNumber = user.postsNumber + 1;
+    await this.userRepository.save(user);
 
     return new CreatePostResultModel({ success: true });
   }
