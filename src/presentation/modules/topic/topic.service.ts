@@ -1,8 +1,11 @@
 import { Injectable } from '@nestjs/common';
+import { CreateTopicInputModel } from 'src/domain/models';
 import { TopicDomainService } from 'src/domain/services';
 import {
   AddTopicToUserRequestModel,
   AddTopicToUserResponseMode,
+  CreateTopicRequestModel,
+  CreateTopicResponseModel,
   GetAllPostResponseModel,
   GetAllTopicRequestModel,
   GetAllTopicResponseModel,
@@ -46,6 +49,16 @@ export class TopicService {
     return new AddTopicToUserResponseMode({
       id: RequestCorrelation.getRequestId(),
       data: { success: result.success },
+    });
+  }
+
+  async create(request: CreateTopicRequestModel) {
+    const result = await this.topicDomainService.create(
+      new CreateTopicInputModel({ name: request.name, image: request.image }),
+    );
+    return new CreateTopicResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: true },
     });
   }
 }

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AddUserToTopicCommand } from 'src/domain/commands';
+import { AddUserToTopicCommand, CreateTopicCommand } from 'src/domain/commands';
 import { TopicQuery } from 'src/domain/queries';
 import { TopicDomainService } from 'src/domain/services';
 import {
@@ -29,6 +29,7 @@ import { TopicService } from './topic.service';
     AddUserToTopicCommand,
     TopicUserRepository,
     UserRepository,
+    CreateTopicCommand,
   ],
   exports: [],
 })

@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   RegisterUserCommand,
   UpdateConfirmEmailUserCommand,
+  UpdateInfoUserCommand,
 } from 'src/domain/commands';
 import { UserQuery } from 'src/domain/queries';
 import { UserDomainService } from 'src/domain/services';
@@ -87,6 +88,7 @@ import { JwtStrategy } from './auth.strategy';
     JwtUtil,
     RequestCorrelation,
     JwtStrategy,
+    UpdateInfoUserCommand,
   ],
   exports: [TypeOrmModule],
 })

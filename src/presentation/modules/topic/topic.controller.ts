@@ -12,6 +12,8 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   AddTopicToUserRequestModel,
   AddTopicToUserResponseMode,
+  CreateTopicRequestModel,
+  CreateTopicResponseModel,
   GetAllTopicRequestModel,
   GetAllTopicResponseModel,
 } from 'src/presentation/models';
@@ -49,5 +51,17 @@ export class TopicController {
   ) {
     const userId = req.user['userId'];
     return await this.topicService.addUserToTopic(body, userId);
+  }
+
+  @Post()
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: CreateTopicResponseModel,
+    isArray: false,
+  })
+  async create(@Body() body: CreateTopicRequestModel) {
+    return await this.topicService.create(body);
   }
 }

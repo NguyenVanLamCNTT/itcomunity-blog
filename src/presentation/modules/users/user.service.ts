@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { UpdateInfoUserInputModel } from 'src/domain/models';
 import { UserDomainService } from 'src/domain/services';
 import { GetInfoUserResponseModel } from 'src/presentation/models';
+import { UpdateInfoUserRequestModel } from 'src/presentation/models/users/update-info-user-request.model';
+import { UpdateInfoUserResponseModel } from 'src/presentation/models/users/update-info-user-response.model';
 import { RequestCorrelation } from 'src/utility';
 
 @Injectable({})
@@ -28,6 +31,20 @@ export class UserService {
         postsNumber: user.postsNumber,
         username: user.username,
       },
+    });
+  }
+
+  async updateInfoUser(request: UpdateInfoUserRequestModel, userId: number) {
+    const result = await this.userDomainService.update(
+      new UpdateInfoUserInputModel({
+        id: userId,
+        ...request,
+      }),
+    );
+
+    return new UpdateInfoUserResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: result.success },
     });
   }
 }
