@@ -9,4 +9,8 @@ export class UpdateInfoUserRequestModel {
   age: number;
   @ApiProperty()
   gender: string;
+  @ApiProperty()
+  avatar: string;
+  @ApiProperty()
+  about: string;
 }
