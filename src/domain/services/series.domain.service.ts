@@ -22,4 +22,8 @@ export class SeriesDomainService {
   async getId(id: number) {
     return await this.seriesQuery.getById(id);
   }
+
+  async getByUser(userId: number, page: number, perPage: number, sort: string) {
+    return await this.seriesQuery.getByUser(userId, page, perPage, sort);
+  }
 }

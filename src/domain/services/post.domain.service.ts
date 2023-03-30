@@ -58,4 +58,13 @@ export class PostDomainService {
   ) {
     return await this.postQuery.findAllBySeries(seriesId, page, perPage, sort);
   }
+
+  async findByAuthor(
+    userId: number,
+    page: number,
+    perPage: number,
+    sort: string,
+  ) {
+    return this.postQuery.findByAuthor(userId, page, perPage, sort);
+  }
 }
