@@ -100,4 +100,31 @@ export class PostRepository {
       },
     );
   }
+
+  async findByAuthor(
+    userId: number,
+    page: number,
+    perPage: number,
+    sort: string,
+  ) {
+    const sortBy = sort ? sort.split(',')[0] : 'created';
+    const sortDir = sort
+      ? sort.split(',')[1] === 'asc'
+        ? 'ASC'
+        : 'DESC'
+      : 'DESC';
+
+    return await paginate<PostEntity>(
+      this.postRepository,
+      {
+        page: page,
+        limit: perPage,
+      },
+      {
+        where: { author: { id: userId }, isDeleted: false },
+        relations: ['author'],
+        order: { [sortBy]: sortDir.toLocaleUpperCase() },
+      },
+    );
+  }
 }

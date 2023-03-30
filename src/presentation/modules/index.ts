@@ -3,3 +3,4 @@ export * from './auth';
 export * from './post';
 export * from './dms';
 export * from './topic';
+export * from './comment';

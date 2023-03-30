@@ -12,4 +12,8 @@ export class SeriesQuery {
   async getById(id: number) {
     return await this.seriesRepository.findById(id);
   }
+
+  async getByUser(userId: number, page: number, perPage: number, sort: string) {
+    return await this.seriesRepository.findByUser(userId, page, perPage, sort);
+  }
 }

@@ -119,4 +119,17 @@ export class PostController {
   async createPostWithChatGPT(@Body() body: CreatePostWithChatGPTRequestModel) {
     return await this.postService.createPostWithChatGPT(body);
   }
+
+  @Get('me/author')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: GetAllPostResponseModel,
+    isArray: false,
+  })
+  async getByUser(@Query() pageable: GetAllPostRequestModel, @Req() req: any) {
+    const userId = req.user['userId'];
+    return await this.postService.getByUser(userId, pageable);
+  }
 }

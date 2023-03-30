@@ -70,4 +70,28 @@ export class SeriesService {
       },
     });
   }
+
+  async getByUser(userId: number, pageable: GetAllSeriesRequestModel) {
+    const data = await this.seriesDomainService.getByUser(
+      userId,
+      pageable.page,
+      pageable.perPage,
+      pageable.sort,
+    );
+
+    return new GetAllSeriesResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new SeriesResponse({
+            ...item,
+          });
+        }),
+      },
+    });
+  }
 }

@@ -61,4 +61,17 @@ export class SeriesController {
   async getById(@Param('id') id: number) {
     return this.service.getById(id);
   }
+
+  @Get('me/author')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: GetAllSeriesResponseModel,
+    isArray: false,
+  })
+  async getByUser(@Req() req: any, @Query() query: GetAllSeriesRequestModel) {
+    const userId = req.user['userId'];
+    return this.service.getByUser(userId, query);
+  }
 }

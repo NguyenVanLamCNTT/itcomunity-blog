@@ -6,3 +6,6 @@ export * from './topic-post.entity';
 export * from './topic-user.entity';
 export * from './series.entity';
 export * from './series-post.entity';
+export * from './answer.entity';
+export * from './comment.entity';
+export * from './question.entity';

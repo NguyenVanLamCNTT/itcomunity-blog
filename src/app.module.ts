@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import configuration from './presentation/configurations/configuration';
 import {
   AuthModule,
+  CommentModule,
   DMSModule,
   PostModule,
   TopicModule,
@@ -44,6 +45,7 @@ import { SeriesModule } from './presentation/modules/series';
     DMSModule,
     TopicModule,
     SeriesModule,
+    CommentModule,
   ],
   controllers: [],
   providers: [],
