@@ -31,6 +31,7 @@ export class PostDomainService {
       pageable.page,
       pageable.perPage,
       pageable.sort,
+      pageable.username,
     );
   }
 
@@ -66,14 +67,5 @@ export class PostDomainService {
     sort: string,
   ) {
     return this.postQuery.findByAuthor(userId, page, perPage, sort);
-  }
-
-  async findByUsername(
-    page: number,
-    perPage: number,
-    sort: string,
-    username: string,
-  ) {
-    return await this.postQuery.findByUsername(page, perPage, sort, username);
   }
 }

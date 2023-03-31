@@ -133,15 +133,4 @@ export class PostController {
     const userId = req.user['userId'];
     return await this.postService.getByUser(userId, pageable);
   }
-
-  @Get('/author/username')
-  @HttpCode(200)
-  @ApiResponse({
-    status: 200,
-    type: GetAllPostResponseModel,
-    isArray: false,
-  })
-  async getAllByUsername(@Query() query: GetPostByUsernameRequestModel) {
-    return this.postService.getByUsername(query);
-  }
 }

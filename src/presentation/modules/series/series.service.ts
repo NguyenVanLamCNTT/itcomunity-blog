@@ -32,6 +32,7 @@ export class SeriesService {
       pageable.page,
       pageable.perPage,
       pageable.sort,
+      pageable.username,
     );
 
     return new GetAllSeriesResponseModel({

@@ -43,7 +43,7 @@ export class PostRepository {
         limit: perPage,
       },
       {
-        where: { isDeleted: false, ...query },
+        where: { isDeleted: false, ...query, status: 'PUBLISH' },
         relations: ['author'],
         order: { [sortBy]: sortDir.toLocaleUpperCase() },
       },
