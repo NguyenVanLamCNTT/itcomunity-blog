@@ -10,6 +10,7 @@ import {
   GetAllPostRequestModel,
   GetAllPostResponseModel,
   GetDetailPostResponseModel,
+  GetPostByUsernameRequestModel,
   PostResponse,
   RemovePostResponseModel,
 } from 'src/presentation/models';
@@ -161,6 +162,36 @@ export class PostService {
       pageable.page,
       pageable.perPage,
       pageable.sort,
+    );
+
+    return new GetAllPostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new PostResponse({
+            ...item,
+            author: {
+              id: item.author.id,
+              avatar: item.author.avatar,
+              fullName: item.author.fullName,
+              username: item.author.username,
+            },
+          });
+        }),
+      },
+    });
+  }
+
+  async getByUsername(query: GetPostByUsernameRequestModel) {
+    const data = await this.postDomainService.findByUsername(
+      query.page,
+      query.perPage,
+      query.sort,
+      query.username,
     );
 
     return new GetAllPostResponseModel({

@@ -19,6 +19,7 @@ import {
   GetAllPostRequestModel,
   GetAllPostResponseModel,
   GetDetailPostResponseModel,
+  GetPostByUsernameRequestModel,
 } from 'src/presentation/models';
 import { RemovePostResponseModel } from 'src/presentation/models/post/remove-post-response.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
@@ -131,5 +132,16 @@ export class PostController {
   async getByUser(@Query() pageable: GetAllPostRequestModel, @Req() req: any) {
     const userId = req.user['userId'];
     return await this.postService.getByUser(userId, pageable);
+  }
+
+  @Get('/author/username')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllPostResponseModel,
+    isArray: false,
+  })
+  async getAllByUsername(@Query() query: GetPostByUsernameRequestModel) {
+    return this.postService.getByUsername(query);
   }
 }

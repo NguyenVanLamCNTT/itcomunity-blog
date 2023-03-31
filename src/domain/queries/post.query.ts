@@ -65,4 +65,13 @@ export class PostQuery {
   ) {
     return this.postRepository.findByAuthor(userId, page, perPage, sort);
   }
+
+  async findByUsername(
+    page: number,
+    perPage: number,
+    sort: string,
+    username: string,
+  ) {
+    return await this.postRepository.findAll(page, perPage, sort, username);
+  }
 }
