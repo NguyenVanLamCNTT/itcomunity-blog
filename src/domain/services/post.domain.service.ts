@@ -31,6 +31,7 @@ export class PostDomainService {
       pageable.page,
       pageable.perPage,
       pageable.sort,
+      pageable.username,
     );
   }
 

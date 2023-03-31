@@ -10,6 +10,7 @@ import {
   GetAllPostRequestModel,
   GetAllPostResponseModel,
   GetDetailPostResponseModel,
+  GetPostByUsernameRequestModel,
   PostResponse,
   RemovePostResponseModel,
 } from 'src/presentation/models';

@@ -17,7 +17,18 @@ export class PostRepository {
     return await this.postRepository.findOne({ where: { id } });
   }
 
-  async findAll(page: number, perPage: number, sort: string) {
+  async findAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    username?: string,
+  ) {
+    let query = {};
+    if (username) {
+      query = {
+        author: { username },
+      };
+    }
     const sortBy = sort ? sort.split(',')[0] : 'created';
     const sortDir = sort
       ? sort.split(',')[1] === 'asc'
@@ -32,7 +43,7 @@ export class PostRepository {
         limit: perPage,
       },
       {
-        where: { isDeleted: false },
+        where: { isDeleted: false, ...query, status: 'PUBLISH' },
         relations: ['author'],
         order: { [sortBy]: sortDir.toLocaleUpperCase() },
       },

@@ -19,6 +19,7 @@ import {
   GetAllPostRequestModel,
   GetAllPostResponseModel,
   GetDetailPostResponseModel,
+  GetPostByUsernameRequestModel,
 } from 'src/presentation/models';
 import { RemovePostResponseModel } from 'src/presentation/models/post/remove-post-response.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
