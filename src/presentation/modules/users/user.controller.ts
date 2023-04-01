@@ -5,13 +5,17 @@ import {
   HttpCode,
   HttpStatus,
   Put,
+  Query,
   Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { Request, Response } from 'express';
-import { GetInfoUserResponseModel } from 'src/presentation/models';
+import {
+  GetInfoUserResponseModel,
+  GetUserRequestModel,
+} from 'src/presentation/models';
 import { UpdateInfoUserRequestModel } from 'src/presentation/models/users/update-info-user-request.model';
 import { UpdateInfoUserResponseModel } from 'src/presentation/models/users/update-info-user-response.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
@@ -59,5 +63,16 @@ export class UserController {
   async updateinfo(@Body() body: UpdateInfoUserRequestModel, @Req() req: any) {
     const userId = req.user['userId'];
     return await this.userService.updateInfoUser(body, userId);
+  }
+
+  @Get('user')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetInfoUserResponseModel,
+    isArray: false,
+  })
+  async getUser(@Query() query: GetUserRequestModel) {
+    return await this.userService.getUser(query.username);
   }
 }
