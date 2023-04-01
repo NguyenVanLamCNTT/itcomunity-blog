@@ -28,11 +28,11 @@ export class UpdateViewPostCommand
       input.postId,
     );
     post.viewNumber = post.viewNumber + 1;
-    this.postRepository.save(post);
+    await this.postRepository.save(post);
     for (const item of seriesPost) {
       const series = item.series;
       series.viewNumber++;
-      this.seriesRepository.save(series);
+      await this.seriesRepository.save(series);
     }
 
     return new UpdateViewPostResultModel({ success: true });
