@@ -10,7 +10,7 @@ export class SeriesRepository {
   ) {}
 
   async save(series: SeriesEntity) {
-    return this.seriesRepository.save(series);
+    return await this.seriesRepository.save(series);
   }
 
   async findAll(
