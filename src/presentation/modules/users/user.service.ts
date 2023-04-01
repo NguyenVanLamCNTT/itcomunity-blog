@@ -47,4 +47,27 @@ export class UserService {
       data: { success: result.success },
     });
   }
+
+  async getUser(username: string) {
+    const user = await this.userDomainService.getUserByEmailOrUsername(
+      username,
+    );
+
+    return new GetInfoUserResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        id: user.id,
+        about: user.about,
+        age: user.age,
+        avatar: user.avatar,
+        email: user.email,
+        followersNumber: user.followersNumber,
+        fullName: user.fullName,
+        gender: user.gender,
+        likesNumber: user.likesNumber,
+        postsNumber: user.postsNumber,
+        username: user.username,
+      },
+    });
+  }
 }
