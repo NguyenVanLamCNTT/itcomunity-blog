@@ -4,6 +4,7 @@ import {
   AddNewSeriesCommand,
   CreatePostCommand,
   RemovePostCommand,
+  UpdateViewPostCommand,
 } from 'src/domain/commands';
 import { PostQuery } from 'src/domain/queries';
 import { SeriesQuery } from 'src/domain/queries/series.query';
@@ -59,6 +60,7 @@ import { SeriesService } from './series.service';
     SeriesDomainService,
     AddNewSeriesCommand,
     SeriesPostRepository,
+    UpdateViewPostCommand,
   ],
   exports: [TypeOrmModule],
 })

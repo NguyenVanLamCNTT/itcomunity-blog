@@ -13,6 +13,8 @@ import {
   GetPostByUsernameRequestModel,
   PostResponse,
   RemovePostResponseModel,
+  UpdateViewPostRequestModel,
+  UpdateViewPostResponseModel,
 } from 'src/presentation/models';
 import { RequestCorrelation } from 'src/utility';
 
@@ -183,6 +185,15 @@ export class PostService {
           });
         }),
       },
+    });
+  }
+
+  async updateViewPost(body: UpdateViewPostRequestModel) {
+    const data = await this.postDomainService.updateViewPost(body.postId);
+
+    return new UpdateViewPostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: data },
     });
   }
 }

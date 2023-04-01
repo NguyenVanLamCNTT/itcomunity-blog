@@ -2,8 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate/dist/pagination';
 import { PostEntity } from 'src/infrastructure/database/entities';
 import { GetAllPostRequestModel } from 'src/presentation/models';
-import { CreatePostCommand, RemovePostCommand } from '../commands';
-import { CreatePostInputModel, RemovePostInputModel } from '../models';
+import {
+  CreatePostCommand,
+  RemovePostCommand,
+  UpdateViewPostCommand,
+} from '../commands';
+import {
+  CreatePostInputModel,
+  RemovePostInputModel,
+  UpdateViewPostInputModel,
+} from '../models';
 import { PostQuery } from '../queries';
 
 @Injectable()
@@ -11,6 +19,7 @@ export class PostDomainService {
   constructor(
     private createPostCommand: CreatePostCommand,
     private removePostCommand: RemovePostCommand,
+    private updateViewCommand: UpdateViewPostCommand,
     private postQuery: PostQuery,
   ) {}
 
@@ -67,5 +76,13 @@ export class PostDomainService {
     sort: string,
   ) {
     return this.postQuery.findByAuthor(userId, page, perPage, sort);
+  }
+
+  async updateViewPost(postId: number) {
+    const result = await this.updateViewCommand.execute(
+      new UpdateViewPostInputModel({ postId }),
+    );
+
+    return result.success;
   }
 }

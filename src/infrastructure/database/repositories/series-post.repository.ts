@@ -15,4 +15,8 @@ export class SeriesPostRepository {
   async findBySeriesId(seriesId: number) {
     return await this.repository.find({ where: { series: { id: seriesId } } });
   }
+
+  async findByPostId(postId: number) {
+    return await this.repository.find({ where: { post: { id: postId } } });
+  }
 }
