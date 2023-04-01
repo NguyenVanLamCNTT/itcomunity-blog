@@ -9,6 +9,7 @@ import {
   Req,
   UseGuards,
   Query,
+  Patch,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
@@ -20,6 +21,8 @@ import {
   GetAllPostResponseModel,
   GetDetailPostResponseModel,
   GetPostByUsernameRequestModel,
+  UpdateViewPostRequestModel,
+  UpdateViewPostResponseModel,
 } from 'src/presentation/models';
 import { RemovePostResponseModel } from 'src/presentation/models/post/remove-post-response.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
@@ -132,5 +135,16 @@ export class PostController {
   async getByUser(@Query() pageable: GetAllPostRequestModel, @Req() req: any) {
     const userId = req.user['userId'];
     return await this.postService.getByUser(userId, pageable);
+  }
+
+  @Patch('view')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: UpdateViewPostResponseModel,
+    isArray: false,
+  })
+  async updateView(@Body() body: UpdateViewPostRequestModel) {
+    return await this.postService.updateViewPost(body);
   }
 }
