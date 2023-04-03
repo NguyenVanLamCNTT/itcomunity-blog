@@ -30,6 +30,7 @@ export class CommentController {
   })
   async create(@Req() req: any, @Body() body: AddCommentRequestModel) {
     const userId = req.user['userId'];
+
     return await this.service.create(body, userId);
   }
 }

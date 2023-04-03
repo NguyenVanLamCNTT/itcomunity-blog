@@ -5,26 +5,26 @@ import { PostEntity } from './post.entity';
 import { SeriesEntity } from './series.entity';
 import { UserEntity } from './user.entity';
 
-@Entity({ name: 'comment' })
+@Entity({ name: 'comments' })
 export class CommentEntity extends BaseEntity {
   @Column({ name: 'content' })
   content: string;
   @Column({ name: 'report_number' })
   reportNumber: number;
 
-  @ManyToOne(() => UserEntity, { eager: true })
+  @ManyToOne(() => UserEntity, { eager: true, nullable: true })
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   author: UserEntity;
 
-  @ManyToOne(() => PostEntity, { eager: true })
+  @ManyToOne(() => PostEntity, { eager: true, nullable: true })
   @JoinColumn({ name: 'post_id', referencedColumnName: 'id' })
   post: PostEntity;
 
-  @ManyToOne(() => SeriesEntity, { eager: true })
+  @ManyToOne(() => SeriesEntity, { eager: true, nullable: true })
   @JoinColumn({ name: 'series_id', referencedColumnName: 'id' })
   series: SeriesEntity;
 
-  @ManyToOne(() => AnswerEntity, { eager: true })
+  @ManyToOne(() => AnswerEntity, { eager: true, nullable: true })
   @JoinColumn({ name: 'answer_id', referencedColumnName: 'id' })
   answer: AnswerEntity;
 
