@@ -20,30 +20,35 @@ export class AddCommentCommand
     private userRepository: UserRepository,
   ) {}
   async execute(input: AddCommentInputModel): Promise<AddCommentResultModel> {
-    const comment = !input.parentCommentId
-      ? null
-      : await this.commentRepository.findById(input.parentCommentId);
+    try {
+      console.log(input.parentCommentId);
+      const comment = !input.parentCommentId
+        ? null
+        : await this.commentRepository.findById(input.parentCommentId);
 
-    const post = !input.postId
-      ? null
-      : await this.postRepository.findById(input.postId);
-    const series = !input.seriesId
-      ? null
-      : await this.seriesRepository.findById(input.seriesId);
-    const user = !input.userId
-      ? null
-      : await this.userRepository.findById(input.userId);
-    const entity = new CommentEntity({
-      author: user,
-      content: input.content,
-      post: post,
-      parentComment: comment,
-      series: series,
-      reportNumber: 0,
-    });
+      const post = !input.postId
+        ? null
+        : await this.postRepository.findById(input.postId);
+      const series = !input.seriesId
+        ? null
+        : await this.seriesRepository.findById(input.seriesId);
+      const user = !input.userId
+        ? null
+        : await this.userRepository.findById(input.userId);
+      const entity = new CommentEntity({
+        author: user,
+        content: input.content,
+        post: post,
+        parentComment: comment,
+        series: series,
+        reportNumber: 0,
+      });
 
-    await this.commentRepository.save(entity);
+      await this.commentRepository.save(entity);
 
-    return new AddCommentResultModel({ success: true });
+      return new AddCommentResultModel({ success: true });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }

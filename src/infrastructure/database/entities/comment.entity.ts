@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { AnswerEntity } from './answer.entity';
 import { BaseEntity } from './base.entity';
 import { PostEntity } from './post.entity';
@@ -16,21 +16,24 @@ export class CommentEntity extends BaseEntity {
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
   author: UserEntity;
 
-  @ManyToOne(() => PostEntity, { eager: true, nullable: true })
+  @ManyToOne(() => PostEntity, { nullable: true })
   @JoinColumn({ name: 'post_id', referencedColumnName: 'id' })
   post: PostEntity;
 
-  @ManyToOne(() => SeriesEntity, { eager: true, nullable: true })
+  @ManyToOne(() => SeriesEntity, { nullable: true })
   @JoinColumn({ name: 'series_id', referencedColumnName: 'id' })
   series: SeriesEntity;
 
-  @ManyToOne(() => AnswerEntity, { eager: true, nullable: true })
+  @ManyToOne(() => AnswerEntity, { nullable: true })
   @JoinColumn({ name: 'answer_id', referencedColumnName: 'id' })
   answer: AnswerEntity;
 
-  @ManyToOne(() => CommentEntity, { eager: true })
+  @ManyToOne(() => CommentEntity)
   @JoinColumn({ name: 'parent_comment_id', referencedColumnName: 'id' })
   parentComment: CommentEntity;
+
+  @OneToMany(() => CommentEntity, (comment) => comment.parentComment)
+  childComment: CommentEntity[];
 
   constructor(partial: Partial<CommentEntity>) {
     super();

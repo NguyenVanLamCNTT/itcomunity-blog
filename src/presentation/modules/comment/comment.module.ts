@@ -16,6 +16,7 @@ import {
 } from 'src/infrastructure/database/repositories';
 import { CommentController } from './comment.controller';
 import { CommentService } from './comment.service';
+import { CommentQuery } from 'src/domain/queries';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { CommentService } from './comment.service';
     PostRepository,
     SeriesRepository,
     CommentRepository,
+    CommentQuery,
   ],
   exports: [TypeOrmModule],
 })
