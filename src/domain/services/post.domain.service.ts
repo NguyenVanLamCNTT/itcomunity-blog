@@ -41,6 +41,7 @@ export class PostDomainService {
       pageable.perPage,
       pageable.sort,
       pageable.username,
+      pageable.topicId,
     );
   }
 

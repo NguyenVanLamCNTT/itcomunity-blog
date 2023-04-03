@@ -15,8 +15,20 @@ export class PostQuery {
     private seriesPostRepository: SeriesPostRepository,
   ) {}
 
-  async findAll(page: number, perPage: number, sort: string, username: string) {
-    return await this.postRepository.findAll(page, perPage, sort, username);
+  async findAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    username: string,
+    topicId: number,
+  ) {
+    return await this.postRepository.findAll(
+      page,
+      perPage,
+      sort,
+      username,
+      topicId,
+    );
   }
 
   async findById(id: number) {

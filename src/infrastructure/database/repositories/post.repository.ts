@@ -22,6 +22,7 @@ export class PostRepository {
     perPage: number,
     sort: string,
     username?: string,
+    topicId?: number,
   ) {
     let query = {};
     if (username) {
@@ -43,8 +44,13 @@ export class PostRepository {
         limit: perPage,
       },
       {
-        where: { isDeleted: false, ...query, status: 'PUBLISH' },
-        relations: ['author'],
+        where: {
+          isDeleted: false,
+          ...query,
+          status: 'PUBLISH',
+          topicPost: { topic: { id: topicId } },
+        },
+        relations: ['author', 'topicPost'],
         order: { [sortBy]: sortDir.toLocaleUpperCase() },
       },
     );
@@ -56,17 +62,19 @@ export class PostRepository {
     sort: string,
     postIds: number[],
   ) {
+    const postIdsString = postIds.join(',');
     if (sort) {
       const filed = sort.split(',')[0];
       const direction = sort.split(',')[1] === 'asc' ? 'ASC' : 'DESC';
       const query = this.postRepository
         .createQueryBuilder('posts')
         .where('posts.isDeleted = :status', { status: false })
-        .where('posts.id In (:postIds)', { postIds })
+        .where(`posts.id IN (${postIdsString})`)
         .innerJoin('posts.author', 'user')
         .addSelect('user.id')
         .addSelect('user.fullName')
         .addSelect('user.username')
+        .addSelect('user.avatar')
         .orderBy(`posts.${filed}`, direction);
 
       return await paginate<PostEntity>(query, { page, limit: perPage });
@@ -75,11 +83,12 @@ export class PostRepository {
     const query = this.postRepository
       .createQueryBuilder('posts')
       .where('posts.isDeleted = :status', { status: false })
-      // .where('posts.id IN (:postIds)', {postIds})
+      .where(`posts.id IN (${postIdsString})`)
       .innerJoin('posts.author', 'user')
       .addSelect('user.id')
       .addSelect('user.fullName')
       .addSelect('user.username')
+      .addSelect('user.avatar')
       .orderBy(`posts.created`, 'DESC');
 
     return await paginate<PostEntity>(query, { page, limit: perPage });
