@@ -1,6 +1,7 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { UserEntity } from './user.entity';
+import { TopicPostEntity } from './topic-post.entity';
 
 @Entity({ name: 'posts' })
 export class PostEntity extends BaseEntity {
@@ -39,4 +40,7 @@ export class PostEntity extends BaseEntity {
   @ManyToOne(() => UserEntity, (user) => user.posts, { eager: true })
   @JoinColumn({ name: 'author_user_id', referencedColumnName: 'id' })
   author: UserEntity;
+
+  @OneToMany(() => TopicPostEntity, (topicPost) => topicPost.post)
+  topicPost: TopicPostEntity[];
 }
