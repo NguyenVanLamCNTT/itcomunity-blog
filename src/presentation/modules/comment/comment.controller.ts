@@ -38,31 +38,14 @@ export class CommentController {
     return await this.service.create(body, userId);
   }
 
-  @Get('post/:postId')
+  @Get()
   @HttpCode(200)
   @ApiResponse({
     status: 200,
     type: AddCommentResponseModel,
     isArray: false,
   })
-  async getByPostId(
-    @Param('postId') postId: number,
-    @Query() query: GetAllCommentRequestModel,
-  ) {
-    return await this.service.getByPostId(postId, query);
-  }
-
-  @Get('series/:seriesId')
-  @HttpCode(200)
-  @ApiResponse({
-    status: 200,
-    type: AddCommentResponseModel,
-    isArray: false,
-  })
-  async getBySeriesId(
-    @Param('seriesId') seriesId: number,
-    @Query() query: GetAllCommentRequestModel,
-  ) {
-    return await this.service.getBySeriesId(seriesId, query);
+  async getByPostId(@Query() query: GetAllCommentRequestModel) {
+    return await this.service.getAll(query);
   }
 }

@@ -69,7 +69,7 @@ export class PostRepository {
       const query = this.postRepository
         .createQueryBuilder('posts')
         .where('posts.isDeleted = :status', { status: false })
-        .where(`posts.id IN (${postIdsString})`)
+        .andWhere(`posts.id IN (${postIdsString})`)
         .innerJoin('posts.author', 'user')
         .addSelect('user.id')
         .addSelect('user.fullName')
@@ -83,7 +83,7 @@ export class PostRepository {
     const query = this.postRepository
       .createQueryBuilder('posts')
       .where('posts.isDeleted = :status', { status: false })
-      .where(`posts.id IN (${postIdsString})`)
+      .andWhere(`posts.id IN (${postIdsString})`)
       .innerJoin('posts.author', 'user')
       .addSelect('user.id')
       .addSelect('user.fullName')

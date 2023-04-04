@@ -14,11 +14,12 @@ export class CommentDomainService {
     return await this.addCommentCommand.execute(model);
   }
 
-  async getByPostId(postId: number, page: number, perPage: number) {
-    return await this.commentQuery.findByPostId(postId, page, perPage);
-  }
-
-  async getBySeriesId(seriesId: number, page: number, perPage: number) {
-    return await this.commentQuery.findBySeriesId(seriesId, page, perPage);
+  async getAll(
+    page: number,
+    perPage: number,
+    postId: number,
+    seriesId: number,
+  ) {
+    return await this.commentQuery.findAll(page, perPage, postId, seriesId);
   }
 }

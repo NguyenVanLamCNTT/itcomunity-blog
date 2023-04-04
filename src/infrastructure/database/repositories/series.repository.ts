@@ -22,7 +22,7 @@ export class SeriesRepository {
     const query = this.seriesRepository
       .createQueryBuilder('series')
       .where('series.isDeleted = :status', { status: false })
-      .where('series.status = :status', { status: 'PUBLISH' })
+      .andWhere('series.status = :status', { status: 'PUBLISH' })
       .innerJoin('series.author', 'user')
       .addSelect('user.id')
       .addSelect('user.fullName')
@@ -31,7 +31,7 @@ export class SeriesRepository {
       .orderBy(`series.created`, 'DESC');
 
     if (username) {
-      query.where('user.username = :username', { username });
+      query.andWhere('user.username = :username', { username });
     }
     if (sort) {
       const filed = sort.split(',')[0];
@@ -59,7 +59,7 @@ export class SeriesRepository {
       const query = this.seriesRepository
         .createQueryBuilder('series')
         .where('series.isDeleted = :status', { status: false })
-        .where('series.author.id = :userId', { userId: userId })
+        .andWhere('series.author.id = :userId', { userId: userId })
         .innerJoin('series.author', 'user')
         .addSelect('user.id')
         .addSelect('user.fullName')
@@ -73,7 +73,7 @@ export class SeriesRepository {
     const query = this.seriesRepository
       .createQueryBuilder('series')
       .where('series.isDeleted = :status', { status: false })
-      .where('series.author.id = :userId', { userId: userId })
+      .andWhere('series.author.id = :userId', { userId: userId })
       .innerJoin('series.author', 'user')
       .addSelect('user.id')
       .addSelect('user.fullName')
