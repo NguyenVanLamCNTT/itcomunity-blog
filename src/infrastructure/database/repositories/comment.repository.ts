@@ -43,7 +43,6 @@ export class CommentRepository {
           ...option,
           parentComment: null,
           isDeleted: false,
-          childComment: { isDeleted: false },
         },
         relations: ['childComment'],
         order: { created: 'DESC' },
