@@ -16,29 +16,34 @@ export class CommentRepository {
   async findById(id: number) {
     return await this.commentRepository.findOne({ where: { id } });
   }
-  async findByPostId(postId: number, page: number, perPage: number) {
+  async findAll(
+    page: number,
+    perPage: number,
+    postId: number,
+    seriesId: number,
+  ) {
+    let option = {};
+    if (postId) {
+      option = {
+        ...option,
+        post: { id: postId },
+      };
+    }
+    if (seriesId) {
+      option = {
+        ...option,
+        series: { id: seriesId },
+      };
+    }
     return await paginate<CommentEntity>(
       this.commentRepository,
       { page, limit: perPage },
       {
         where: {
-          post: { id: postId },
+          ...option,
           parentComment: null,
-        },
-        relations: ['childComment'],
-        order: { created: 'DESC' },
-      },
-    );
-  }
-
-  async findBySeriesId(seriesId: number, page: number, perPage: number) {
-    return await paginate<CommentEntity>(
-      this.commentRepository,
-      { page, limit: perPage },
-      {
-        where: {
-          series: { id: seriesId },
-          parentComment: null,
+          isDeleted: false,
+          childComment: { isDeleted: false },
         },
         relations: ['childComment'],
         order: { created: 'DESC' },

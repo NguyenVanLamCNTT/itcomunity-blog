@@ -5,11 +5,17 @@ import { CommentRepository } from 'src/infrastructure/database/repositories';
 export class CommentQuery {
   constructor(private commentRepository: CommentRepository) {}
 
-  async findByPostId(postId: number, page: number, perPage: number) {
-    return await this.commentRepository.findByPostId(postId, page, perPage);
-  }
-
-  async findBySeriesId(seriesId: number, page: number, perPage: number) {
-    return await this.commentRepository.findBySeriesId(seriesId, page, perPage);
+  async findAll(
+    page: number,
+    perPage: number,
+    postId: number,
+    seriesId: number,
+  ) {
+    return await this.commentRepository.findAll(
+      page,
+      perPage,
+      postId,
+      seriesId,
+    );
   }
 }
