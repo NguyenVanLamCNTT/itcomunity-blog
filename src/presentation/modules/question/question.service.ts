@@ -4,6 +4,10 @@ import { QuestionDomainService } from 'src/domain/services/question.domain.servi
 import {
   CreateQuestionRequestModel,
   CreateQuestionResponseModel,
+  GetAllCommentResponseModel,
+  GetAllQuestionRequestModel,
+  GetAllQuestionResponseModel,
+  QuestionResponseModel,
 } from 'src/presentation/models';
 import { RequestCorrelation } from 'src/utility';
 
@@ -22,6 +26,36 @@ export class QuestionService {
     return new CreateQuestionResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: { success: true },
+    });
+  }
+
+  async getAll(request: GetAllQuestionRequestModel) {
+    const data = await this.questionDomainService.getAll(
+      request.page,
+      request.perPage,
+      request.sort,
+      request.username,
+    );
+
+    return new GetAllQuestionResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new QuestionResponseModel({
+            ...item,
+            author: {
+              id: item.author.id,
+              avatar: item.author.avatar,
+              fullname: item.author.fullName,
+              username: item.author.username,
+            },
+          });
+        }),
+      },
     });
   }
 }

@@ -24,6 +24,10 @@ export class GetAllCommentModel {
   author: GetAllCommentAuthor;
   @ApiProperty({ type: GetAllCommentModel, isArray: true })
   childComment?: GetAllCommentModel[];
+  @ApiProperty()
+  created: Date;
+  @ApiProperty()
+  modified: Date;
 
   constructor(partial: Partial<GetAllCommentModel>) {
     Object.assign(this, partial);
