@@ -6,3 +6,4 @@ export * from './topic.repository';
 export * from './series.repository';
 export * from './series-post.repository';
 export * from './comment.repository';
+export * from './question.repository';
