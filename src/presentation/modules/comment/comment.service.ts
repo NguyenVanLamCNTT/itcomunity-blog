@@ -46,6 +46,8 @@ export class CommentService {
               id: item.id,
               content: item.content,
               reportNumber: item.reportNumber,
+              modified: item.modified,
+              created: item.created,
               author: {
                 id: item.author.id,
                 avatar: item.author.avatar,
@@ -58,6 +60,8 @@ export class CommentService {
                     id: i.id,
                     content: i.content,
                     reportNumber: i.reportNumber,
+                    created: i.created,
+                    modified: item.modified,
                     author: {
                       id: i.author.id,
                       avatar: i.author.avatar,

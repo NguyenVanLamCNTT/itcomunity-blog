@@ -13,6 +13,7 @@ import {
   QuestionRepository,
   UserRepository,
 } from 'src/infrastructure/database/repositories';
+import { QuestionQuery } from 'src/domain/queries';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import {
     QuestionRepository,
     QuestionDomainService,
     UserRepository,
+    QuestionQuery,
   ],
   exports: [],
 })

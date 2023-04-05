@@ -1,0 +1,11 @@
+import { Injectable } from '@nestjs/common';
+import { QuestionRepository } from 'src/infrastructure/database/repositories';
+
+@Injectable()
+export class QuestionQuery {
+  constructor(private questionRepository: QuestionRepository) {}
+
+  async getAll(page: number, perPage: number, sort: string, username: string) {
+    return this.questionRepository.getAll(page, perPage, sort, username);
+  }
+}
