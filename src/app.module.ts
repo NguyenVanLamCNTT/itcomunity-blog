@@ -8,6 +8,7 @@ import {
   CommentModule,
   DMSModule,
   PostModule,
+  QuestionModule,
   TopicModule,
   UserModule,
 } from './presentation/modules';
@@ -46,6 +47,7 @@ import { SeriesModule } from './presentation/modules/series';
     TopicModule,
     SeriesModule,
     CommentModule,
+    QuestionModule,
   ],
   controllers: [],
   providers: [],

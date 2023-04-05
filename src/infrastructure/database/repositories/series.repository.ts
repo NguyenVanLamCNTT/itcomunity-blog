@@ -21,7 +21,7 @@ export class SeriesRepository {
   ) {
     const query = this.seriesRepository
       .createQueryBuilder('series')
-      .where('series.isDeleted = :status', { status: false })
+      .where('series.isDeleted = :delete', { delete: false })
       .andWhere('series.status = :status', { status: 'PUBLISH' })
       .innerJoin('series.author', 'user')
       .addSelect('user.id')

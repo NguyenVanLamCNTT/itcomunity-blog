@@ -4,3 +4,4 @@ export * from './post';
 export * from './dms';
 export * from './topic';
 export * from './comment';
+export * from './question';
