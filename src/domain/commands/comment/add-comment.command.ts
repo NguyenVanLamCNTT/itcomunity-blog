@@ -21,17 +21,22 @@ export class AddCommentCommand
   ) {}
   async execute(input: AddCommentInputModel): Promise<AddCommentResultModel> {
     try {
-      console.log(input.parentCommentId);
-      const comment = !input.parentCommentId
-        ? null
-        : await this.commentRepository.findById(input.parentCommentId);
-
-      const post = !input.postId
-        ? null
-        : await this.postRepository.findById(input.postId);
-      const series = !input.seriesId
-        ? null
-        : await this.seriesRepository.findById(input.seriesId);
+      let comment = null;
+      let post = null;
+      let series = null;
+      if (input.parentCommentId) {
+        comment = await this.commentRepository.findById(input.parentCommentId);
+      }
+      if (input.postId) {
+        post = await this.postRepository.findById(input.postId);
+        post.commentNumber = post.commentNumber + 1;
+        await this.postRepository.save(post);
+      }
+      if (input.seriesId) {
+        series = await this.seriesRepository.findById(input.seriesId);
+        series.commentNumber = series.commentNumber + 1;
+        await this.seriesRepository.save(series);
+      }
       const user = !input.userId
         ? null
         : await this.userRepository.findById(input.userId);
