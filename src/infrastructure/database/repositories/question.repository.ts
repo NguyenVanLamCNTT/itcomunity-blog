@@ -42,4 +42,8 @@ export class QuestionRepository {
       },
     );
   }
+
+  async findById(id: number) {
+    return await this.repository.findOne({ where: { id } });
+  }
 }

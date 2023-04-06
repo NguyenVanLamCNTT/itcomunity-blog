@@ -7,9 +7,13 @@ import {
 } from 'src/infrastructure/database/entities';
 import { QuestionController } from './question.controller';
 import { QuestionService } from './question.service';
-import { CreateQuestionCommand } from 'src/domain/commands';
+import {
+  CreateAnswerCommand,
+  CreateQuestionCommand,
+} from 'src/domain/commands';
 import { QuestionDomainService } from 'src/domain/services/question.domain.service';
 import {
+  AnswerRepository,
   QuestionRepository,
   UserRepository,
 } from 'src/infrastructure/database/repositories';
@@ -27,6 +31,8 @@ import { QuestionQuery } from 'src/domain/queries';
     QuestionDomainService,
     UserRepository,
     QuestionQuery,
+    AnswerRepository,
+    CreateAnswerCommand,
   ],
   exports: [],
 })

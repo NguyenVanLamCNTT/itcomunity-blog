@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CreateQuestionInputModel } from 'src/domain/models';
+import {
+  CreateAnswerInputModel,
+  CreateQuestionInputModel,
+} from 'src/domain/models';
 import { QuestionDomainService } from 'src/domain/services/question.domain.service';
 import {
+  CreateAnswerRequestModel,
   CreateQuestionRequestModel,
   CreateQuestionResponseModel,
   GetAllCommentResponseModel,
@@ -56,6 +60,20 @@ export class QuestionService {
           });
         }),
       },
+    });
+  }
+
+  async createAnswer(request: CreateAnswerRequestModel, userId: number) {
+    const result = await this.questionDomainService.createAnswer(
+      new CreateAnswerInputModel({
+        ...request,
+        userId,
+      }),
+    );
+
+    return new CreateQuestionResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: result },
     });
   }
 }

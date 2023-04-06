@@ -12,6 +12,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { QuestionService } from './question.service';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import {
+  CreateAnswerRequestModel,
   CreateQuestionRequestModel,
   CreateQuestionResponseModel,
   GetAllCommentResponseModel,
@@ -46,5 +47,18 @@ export class QuestionController {
   })
   async getAll(@Query() query: GetAllQuestionRequestModel) {
     return await this.service.getAll(query);
+  }
+
+  @Post('/answers')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: GetAllCommentResponseModel,
+    isArray: false,
+  })
+  async createAnswer(@Req() req: any, @Body() body: CreateAnswerRequestModel) {
+    const userId = req.user['userId'];
+    return this.service.createAnswer(body, userId);
   }
 }
