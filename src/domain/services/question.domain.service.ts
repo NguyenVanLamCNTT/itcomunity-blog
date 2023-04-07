@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAnswerCommand, CreateQuestionCommand } from '../commands';
 import { CreateAnswerInputModel, CreateQuestionInputModel } from '../models';
-import { QuestionQuery } from '../queries';
+import { AnswerQuery, QuestionQuery } from '../queries';
 
 @Injectable()
 export class QuestionDomainService {
@@ -9,6 +9,7 @@ export class QuestionDomainService {
     private createQuestionCommand: CreateQuestionCommand,
     private questionQuery: QuestionQuery,
     private createAnswerCommand: CreateAnswerCommand,
+    private answerQuery: AnswerQuery,
   ) {}
 
   async create(input: CreateQuestionInputModel) {
@@ -22,5 +23,18 @@ export class QuestionDomainService {
 
   async createAnswer(input: CreateAnswerInputModel) {
     return (await this.createAnswerCommand.execute(input)).success;
+  }
+
+  async getAllAnswer(
+    page: number,
+    perPage: number,
+    sort: string,
+    questionId: number,
+  ) {
+    return await this.answerQuery.findAll(page, perPage, sort, questionId);
+  }
+
+  async getQuestionById(id: number) {
+    return await this.questionQuery.getById(id);
   }
 }

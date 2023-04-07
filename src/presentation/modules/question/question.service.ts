@@ -5,9 +5,12 @@ import {
 } from 'src/domain/models';
 import { QuestionDomainService } from 'src/domain/services/question.domain.service';
 import {
+  AnswerResponseModel,
   CreateAnswerRequestModel,
   CreateQuestionRequestModel,
   CreateQuestionResponseModel,
+  GetAllAnswerRequestModel,
+  GetAllAnswerResponseModel,
   GetAllCommentResponseModel,
   GetAllQuestionRequestModel,
   GetAllQuestionResponseModel,
@@ -74,6 +77,49 @@ export class QuestionService {
     return new CreateQuestionResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: { success: result },
+    });
+  }
+
+  async findAllAnswer(questionId: number, request: GetAllAnswerRequestModel) {
+    const data = await this.questionDomainService.getAllAnswer(
+      request.page,
+      request.perPage,
+      request.sort,
+      questionId,
+    );
+
+    return new GetAllAnswerResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new AnswerResponseModel({
+            ...item,
+            author: {
+              id: item.author.id,
+              avatar: item.author.avatar,
+              fullname: item.author.fullName,
+              username: item.author.username,
+            },
+          });
+        }),
+      },
+    });
+  }
+
+  async getQuestionById(id: number) {
+    const data = await this.questionDomainService.getQuestionById(id);
+    return new QuestionResponseModel({
+      ...data,
+      author: {
+        id: data.author.id,
+        avatar: data.author.avatar,
+        fullname: data.author.fullName,
+        username: data.author.username,
+      },
     });
   }
 }

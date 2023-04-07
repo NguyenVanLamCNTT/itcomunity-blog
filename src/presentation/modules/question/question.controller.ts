@@ -3,18 +3,21 @@ import {
   Controller,
   Get,
   HttpCode,
+  Param,
   Post,
   Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { QuestionService } from './question.service';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import {
   CreateAnswerRequestModel,
   CreateQuestionRequestModel,
   CreateQuestionResponseModel,
+  GetAllAnswerRequestModel,
+  GetAllAnswerResponseModel,
   GetAllCommentResponseModel,
   GetAllQuestionRequestModel,
 } from 'src/presentation/models';
@@ -60,5 +63,32 @@ export class QuestionController {
   async createAnswer(@Req() req: any, @Body() body: CreateAnswerRequestModel) {
     const userId = req.user['userId'];
     return this.service.createAnswer(body, userId);
+  }
+
+  @Get(':id/answer')
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @ApiResponse({
+    status: 200,
+    type: GetAllAnswerResponseModel,
+    isArray: false,
+  })
+  async getAllAnswer(
+    @Query() query: GetAllAnswerRequestModel,
+    @Param('id') id: number,
+  ) {
+    return await this.service.findAllAnswer(id, query);
+  }
+
+  @Get(':id')
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @ApiResponse({
+    status: 200,
+    type: GetAllAnswerResponseModel,
+    isArray: false,
+  })
+  async getById(@Param('id') id: number) {
+    return await this.service.getQuestionById(id);
   }
 }
