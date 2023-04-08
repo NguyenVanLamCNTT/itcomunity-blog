@@ -8,4 +8,8 @@ export class QuestionQuery {
   async getAll(page: number, perPage: number, sort: string, username: string) {
     return this.questionRepository.getAll(page, perPage, sort, username);
   }
+
+  async getById(id: number) {
+    return await this.questionRepository.findById(id);
+  }
 }

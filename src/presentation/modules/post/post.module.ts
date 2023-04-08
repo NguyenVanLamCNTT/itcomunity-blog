@@ -4,6 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   CreatePostCommand,
   RemovePostCommand,
+  UpdatePostCommand,
+  UpdatePostFromSeriesCommand,
+  UpdateSeriesCommand,
   UpdateViewPostCommand,
 } from 'src/domain/commands';
 import { PostQuery } from 'src/domain/queries';
@@ -62,6 +65,9 @@ import { PostService } from './post.service';
     GPTUtil,
     UpdateViewPostCommand,
     SeriesRepository,
+    UpdatePostCommand,
+    UpdateSeriesCommand,
+    UpdatePostFromSeriesCommand,
   ],
   exports: [TypeOrmModule],
 })

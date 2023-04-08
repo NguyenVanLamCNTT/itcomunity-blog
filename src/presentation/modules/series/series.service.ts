@@ -7,6 +7,8 @@ import {
   GetAllSeriesResponseModel,
   GetDetailSeriesResponseModel,
   SeriesResponse,
+  UpdatePostFromSeriesRequestModel,
+  UpdateSeriesRequestModel,
 } from 'src/presentation/models';
 
 import { RequestCorrelation } from 'src/utility';
@@ -93,6 +95,34 @@ export class SeriesService {
           });
         }),
       },
+    });
+  }
+
+  async update(seriesId: number, body: UpdateSeriesRequestModel) {
+    const data = await this.seriesDomainService.updateSeries({
+      title: body.name,
+      seriesId,
+      ...body,
+    });
+
+    return new CreateSeriesResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
+    });
+  }
+
+  async updatePostFromSeries(
+    seriesId: number,
+    body: UpdatePostFromSeriesRequestModel,
+  ) {
+    const data = await this.seriesDomainService.updatePostFromSeries({
+      seriesId,
+      ...body,
+    });
+
+    return new CreateSeriesResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
     });
   }
 }

@@ -5,6 +5,7 @@ export class ErrorStatusConstants {
   //403 Forbidden
   public static INCORRECT_PASSWORD = '403001';
   public static USER_HAS_NOT_CONFIRMED_EMAIL = '403002';
+  public static USER_NOT_APPROVE_ANSWER = '403003';
   //404 Not found
   public static USER_NOT_EXIST = '404001';
   public static POST_NOT_EXIST = '404002';

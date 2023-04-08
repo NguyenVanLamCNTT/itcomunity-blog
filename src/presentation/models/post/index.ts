@@ -9,3 +9,4 @@ export * from './create-post-with-chat-gpt-response.model';
 export * from './get-post-by-username-request.model';
 export * from './update-view-post-request.model';
 export * from './update-view-post-response.model';
+export * from './update-post-request..model';

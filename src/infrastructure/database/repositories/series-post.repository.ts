@@ -19,4 +19,14 @@ export class SeriesPostRepository {
   async findByPostId(postId: number) {
     return await this.repository.find({ where: { post: { id: postId } } });
   }
+
+  async findByPostIdAndSeriesId(seriesId: number, postId: number) {
+    return await this.repository.findOne({
+      where: { series: { id: seriesId }, post: { id: postId } },
+    });
+  }
+
+  async remove(entity: SeriesPostEntity) {
+    await this.repository.remove(entity);
+  }
 }

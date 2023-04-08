@@ -13,6 +13,7 @@ import {
   GetPostByUsernameRequestModel,
   PostResponse,
   RemovePostResponseModel,
+  UpdatePostRequestModel,
   UpdateViewPostRequestModel,
   UpdateViewPostResponseModel,
 } from 'src/presentation/models';
@@ -195,6 +196,19 @@ export class PostService {
     return new UpdateViewPostResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: { success: data },
+    });
+  }
+
+  async updatePost(postId: number, req: UpdatePostRequestModel) {
+    const data = await this.postDomainService.updatePost({
+      ...req,
+      postId,
+      title: req.name,
+    });
+
+    return new CreatePostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: data,
     });
   }
 }

@@ -21,6 +21,7 @@ export class CommentRepository {
     perPage: number,
     postId: number,
     seriesId: number,
+    answerId: number,
   ) {
     let option = {};
     if (postId) {
@@ -33,6 +34,12 @@ export class CommentRepository {
       option = {
         ...option,
         series: { id: seriesId },
+      };
+    }
+    if (answerId) {
+      option = {
+        ...option,
+        answer: { id: answerId },
       };
     }
     return await paginate<CommentEntity>(

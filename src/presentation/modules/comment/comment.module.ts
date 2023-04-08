@@ -3,12 +3,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddCommentCommand } from 'src/domain/commands';
 import { CommentDomainService } from 'src/domain/services';
 import {
+  AnswerEntity,
   CommentEntity,
   PostEntity,
   SeriesEntity,
   UserEntity,
 } from 'src/infrastructure/database/entities';
 import {
+  AnswerRepository,
   CommentRepository,
   PostRepository,
   SeriesRepository,
@@ -25,6 +27,7 @@ import { CommentQuery } from 'src/domain/queries';
       CommentEntity,
       PostEntity,
       SeriesEntity,
+      AnswerEntity,
     ]),
   ],
   controllers: [CommentController],
@@ -37,6 +40,7 @@ import { CommentQuery } from 'src/domain/queries';
     SeriesRepository,
     CommentRepository,
     CommentQuery,
+    AnswerRepository,
   ],
   exports: [TypeOrmModule],
 })

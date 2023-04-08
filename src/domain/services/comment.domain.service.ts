@@ -19,7 +19,14 @@ export class CommentDomainService {
     perPage: number,
     postId: number,
     seriesId: number,
+    answerId: number,
   ) {
-    return await this.commentQuery.findAll(page, perPage, postId, seriesId);
+    return await this.commentQuery.findAll(
+      page,
+      perPage,
+      postId,
+      seriesId,
+      answerId,
+    );
   }
 }
