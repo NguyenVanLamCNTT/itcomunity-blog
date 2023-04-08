@@ -1,6 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { CreateAnswerCommand, CreateQuestionCommand } from '../commands';
-import { CreateAnswerInputModel, CreateQuestionInputModel } from '../models';
+import {
+  CreateAnswerCommand,
+  CreateQuestionCommand,
+  UpdateAnswerCommand,
+  UpdateQuestionCommand,
+  UpdateViewQuestionCommand,
+} from '../commands';
+import {
+  CreateAnswerInputModel,
+  CreateQuestionInputModel,
+  UpdateQuestionInputModel,
+} from '../models';
 import { AnswerQuery, QuestionQuery } from '../queries';
 
 @Injectable()
@@ -10,6 +20,9 @@ export class QuestionDomainService {
     private questionQuery: QuestionQuery,
     private createAnswerCommand: CreateAnswerCommand,
     private answerQuery: AnswerQuery,
+    private updateViewQuestionCommand: UpdateViewQuestionCommand,
+    private updateQuestionCommand: UpdateQuestionCommand,
+    private updateAnswerCommand: UpdateAnswerCommand,
   ) {}
 
   async create(input: CreateQuestionInputModel) {
@@ -35,6 +48,23 @@ export class QuestionDomainService {
   }
 
   async getQuestionById(id: number) {
+    await this.updateViewQuestionCommand.execute({ questionId: id });
     return await this.questionQuery.getById(id);
+  }
+
+  async updateQuestion(input: UpdateQuestionInputModel) {
+    return (await this.updateQuestionCommand.execute(input)).success;
+  }
+
+  async updateAnswer(content: string, answerId: number) {
+    return await this.updateAnswerCommand.execute({ answerId, content });
+  }
+
+  async approvedAnswer(answerId: number, approved: boolean, userId: number) {
+    return await this.updateAnswerCommand.execute({
+      answerId,
+      userId,
+      approved,
+    });
   }
 }

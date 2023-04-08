@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateQuestionRequestModel {
-  @ApiProperty()
-  title: string;
+export class UpdateQuestionRequestModel {
   @ApiProperty()
   content: string;
   @ApiProperty()
   keywords: string[];
+  @ApiProperty()
+  title: string;
 }

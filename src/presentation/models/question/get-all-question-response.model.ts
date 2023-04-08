@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { BaseGetAllResponseModel } from '../base-get-all-response.model';
 import { ResponseModel } from '../response.model';
 
-class GetQuestionAuthor {
+export class GetQuestionAuthor {
   @ApiProperty()
   id: number;
   @ApiProperty()

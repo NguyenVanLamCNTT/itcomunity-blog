@@ -10,6 +10,9 @@ import { QuestionService } from './question.service';
 import {
   CreateAnswerCommand,
   CreateQuestionCommand,
+  UpdateAnswerCommand,
+  UpdateQuestionCommand,
+  UpdateViewQuestionCommand,
 } from 'src/domain/commands';
 import { QuestionDomainService } from 'src/domain/services/question.domain.service';
 import {
@@ -34,6 +37,10 @@ import { AnswerQuery, QuestionQuery } from 'src/domain/queries';
     AnswerRepository,
     CreateAnswerCommand,
     AnswerQuery,
+    UpdateViewQuestionCommand,
+    UpdateViewQuestionCommand,
+    UpdateAnswerCommand,
+    UpdateQuestionCommand,
   ],
   exports: [],
 })

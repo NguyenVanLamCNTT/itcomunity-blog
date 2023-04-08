@@ -6,6 +6,7 @@ import {
 import { QuestionDomainService } from 'src/domain/services/question.domain.service';
 import {
   AnswerResponseModel,
+  ApprovedAnswerRequestModel,
   CreateAnswerRequestModel,
   CreateQuestionRequestModel,
   CreateQuestionResponseModel,
@@ -14,7 +15,12 @@ import {
   GetAllCommentResponseModel,
   GetAllQuestionRequestModel,
   GetAllQuestionResponseModel,
+  GetDetailQuestionResponseModel,
   QuestionResponseModel,
+  UpdateAnswerRequestModel,
+  UpdateAnswerResponseModel,
+  UpdateQuestionRequestModel,
+  UpdateQuestionResponseModel,
 } from 'src/presentation/models';
 import { RequestCorrelation } from 'src/utility';
 
@@ -112,14 +118,60 @@ export class QuestionService {
 
   async getQuestionById(id: number) {
     const data = await this.questionDomainService.getQuestionById(id);
-    return new QuestionResponseModel({
-      ...data,
-      author: {
-        id: data.author.id,
-        avatar: data.author.avatar,
-        fullname: data.author.fullName,
-        username: data.author.username,
-      },
+    return new GetDetailQuestionResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: new QuestionResponseModel({
+        ...data,
+        author: {
+          id: data.author.id,
+          avatar: data.author.avatar,
+          fullname: data.author.fullName,
+          username: data.author.username,
+        },
+      }),
+    });
+  }
+
+  async updateQuestion(
+    questionId: number,
+    request: UpdateQuestionRequestModel,
+  ) {
+    const data = await this.questionDomainService.updateQuestion({
+      id: questionId,
+      ...request,
+    });
+
+    return new UpdateQuestionResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: data },
+    });
+  }
+
+  async updateAnswer(answerId: number, req: UpdateAnswerRequestModel) {
+    const result = await this.questionDomainService.updateAnswer(
+      req.content,
+      answerId,
+    );
+
+    return new UpdateAnswerResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: result,
+    });
+  }
+
+  async approvedAnswer(
+    answerId: number,
+    userId: number,
+    req: ApprovedAnswerRequestModel,
+  ) {
+    const result = await this.questionDomainService.approvedAnswer(
+      answerId,
+      req.approved,
+      userId,
+    );
+    return new UpdateAnswerResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: result,
     });
   }
 }

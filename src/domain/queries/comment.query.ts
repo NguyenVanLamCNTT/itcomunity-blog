@@ -10,12 +10,14 @@ export class CommentQuery {
     perPage: number,
     postId: number,
     seriesId: number,
+    answerId: number,
   ) {
     return await this.commentRepository.findAll(
       page,
       perPage,
       postId,
       seriesId,
+      answerId,
     );
   }
 }

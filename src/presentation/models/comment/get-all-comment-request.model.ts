@@ -6,4 +6,6 @@ export class GetAllCommentRequestModel extends BaseFilterGetListModel {
   postId?: number;
   @ApiProperty({ required: false })
   seriesId?: number;
+  @ApiProperty({ required: false })
+  answerId?: number;
 }

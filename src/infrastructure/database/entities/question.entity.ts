@@ -9,6 +9,9 @@ export class QuestionEntity extends BaseEntity {
     Object.assign(this, partial);
   }
 
+  @Column({ name: 'title' })
+  title: string;
+
   @Column({ name: 'keywords', type: String, array: true })
   keywords: string[];
 

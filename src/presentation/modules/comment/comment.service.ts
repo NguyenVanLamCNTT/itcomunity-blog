@@ -35,6 +35,7 @@ export class CommentService {
       pageable.perPage,
       pageable.postId,
       pageable.seriesId,
+      pageable.answerId,
     );
 
     return new GetAllCommentResponseModel({
