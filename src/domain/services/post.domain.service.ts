@@ -5,11 +5,13 @@ import { GetAllPostRequestModel } from 'src/presentation/models';
 import {
   CreatePostCommand,
   RemovePostCommand,
+  UpdatePostCommand,
   UpdateViewPostCommand,
 } from '../commands';
 import {
   CreatePostInputModel,
   RemovePostInputModel,
+  UpdatePostInputModel,
   UpdateViewPostInputModel,
 } from '../models';
 import { PostQuery } from '../queries';
@@ -21,6 +23,7 @@ export class PostDomainService {
     private removePostCommand: RemovePostCommand,
     private updateViewCommand: UpdateViewPostCommand,
     private postQuery: PostQuery,
+    private updatePostCommand: UpdatePostCommand,
   ) {}
 
   async createPost(input: CreatePostInputModel): Promise<boolean> {
@@ -85,5 +88,9 @@ export class PostDomainService {
     );
 
     return result.success;
+  }
+
+  async updatePost(input: UpdatePostInputModel) {
+    return await this.updatePostCommand.execute(input);
   }
 }

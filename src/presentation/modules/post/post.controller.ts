@@ -10,6 +10,7 @@ import {
   UseGuards,
   Query,
   Patch,
+  Put,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
@@ -21,6 +22,7 @@ import {
   GetAllPostResponseModel,
   GetDetailPostResponseModel,
   GetPostByUsernameRequestModel,
+  UpdatePostRequestModel,
   UpdateViewPostRequestModel,
   UpdateViewPostResponseModel,
 } from 'src/presentation/models';
@@ -146,5 +148,17 @@ export class PostController {
   })
   async updateView(@Body() body: UpdateViewPostRequestModel) {
     return await this.postService.updateViewPost(body);
+  }
+
+  @Put(':id')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: CreatePostResponseModel,
+    isArray: false,
+  })
+  async update(@Param('id') id: number, @Body() body: UpdatePostRequestModel) {
+    return this.postService.updatePost(id, body);
   }
 }
