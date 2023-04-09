@@ -60,38 +60,46 @@ export class PostRepository {
     page: number,
     perPage: number,
     sort: string,
-    postIds: number[],
+    topicIds: number[],
+    authorIds: number[],
   ) {
-    const postIdsString = postIds.join(',');
-    if (sort) {
-      const filed = sort.split(',')[0];
-      const direction = sort.split(',')[1] === 'asc' ? 'ASC' : 'DESC';
-      const query = this.postRepository
-        .createQueryBuilder('posts')
-        .where('posts.isDeleted = :status', { status: false })
-        .andWhere(`posts.id IN (${postIdsString})`)
-        .innerJoin('posts.author', 'user')
-        .addSelect('user.id')
-        .addSelect('user.fullName')
-        .addSelect('user.username')
-        .addSelect('user.avatar')
-        .orderBy(`posts.${filed}`, direction);
-
-      return await paginate<PostEntity>(query, { page, limit: perPage });
-    }
-
-    const query = this.postRepository
-      .createQueryBuilder('posts')
-      .where('posts.isDeleted = :status', { status: false })
-      .andWhere(`posts.id IN (${postIdsString})`)
-      .innerJoin('posts.author', 'user')
-      .addSelect('user.id')
-      .addSelect('user.fullName')
-      .addSelect('user.username')
-      .addSelect('user.avatar')
-      .orderBy(`posts.created`, 'DESC');
-
-    return await paginate<PostEntity>(query, { page, limit: perPage });
+    const sortBy = sort ? sort.split(',')[0] : 'created';
+    const sortDir = sort
+      ? sort.split(',')[1] === 'asc'
+        ? 'ASC'
+        : 'DESC'
+      : 'DESC';
+    return await paginate<PostEntity>(
+      this.postRepository,
+      { page, limit: perPage },
+      {
+        where: [
+          {
+            isDeleted: false,
+            topicPost: {
+              topic: { id: In(topicIds) },
+            },
+            author: {
+              id: In(authorIds),
+            },
+          },
+          {
+            isDeleted: false,
+            topicPost: {
+              topic: { id: In(topicIds) },
+            },
+          },
+          {
+            isDeleted: false,
+            author: {
+              id: In(authorIds),
+            },
+          },
+        ],
+        relations: ['author', 'topicPost'],
+        order: { [sortBy]: sortDir.toLocaleUpperCase() },
+      },
+    );
   }
 
   async findInIds(

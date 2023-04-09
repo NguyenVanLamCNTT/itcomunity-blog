@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
+  AuthorFollowerRepository,
   PostRepository,
   SeriesPostRepository,
   TopicPostRepository,
@@ -13,6 +14,7 @@ export class PostQuery {
     private topicUserRepository: TopicUserRepository,
     private topicPostRepository: TopicPostRepository,
     private seriesPostRepository: SeriesPostRepository,
+    private authorFollowerRepository: AuthorFollowerRepository,
   ) {}
 
   async findAll(
@@ -45,14 +47,16 @@ export class PostQuery {
       (item) => item.topic.id,
     );
 
-    const postIds = (
-      await this.topicPostRepository.findByTopicIds(topicIds)
-    ).map((item) => item.post.id);
+    const authorIds = (
+      await this.authorFollowerRepository.findByFollowerId(userId)
+    ).map((item) => item.author.id);
+
     return await this.postRepository.findAllByTopicIds(
       page,
       perPage,
       sort,
-      postIds,
+      topicIds,
+      authorIds,
     );
   }
 

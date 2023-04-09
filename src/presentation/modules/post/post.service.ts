@@ -115,8 +115,15 @@ export class PostService {
         totalItems: data.meta.totalItems,
         totalPages: data.meta.totalPages,
         items: data.items.map((item) => {
+          delete item.topicPost;
           return new PostResponse({
             ...item,
+            author: {
+              id: item.author.id,
+              avatar: item.author.avatar,
+              fullName: item.author.fullName,
+              username: item.author.username,
+            },
           });
         }),
       },

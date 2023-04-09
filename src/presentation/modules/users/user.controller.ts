@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Post,
   Put,
   Query,
   Req,
@@ -20,6 +21,8 @@ import { UpdateInfoUserRequestModel } from 'src/presentation/models/users/update
 import { UpdateInfoUserResponseModel } from 'src/presentation/models/users/update-info-user-response.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { UserService } from './user.service';
+import { FollowUserRequestModel } from 'src/presentation/models/users/follow-user-request.model';
+import { FollowUserResponseModel } from 'src/presentation/models/users/follow-user-response.model';
 
 @ApiBearerAuth()
 @ApiTags('api/users')
@@ -74,5 +77,18 @@ export class UserController {
   })
   async getUser(@Query() query: GetUserRequestModel) {
     return await this.userService.getUser(query.username);
+  }
+
+  @Post('user/follow')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: FollowUserResponseModel,
+    isArray: false,
+  })
+  async followUser(@Req() req: any, @Body() body: FollowUserRequestModel) {
+    const userId = req.user['userId'];
+    return await this.userService.folowUser(body, userId);
   }
 }
