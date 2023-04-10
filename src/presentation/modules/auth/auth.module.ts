@@ -5,14 +5,22 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
+  FollowUserCommand,
   RegisterUserCommand,
+  UnfollowUserCommand,
   UpdateConfirmEmailUserCommand,
   UpdateInfoUserCommand,
 } from 'src/domain/commands';
 import { UserQuery } from 'src/domain/queries';
 import { UserDomainService } from 'src/domain/services';
-import { UserEntity } from 'src/infrastructure/database/entities';
-import { UserRepository } from 'src/infrastructure/database/repositories';
+import {
+  AuthorFollowersEntity,
+  UserEntity,
+} from 'src/infrastructure/database/entities';
+import {
+  AuthorFollowerRepository,
+  UserRepository,
+} from 'src/infrastructure/database/repositories';
 import { JwtUtil } from 'src/infrastructure/utilities/jwt.util';
 import configuration from 'src/presentation/configurations/configuration';
 import { RequestCorrelation } from 'src/utility/request-correlation';
@@ -25,7 +33,7 @@ import { SendEmailConstants } from 'src/domain/constants';
 import { JwtStrategy } from './auth.strategy';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity]),
+    TypeOrmModule.forFeature([UserEntity, AuthorFollowersEntity]),
     PassportModule,
     ConfigModule.forRoot({
       load: [configuration],
@@ -89,6 +97,11 @@ import { JwtStrategy } from './auth.strategy';
     RequestCorrelation,
     JwtStrategy,
     UpdateInfoUserCommand,
+    UpdateConfirmEmailUserCommand,
+    UpdateInfoUserCommand,
+    FollowUserCommand,
+    UnfollowUserCommand,
+    AuthorFollowerRepository,
   ],
   exports: [TypeOrmModule],
 })

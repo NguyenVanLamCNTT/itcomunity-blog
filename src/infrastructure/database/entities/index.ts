@@ -9,3 +9,4 @@ export * from './series-post.entity';
 export * from './answer.entity';
 export * from './comment.entity';
 export * from './question.entity';
+export * from './author-followers.entity';

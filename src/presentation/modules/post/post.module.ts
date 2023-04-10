@@ -12,6 +12,7 @@ import {
 import { PostQuery } from 'src/domain/queries';
 import { PostDomainService } from 'src/domain/services';
 import {
+  AuthorFollowersEntity,
   PostEntity,
   SeriesEntity,
   SeriesPostEntity,
@@ -21,6 +22,7 @@ import {
   UserEntity,
 } from 'src/infrastructure/database/entities';
 import {
+  AuthorFollowerRepository,
   PostRepository,
   SeriesPostRepository,
   SeriesRepository,
@@ -44,6 +46,7 @@ import { PostService } from './post.service';
       TopicUserEntity,
       SeriesPostEntity,
       SeriesEntity,
+      AuthorFollowersEntity,
     ]),
     ConfigModule.forRoot({
       load: [configuration],
@@ -68,6 +71,7 @@ import { PostService } from './post.service';
     UpdatePostCommand,
     UpdateSeriesCommand,
     UpdatePostFromSeriesCommand,
+    AuthorFollowerRepository,
   ],
   exports: [TypeOrmModule],
 })

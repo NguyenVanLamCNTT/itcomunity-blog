@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { UpdateInfoUserInputModel } from 'src/domain/models';
 import { UserDomainService } from 'src/domain/services';
 import { GetInfoUserResponseModel } from 'src/presentation/models';
+import { FollowUserRequestModel } from 'src/presentation/models/users/follow-user-request.model';
+import { FollowUserResponseModel } from 'src/presentation/models/users/follow-user-response.model';
 import { UpdateInfoUserRequestModel } from 'src/presentation/models/users/update-info-user-request.model';
 import { UpdateInfoUserResponseModel } from 'src/presentation/models/users/update-info-user-response.model';
 import { RequestCorrelation } from 'src/utility';
@@ -53,6 +55,10 @@ export class UserService {
       username,
     );
 
+    const followerIds = (
+      await this.userDomainService.getFollowerByAuthor(user.id)
+    ).map((item) => item.id);
+
     return new GetInfoUserResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: {
@@ -67,7 +73,21 @@ export class UserService {
         likesNumber: user.likesNumber,
         postsNumber: user.postsNumber,
         username: user.username,
+        followerIds,
       },
+    });
+  }
+
+  async folowUser(req: FollowUserRequestModel, userId: number) {
+    if (req.follow) {
+      await this.userDomainService.followUser(req.authorId, userId);
+    } else {
+      await this.userDomainService.unfollowUser(req.authorId, userId);
+    }
+
+    return new FollowUserResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: true },
     });
   }
 }

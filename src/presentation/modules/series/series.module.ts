@@ -14,6 +14,7 @@ import { SeriesQuery } from 'src/domain/queries/series.query';
 import { PostDomainService } from 'src/domain/services';
 import { SeriesDomainService } from 'src/domain/services/series.domain.service';
 import {
+  AuthorFollowersEntity,
   PostEntity,
   SeriesEntity,
   SeriesPostEntity,
@@ -23,6 +24,7 @@ import {
   UserEntity,
 } from 'src/infrastructure/database/entities';
 import {
+  AuthorFollowerRepository,
   PostRepository,
   SeriesPostRepository,
   SeriesRepository,
@@ -44,6 +46,7 @@ import { SeriesService } from './series.service';
       TopicUserEntity,
       SeriesEntity,
       SeriesPostEntity,
+      AuthorFollowersEntity,
     ]),
   ],
   controllers: [SeriesController],
@@ -67,6 +70,7 @@ import { SeriesService } from './series.service';
     UpdateSeriesCommand,
     UpdatePostFromSeriesCommand,
     UpdatePostCommand,
+    AuthorFollowerRepository,
   ],
   exports: [TypeOrmModule],
 })
