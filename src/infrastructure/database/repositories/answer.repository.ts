@@ -45,7 +45,7 @@ export class AnswerRepository {
   async findById(id: number) {
     return await this.repository.findOne({
       where: { id },
-      relations: ['author'],
+      relations: ['author', 'question'],
     });
   }
 }
