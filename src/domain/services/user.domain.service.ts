@@ -78,4 +78,8 @@ export class UserDomainService {
   async getTopicUserByUserId(userId: number) {
     return await this.userQuery.getTopicUserByUserId(userId);
   }
+
+  async getAuthorByFollowerId(userId: number) {
+    return await this.userQuery.getAuthorByFollowerId(userId);
+  }
 }
