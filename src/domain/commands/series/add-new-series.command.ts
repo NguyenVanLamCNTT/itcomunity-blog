@@ -48,6 +48,8 @@ export class AddNewSeriesCommand
         new SeriesPostEntity({ post: post, series }),
       );
     }
+    user.seriesNumber = user.seriesNumber + 1;
+    await this.userRepository.save(user);
 
     return new AddNewSeriesResultModel({ success: true });
   }

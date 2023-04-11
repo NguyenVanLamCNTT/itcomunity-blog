@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
   AuthorFollowerRepository,
+  TopicUserRepository,
   UserRepository,
 } from 'src/infrastructure/database/repositories';
 
@@ -9,10 +10,11 @@ export class UserQuery {
   constructor(
     private userRepository: UserRepository,
     private authorFollowerRepository: AuthorFollowerRepository,
+    private topicUserRepository: TopicUserRepository,
   ) {}
 
-  async getAll() {
-    return await this.userRepository.findAll();
+  async getAll(page: number, perPage: number, sort: string) {
+    return await this.userRepository.findAll(page, perPage, sort);
   }
 
   async getUserByEmailOrUsername(textSearch: string) {
@@ -25,5 +27,9 @@ export class UserQuery {
 
   async getFollower(authorId: number) {
     return this.authorFollowerRepository.findByAuthorId(authorId);
+  }
+
+  async getTopicUserByUserId(userId: number) {
+    return await this.topicUserRepository.findByUserId(userId);
   }
 }

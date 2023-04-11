@@ -20,4 +20,6 @@ export class TopicEntity extends BaseEntity {
   isTrending: boolean;
   @Column({ name: 'image' })
   image: string;
+  @Column({ name: 'questions_number' })
+  questionsNumber: number;
 }

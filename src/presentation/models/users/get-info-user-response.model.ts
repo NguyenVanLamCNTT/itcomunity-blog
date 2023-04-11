@@ -27,6 +27,8 @@ class InfoData {
   about: string;
   @ApiProperty({ type: Number, isArray: true })
   followerIds?: number[];
+  @ApiProperty({ type: Number, isArray: true })
+  followTopicIds?: number[];
 }
 
 export class GetInfoUserResponseModel extends ResponseModel<InfoData> {

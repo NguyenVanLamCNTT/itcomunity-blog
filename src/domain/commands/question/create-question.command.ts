@@ -28,6 +28,8 @@ export class CreateQuestionCommand
       author: user,
     });
     await this.questionRepository.save(entity);
+    user.questionsNumber = user.questionsNumber + 1;
+    await this.userRepository.save(user);
     return new CreateQuestionResultModel({ success: true });
   }
 }

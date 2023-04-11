@@ -14,6 +14,8 @@ import {
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
 import { Request, Response } from 'express';
 import {
+  GetAllUserRequestModel,
+  GetAllUserResponseModel,
   GetInfoUserResponseModel,
   GetUserRequestModel,
 } from 'src/presentation/models';
@@ -31,10 +33,19 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get('')
-  @UseGuards(JwtAuthGuard)
-  async getUserDeltail(@Req() req: Request, @Res() res: Response) {
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllUserResponseModel,
+    isArray: false,
+  })
+  async getUserDeltail(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Query() query: GetAllUserRequestModel,
+  ) {
     try {
-      const user = await this.userService.getAllUser();
+      const user = await this.userService.getAllUser(query);
       return res.status(HttpStatus.OK).json(user);
     } catch (error) {
       console.log(error);

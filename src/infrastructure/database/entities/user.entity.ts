@@ -55,6 +55,12 @@ export class UserEntity extends BaseEntity {
   @Column({ name: 'about' })
   about: string;
 
+  @Column({ name: 'series_number' })
+  seriesNumber: number;
+
+  @Column({ name: 'questions_number' })
+  questionsNumber: number;
+
   @OneToMany(() => SeriesEntity, (series) => series.author)
   series: SeriesEntity[];
 }
