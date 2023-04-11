@@ -15,10 +15,12 @@ import { UserQuery } from 'src/domain/queries';
 import { UserDomainService } from 'src/domain/services';
 import {
   AuthorFollowersEntity,
+  TopicUserEntity,
   UserEntity,
 } from 'src/infrastructure/database/entities';
 import {
   AuthorFollowerRepository,
+  TopicUserRepository,
   UserRepository,
 } from 'src/infrastructure/database/repositories';
 import { JwtUtil } from 'src/infrastructure/utilities/jwt.util';
@@ -33,7 +35,11 @@ import { SendEmailConstants } from 'src/domain/constants';
 import { JwtStrategy } from './auth.strategy';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserEntity, AuthorFollowersEntity]),
+    TypeOrmModule.forFeature([
+      UserEntity,
+      AuthorFollowersEntity,
+      TopicUserEntity,
+    ]),
     PassportModule,
     ConfigModule.forRoot({
       load: [configuration],
@@ -102,6 +108,7 @@ import { JwtStrategy } from './auth.strategy';
     FollowUserCommand,
     UnfollowUserCommand,
     AuthorFollowerRepository,
+    TopicUserRepository,
   ],
   exports: [TypeOrmModule],
 })

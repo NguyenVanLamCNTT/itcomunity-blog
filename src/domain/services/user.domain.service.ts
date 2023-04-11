@@ -24,8 +24,8 @@ export class UserDomainService {
     private unfollowUserCommand: UnfollowUserCommand,
   ) {}
 
-  async getAllUser() {
-    return await this.userQuery.getAll();
+  async getAllUser(page: number, perPage: number, sort: string) {
+    return await this.userQuery.getAll(page, perPage, sort);
   }
 
   async createUser(
@@ -73,5 +73,9 @@ export class UserDomainService {
 
   async getFollowerByAuthor(authorId: number) {
     return await this.userQuery.getFollower(authorId);
+  }
+
+  async getTopicUserByUserId(userId: number) {
+    return await this.userQuery.getTopicUserByUserId(userId);
   }
 }

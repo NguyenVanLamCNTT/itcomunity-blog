@@ -1,6 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserEntity } from '../entities';
+import { PostEntity, UserEntity } from '../entities';
+import { paginate } from 'nestjs-typeorm-paginate';
 
 export class UserRepository {
   constructor(
@@ -8,8 +9,26 @@ export class UserRepository {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  async findAll() {
-    return await this.usersRepository.find();
+  async findAll(page: number, perPage: number, sort: string) {
+    const sortBy = sort ? sort.split(',')[0] : 'created';
+    const sortDir = sort
+      ? sort.split(',')[1] === 'asc'
+        ? 'ASC'
+        : 'DESC'
+      : 'DESC';
+    return await paginate<UserEntity>(
+      this.usersRepository,
+      {
+        page,
+        limit: perPage,
+      },
+      {
+        where: {
+          isDeleted: false,
+        },
+        order: { [sortBy]: sortDir.toLocaleUpperCase() },
+      },
+    );
   }
 
   async save(user: UserEntity) {

@@ -37,6 +37,9 @@ export class AddUserToTopicCommand
 
     await this.topicUserRepository.save(entity);
 
+    topic.followersNumber = topic.followersNumber + 1;
+    await this.topicRepository.save(topic);
+
     return new AddUserToTopicResultModel({
       success: true,
     });

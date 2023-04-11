@@ -53,11 +53,13 @@ export class CreatePostCommand
       if (!topic) {
         throw new TopicNotExistException();
       }
+      topic.postNumber = topic.postNumber + 1;
+      await this.topicRepository.save(topic);
       const entity = new TopicPostEntity({
         post,
         topic,
       });
-      this.topicPostRepository.save(entity);
+      await this.topicPostRepository.save(entity);
     }
   }
 }

@@ -17,7 +17,7 @@ export class UpdateAnswerCommand
   ): Promise<UpdateAnswerResultModel> {
     const answer = await this.answerRepository.findById(input.answerId);
     if (input.approved) {
-      if (answer.author.id !== input.userId) {
+      if (answer.question.author.id !== input.userId) {
         throw new UserNotApproveAnswerException();
       }
       answer.isApproved = input.approved;
