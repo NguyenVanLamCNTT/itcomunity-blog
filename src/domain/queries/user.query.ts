@@ -32,4 +32,8 @@ export class UserQuery {
   async getTopicUserByUserId(userId: number) {
     return await this.topicUserRepository.findByUserId(userId);
   }
+
+  async getAuthorByFollowerId(userId: number) {
+    return await this.authorFollowerRepository.findByFollowerId(userId);
+  }
 }

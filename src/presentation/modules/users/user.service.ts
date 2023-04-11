@@ -53,6 +53,8 @@ export class UserService {
     const user = await this.userDomainService.getById(id);
     const topicUsers = await this.userDomainService.getTopicUserByUserId(id);
     const topicIds = topicUsers.map((item) => item.topic.id);
+    const userfollows = await this.userDomainService.getAuthorByFollowerId(id);
+    const authorIds = userfollows.map((i) => i.author.id);
     return new GetInfoUserResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: {
@@ -68,6 +70,7 @@ export class UserService {
         postsNumber: user.postsNumber,
         username: user.username,
         followTopicIds: topicIds,
+        authorFollow: authorIds,
       },
     });
   }
