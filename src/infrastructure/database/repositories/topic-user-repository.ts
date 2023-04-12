@@ -19,4 +19,15 @@ export class TopicUserRepository {
       where: { user: { id: userId } },
     });
   }
+
+  async findByUserIdAndTopicId(userId: number, topicId: number) {
+    return await this.topicUserRepository.findOne({
+      relations: ['user', 'topic'],
+      where: { user: { id: userId }, topic: { id: topicId } },
+    });
+  }
+
+  async remove(entity: TopicUserEntity) {
+    await this.topicUserRepository.remove(entity);
+  }
 }

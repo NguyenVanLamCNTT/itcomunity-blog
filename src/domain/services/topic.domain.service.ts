@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { TopicEntity } from 'src/infrastructure/database/entities';
-import { AddUserToTopicCommand, CreateTopicCommand } from '../commands';
+import {
+  AddUserToTopicCommand,
+  CreateTopicCommand,
+  RemoveUserToTopicCommand,
+} from '../commands';
 import { AddUserToTopicInputModel, CreateTopicInputModel } from '../models';
 import { TopicQuery } from '../queries';
 
@@ -11,6 +15,7 @@ export class TopicDomainService {
     private topicQuery: TopicQuery,
     private addUserToTopicCommand: AddUserToTopicCommand,
     private createTopicCommand: CreateTopicCommand,
+    private removeUserToTopicCommand: RemoveUserToTopicCommand,
   ) {}
 
   async findAll(
@@ -27,5 +32,9 @@ export class TopicDomainService {
 
   async create(model: CreateTopicInputModel) {
     return await this.createTopicCommand.execute(model);
+  }
+
+  async removeUserToTopic(model: AddUserToTopicInputModel) {
+    return await this.removeUserToTopicCommand.execute(model);
   }
 }

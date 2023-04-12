@@ -64,4 +64,20 @@ export class TopicController {
   async create(@Body() body: CreateTopicRequestModel) {
     return await this.topicService.create(body);
   }
+
+  @Post('remove-topic-to-user')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: AddTopicToUserResponseMode,
+    isArray: false,
+  })
+  async removeTopicToUser(
+    @Body() body: AddTopicToUserRequestModel,
+    @Req() req: any,
+  ) {
+    const userId = req.user['userId'];
+    return await this.topicService.removeUserToTopic(body, userId);
+  }
 }

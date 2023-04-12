@@ -27,6 +27,15 @@ export class AddUserToTopicCommand
   ): Promise<AddUserToTopicResultModel> {
     const user = await this.userRepository.findById(input.userId);
     const topic = await this.topicRepository.findById(input.topicId);
+    const topicUser = await this.topicUserRepository.findByUserIdAndTopicId(
+      input.userId,
+      input.topicId,
+    );
+    if (topicUser) {
+      return new AddUserToTopicResultModel({
+        success: true,
+      });
+    }
     if (!topic) {
       throw new TopicNotExistException();
     }
