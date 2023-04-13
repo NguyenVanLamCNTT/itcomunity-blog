@@ -10,3 +10,4 @@ export * from './answer.entity';
 export * from './comment.entity';
 export * from './question.entity';
 export * from './author-followers.entity';
+export * from './bookmark.entity';

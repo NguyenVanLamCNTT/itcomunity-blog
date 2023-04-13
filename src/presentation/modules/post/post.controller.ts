@@ -14,6 +14,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
+  BookmarkPostRequestModel,
   CreatePostRequestModel,
   CreatePostResponseModel,
   CreatePostWithChatGPTRequestModel,
@@ -29,6 +30,7 @@ import {
 import { RemovePostResponseModel } from 'src/presentation/models/post/remove-post-response.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { PostService } from './post.service';
+import { BaseFilterGetListModel } from 'src/presentation/models/base-filter-get-list.model';
 
 @ApiBearerAuth()
 @ApiTags('api/posts')
@@ -160,5 +162,34 @@ export class PostController {
   })
   async update(@Param('id') id: number, @Body() body: UpdatePostRequestModel) {
     return this.postService.updatePost(id, body);
+  }
+
+  @Post('/bookmark')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: CreatePostResponseModel,
+    isArray: false,
+  })
+  async bookmark(@Req() req: any, @Body() body: BookmarkPostRequestModel) {
+    const userId = req.user['userId'];
+    return await this.postService.bookmarkPost(userId, body);
+  }
+
+  @Get('/bookmark/user')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: GetAllPostResponseModel,
+    isArray: false,
+  })
+  async getBookmark(
+    @Req() req: any,
+    @Query() pageable: BaseFilterGetListModel,
+  ) {
+    const userId = req.user['userId'];
+    return this.postService.getPostBookmark(userId, pageable);
   }
 }

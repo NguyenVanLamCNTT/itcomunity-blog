@@ -4,17 +4,19 @@ import {
   AddNewSeriesCommand,
   CreatePostCommand,
   RemovePostCommand,
+  UpdateBookmarkCommand,
   UpdatePostCommand,
   UpdatePostFromSeriesCommand,
   UpdateSeriesCommand,
   UpdateViewPostCommand,
 } from 'src/domain/commands';
-import { PostQuery } from 'src/domain/queries';
+import { BookMarkQuery, PostQuery } from 'src/domain/queries';
 import { SeriesQuery } from 'src/domain/queries/series.query';
-import { PostDomainService } from 'src/domain/services';
+import { BookmarkDomainService, PostDomainService } from 'src/domain/services';
 import { SeriesDomainService } from 'src/domain/services/series.domain.service';
 import {
   AuthorFollowersEntity,
+  BookmarkEntity,
   PostEntity,
   SeriesEntity,
   SeriesPostEntity,
@@ -25,6 +27,7 @@ import {
 } from 'src/infrastructure/database/entities';
 import {
   AuthorFollowerRepository,
+  BookmarkRepository,
   PostRepository,
   SeriesPostRepository,
   SeriesRepository,
@@ -47,6 +50,7 @@ import { SeriesService } from './series.service';
       SeriesEntity,
       SeriesPostEntity,
       AuthorFollowersEntity,
+      BookmarkEntity,
     ]),
   ],
   controllers: [SeriesController],
@@ -71,6 +75,10 @@ import { SeriesService } from './series.service';
     UpdatePostFromSeriesCommand,
     UpdatePostCommand,
     AuthorFollowerRepository,
+    BookmarkRepository,
+    UpdateBookmarkCommand,
+    BookMarkQuery,
+    BookmarkDomainService,
   ],
   exports: [TypeOrmModule],
 })

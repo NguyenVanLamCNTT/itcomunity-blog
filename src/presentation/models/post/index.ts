@@ -10,3 +10,4 @@ export * from './get-post-by-username-request.model';
 export * from './update-view-post-request.model';
 export * from './update-view-post-response.model';
 export * from './update-post-request..model';
+export * from './bookmark-post-request.model';

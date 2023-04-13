@@ -61,4 +61,18 @@ export class TopicService {
       data: { success: true },
     });
   }
+
+  async removeUserToTopic(
+    requestModel: AddTopicToUserRequestModel,
+    userId: number,
+  ) {
+    const result = await this.topicDomainService.removeUserToTopic({
+      topicId: requestModel.topicId,
+      userId,
+    });
+    return new AddTopicToUserResponseMode({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: result.success },
+    });
+  }
 }

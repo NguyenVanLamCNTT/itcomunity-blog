@@ -5,3 +5,4 @@ export * from './get-all-series-request.model';
 export * from './get-detail-series-response.model';
 export * from './update-post-from-series-request.model';
 export * from './update-series-request.model';
+export * from './bookmark-post-request.model';

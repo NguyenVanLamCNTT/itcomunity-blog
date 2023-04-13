@@ -4,15 +4,17 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   CreatePostCommand,
   RemovePostCommand,
+  UpdateBookmarkCommand,
   UpdatePostCommand,
   UpdatePostFromSeriesCommand,
   UpdateSeriesCommand,
   UpdateViewPostCommand,
 } from 'src/domain/commands';
-import { PostQuery } from 'src/domain/queries';
-import { PostDomainService } from 'src/domain/services';
+import { BookMarkQuery, PostQuery } from 'src/domain/queries';
+import { BookmarkDomainService, PostDomainService } from 'src/domain/services';
 import {
   AuthorFollowersEntity,
+  BookmarkEntity,
   PostEntity,
   SeriesEntity,
   SeriesPostEntity,
@@ -23,6 +25,7 @@ import {
 } from 'src/infrastructure/database/entities';
 import {
   AuthorFollowerRepository,
+  BookmarkRepository,
   PostRepository,
   SeriesPostRepository,
   SeriesRepository,
@@ -47,6 +50,7 @@ import { PostService } from './post.service';
       SeriesPostEntity,
       SeriesEntity,
       AuthorFollowersEntity,
+      BookmarkEntity,
     ]),
     ConfigModule.forRoot({
       load: [configuration],
@@ -72,6 +76,10 @@ import { PostService } from './post.service';
     UpdateSeriesCommand,
     UpdatePostFromSeriesCommand,
     AuthorFollowerRepository,
+    BookmarkRepository,
+    UpdateBookmarkCommand,
+    BookMarkQuery,
+    BookmarkDomainService,
   ],
   exports: [TypeOrmModule],
 })

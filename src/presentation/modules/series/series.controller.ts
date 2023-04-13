@@ -13,6 +13,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
+  BookmarkSeriesRequestModel,
   CreateSeriesRequestModel,
   CreateSeriesResponseModel,
   GetDetailSeriesResponseModel,
@@ -23,6 +24,7 @@ import { GetAllSeriesResponseModel } from 'src/presentation/models/series/get-al
 import { GetAllSeriesRequestModel } from 'src/presentation/models/series/get-all-series-request.model';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { SeriesService } from './series.service';
+import { BaseFilterGetListModel } from 'src/presentation/models/base-filter-get-list.model';
 
 @ApiBearerAuth()
 @ApiTags('api/series')
@@ -109,5 +111,34 @@ export class SeriesController {
     @Body() body: UpdatePostFromSeriesRequestModel,
   ) {
     return this.service.updatePostFromSeries(id, body);
+  }
+
+  @Post('/bookmark')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: CreateSeriesResponseModel,
+    isArray: false,
+  })
+  async bookmark(@Req() req: any, @Body() body: BookmarkSeriesRequestModel) {
+    const userId = req.user['userId'];
+    return await this.service.bookmark(userId, body);
+  }
+
+  @Get('/bookmark/user')
+  @HttpCode(200)
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: GetAllSeriesResponseModel,
+    isArray: false,
+  })
+  async getBookmark(
+    @Req() req: any,
+    @Query() pageable: BaseFilterGetListModel,
+  ) {
+    const userId = req.user['userId'];
+    return this.service.getBookmark(userId, pageable);
   }
 }
