@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePostInputModel, RemovePostInputModel } from 'src/domain/models';
-import { PostDomainService } from 'src/domain/services';
+import { BookmarkDomainService, PostDomainService } from 'src/domain/services';
 import { GPTUtil } from 'src/infrastructure/utilities';
 import {
+  BookmarkPostRequestModel,
   CreatePostRequestModel,
   CreatePostResponseModel,
   CreatePostWithChatGPTRequestModel,
@@ -17,6 +18,7 @@ import {
   UpdateViewPostRequestModel,
   UpdateViewPostResponseModel,
 } from 'src/presentation/models';
+import { BaseFilterGetListModel } from 'src/presentation/models/base-filter-get-list.model';
 import { RequestCorrelation } from 'src/utility';
 
 @Injectable({})
@@ -24,6 +26,7 @@ export class PostService {
   constructor(
     private postDomainService: PostDomainService,
     private gptUtil: GPTUtil,
+    private bookmarkDomainService: BookmarkDomainService,
   ) {}
 
   async create(requestModel: CreatePostRequestModel, userId: number) {
@@ -216,6 +219,49 @@ export class PostService {
     return new CreatePostResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: data,
+    });
+  }
+
+  async bookmarkPost(userId: number, req: BookmarkPostRequestModel) {
+    const result = await this.bookmarkDomainService.updateBookmark({
+      bookmark: req.bookmark,
+      userId,
+      postId: req.postId,
+    });
+
+    return new CreatePostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: result,
+    });
+  }
+
+  async getPostBookmark(userId: number, req: BaseFilterGetListModel) {
+    const data = await this.bookmarkDomainService.getPostBookmarkByUser(
+      req.page,
+      req.perPage,
+      req.sort,
+      userId,
+    );
+
+    return new GetAllPostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: {
+        page: data.meta.currentPage,
+        perPage: data.meta.itemsPerPage,
+        totalItems: data.meta.totalItems,
+        totalPages: data.meta.totalPages,
+        items: data.items.map((item) => {
+          return new PostResponse({
+            ...item.post,
+            author: {
+              id: item.post.author.id,
+              avatar: item.post.author.avatar,
+              fullName: item.post.author.fullName,
+              username: item.post.author.username,
+            },
+          });
+        }),
+      },
     });
   }
 }
