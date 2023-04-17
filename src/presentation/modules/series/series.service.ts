@@ -59,12 +59,20 @@ export class SeriesService {
     });
   }
 
-  async getById(id: number) {
+  async getById(id: number, userId: number) {
+    let isBookmark = false;
+    if (userId) {
+      isBookmark = await this.bookmarkDomainService.isBookmarkSeries(
+        userId,
+        id,
+      );
+    }
     const data = await this.seriesDomainService.getId(id);
     return new GetDetailSeriesResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: {
         ...data,
+        isBookmark,
         author: {
           id: data.author.id,
           avatar: data.author.avatar,

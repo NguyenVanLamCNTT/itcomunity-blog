@@ -43,6 +43,8 @@ export class PostDetail {
   isTrending: boolean;
   @ApiProperty({ type: Author })
   author: Author;
+  @ApiProperty()
+  isBookmark?: boolean;
 }
 export class GetDetailPostResponseModel extends ResponseModel<PostDetail> {
   @ApiProperty()

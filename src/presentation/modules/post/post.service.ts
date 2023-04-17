@@ -84,12 +84,18 @@ export class PostService {
     });
   }
 
-  async getById(id: number) {
+  async getById(id: number, userId?: number) {
+    let isBookmark = false;
+    if (userId) {
+      isBookmark = await this.bookmarkDomainService.isBookmarkPost(userId, id);
+    }
     const data = await this.postDomainService.findById(id);
+
     return new GetDetailPostResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: {
         ...data,
+        isBookmark,
         author: {
           id: data.author.id,
           avatar: data.author.avatar,

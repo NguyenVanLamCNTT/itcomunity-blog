@@ -32,4 +32,12 @@ export class BookMarkQuery {
       userId,
     );
   }
+
+  async findByUserAndPost(userId: number, postId: number) {
+    return await this.bookmarRepository.findByUserAndPost(userId, postId);
+  }
+
+  async findByUserAndSeries(userId: number, seriesId: number) {
+    return await this.bookmarRepository.findByUserAndSeries(userId, seriesId);
+  }
 }

@@ -43,6 +43,8 @@ class ResponseData {
   keywords: string[];
   @ApiProperty()
   author: Author;
+  @ApiProperty()
+  isBookmark?: boolean;
 }
 
 export class GetDetailSeriesResponseModel extends ResponseModel<ResponseData> {

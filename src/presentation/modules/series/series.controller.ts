@@ -64,8 +64,9 @@ export class SeriesController {
     isArray: false,
   })
   @ApiParam({ name: 'id', required: true })
-  async getById(@Param('id') id: number) {
-    return this.service.getById(id);
+  async getById(@Req() req: any, @Param('id') id: number) {
+    const userId = req.user?.userId;
+    return this.service.getById(id, userId);
   }
 
   @Get('me/author')

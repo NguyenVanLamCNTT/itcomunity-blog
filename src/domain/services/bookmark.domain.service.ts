@@ -41,4 +41,24 @@ export class BookmarkDomainService {
       userId,
     );
   }
+
+  async isBookmarkPost(userId: number, postId: number) {
+    const result = await this.bookmarkQuery.findByUserAndPost(userId, postId);
+    if (result) {
+      return true;
+    }
+    return false;
+  }
+
+  async isBookmarkSeries(userId: number, seriesId: number) {
+    const result = await this.bookmarkQuery.findByUserAndSeries(
+      userId,
+      seriesId,
+    );
+    if (result) {
+      return true;
+    }
+
+    return false;
+  }
 }
