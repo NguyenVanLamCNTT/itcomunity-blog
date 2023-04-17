@@ -82,8 +82,10 @@ export class PostController {
     type: GetDetailPostResponseModel,
     isArray: false,
   })
-  async getById(@Param('id') id: number) {
-    return this.postService.getById(id);
+  async getById(@Req() req: any, @Param('id') id: number) {
+    const userId = req.user?.userId;
+
+    return this.postService.getById(id, userId);
   }
 
   @Get('users/user-follow')

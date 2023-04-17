@@ -28,6 +28,8 @@ export class UpdateBookmarkCommand
   async execute(
     input: UpdateBookmarkInputModel,
   ): Promise<UpdateBookmarkResultModel> {
+    console.log(input.seriesId);
+
     const user = await this.userRepository.findById(input.userId);
     const bookmark =
       await this.bookmarkRepository.findByUserIdAndPostIdAndSeriesId(
@@ -37,17 +39,39 @@ export class UpdateBookmarkCommand
       );
     if (input.bookmark) {
       if (!bookmark) {
-        const post = await this.postRepository.findById(input.postId);
-        const series = await this.seriesRepository.findById(input.seriesId);
-        const entity = new BookmarkEntity({
-          user,
-          post,
-          series,
-        });
+        let entity = null;
+        if (input.postId) {
+          const post = await this.postRepository.findById(input.postId);
+          post.bookMarkNumber = post.bookMarkNumber + 1;
+          await this.postRepository.save(post);
+          entity = new BookmarkEntity({
+            user,
+            post,
+          });
+        }
+        if (input.seriesId) {
+          const series = await this.seriesRepository.findById(input.seriesId);
+          series.bookMarkNumber = series.bookMarkNumber + 1;
+          await this.seriesRepository.save(series);
+          entity = new BookmarkEntity({
+            user,
+            series,
+          });
+        }
         await this.bookmarkRepository.save(entity);
       }
     } else {
       this.bookmarkRepository.remove(bookmark);
+      if (input.postId) {
+        const post = await this.postRepository.findById(input.postId);
+        post.bookMarkNumber = post.bookMarkNumber - 1;
+        await this.postRepository.save(post);
+      }
+      if (input.seriesId) {
+        const series = await this.seriesRepository.findById(input.seriesId);
+        series.bookMarkNumber = series.bookMarkNumber - 1;
+        await this.seriesRepository.save(series);
+      }
     }
 
     return { success: true };

@@ -90,4 +90,16 @@ export class BookmarkRepository {
   async remove(entity: BookmarkEntity) {
     await this.repository.remove(entity);
   }
+
+  async findByUserAndPost(userId: number, postId?: number) {
+    return await this.repository.findOne({
+      where: [{ user: { id: userId }, post: { id: postId } }],
+    });
+  }
+
+  async findByUserAndSeries(userId: number, seriesId: number) {
+    return await this.repository.findOne({
+      where: { user: { id: userId }, series: { id: seriesId } },
+    });
+  }
 }

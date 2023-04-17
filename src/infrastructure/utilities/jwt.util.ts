@@ -32,4 +32,15 @@ export class JwtUtil {
 
     return password;
   }
+
+  async verifyToken(token: string): Promise<any> {
+    try {
+      const payload = await this.jwtService.verify(token, {
+        secret: this.configService.get('jwt.secret'),
+      });
+      return payload;
+    } catch (err) {
+      throw new Error('Invalid token');
+    }
+  }
 }
