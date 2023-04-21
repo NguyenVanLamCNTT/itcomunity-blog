@@ -12,10 +12,12 @@ import {
   ConfirmOTPResponseModel,
   LoginUserRequestModel,
   LoginUserResponseModel,
+  RefreshTokenResponseModel,
   RegisterUserRequestModel,
   RegisterUserResponseModel,
   ValidateOTPRequestModel,
   ValidateOTPResponseModel,
+  refreshTokenRequestModel,
 } from 'src/presentation/models';
 import { RequestCorrelation } from 'src/utility';
 import * as bcrypt from 'bcrypt';
@@ -119,6 +121,18 @@ export class AuthService {
       data: {
         success: true,
       },
+    });
+  }
+
+  async refreshToken(req: refreshTokenRequestModel) {
+    const payload = await this.jwtUtil.verifyToken(req.refreshToken);
+    const userId = payload.user?.userId;
+    const accessToken = this.jwtUtil.generateAccessToken({ userId: userId });
+    const refreshToken = this.jwtUtil.generateRefreshToken({ userId: userId });
+
+    return new RefreshTokenResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { accessToken, refreshToken },
     });
   }
 }

@@ -6,10 +6,12 @@ import {
   ConfirmOTPResponseModel,
   LoginUserRequestModel,
   LoginUserResponseModel,
+  RefreshTokenResponseModel,
   RegisterUserRequestModel,
   RegisterUserResponseModel,
   ValidateOTPRequestModel,
   ValidateOTPResponseModel,
+  refreshTokenRequestModel,
 } from 'src/presentation/models';
 import { AuthService } from './auth.service';
 
@@ -60,5 +62,16 @@ export class AuthController {
   })
   async validateOtp(@Body() body: ValidateOTPRequestModel) {
     return await this.authService.validateOTP(body);
+  }
+
+  @Post('refresh-token')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: RefreshTokenResponseModel,
+    isArray: false,
+  })
+  async refreshToken(@Body() req: refreshTokenRequestModel) {
+    return await this.authService.refreshToken(req);
   }
 }

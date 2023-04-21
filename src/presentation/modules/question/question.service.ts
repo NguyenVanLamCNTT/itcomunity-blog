@@ -48,6 +48,7 @@ export class QuestionService {
       request.perPage,
       request.sort,
       request.username,
+      request.search,
     );
 
     return new GetAllQuestionResponseModel({

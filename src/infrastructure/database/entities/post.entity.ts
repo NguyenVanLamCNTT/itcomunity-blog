@@ -10,7 +10,7 @@ export class PostEntity extends BaseEntity {
     Object.assign(this, partial);
   }
 
-  @Column({ name: 'keywords', type: 'text', array: true })
+  @Column({ name: 'keywords', type: 'varchar', array: true })
   keywords: string[];
 
   @Column({ name: 'content' })

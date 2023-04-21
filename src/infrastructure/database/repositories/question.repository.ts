@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { QuestionEntity } from '../entities';
 import { paginate } from 'nestjs-typeorm-paginate';
 
@@ -13,11 +13,23 @@ export class QuestionRepository {
     return await this.repository.save(question);
   }
 
-  async getAll(page: number, perPage: number, sort: string, username: string) {
+  async getAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    username: string,
+    search?: string,
+  ) {
     let query = {};
     if (username) {
       query = {
         author: { username },
+      };
+    }
+    if (search) {
+      query = {
+        ...query,
+        title: Like(`%${search}%`),
       };
     }
     const sortBy = sort ? sort.split(',')[0] : 'created';

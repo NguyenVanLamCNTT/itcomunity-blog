@@ -194,4 +194,26 @@ export class PostController {
     const userId = req.user['userId'];
     return this.postService.getPostBookmark(userId, pageable);
   }
+
+  @Post('/update-trending')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: CreatePostResponseModel,
+    isArray: false,
+  })
+  async updateTrending() {
+    return await this.postService.updateTrending();
+  }
+
+  @Get('/trending/top')
+  @HttpCode(200)
+  @ApiResponse({
+    status: 200,
+    type: GetAllPostResponseModel,
+    isArray: false,
+  })
+  async getTrending() {
+    return await this.postService.getTrending();
+  }
 }

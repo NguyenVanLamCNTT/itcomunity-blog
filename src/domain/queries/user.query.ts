@@ -13,8 +13,8 @@ export class UserQuery {
     private topicUserRepository: TopicUserRepository,
   ) {}
 
-  async getAll(page: number, perPage: number, sort: string) {
-    return await this.userRepository.findAll(page, perPage, sort);
+  async getAll(page: number, perPage: number, sort: string, search?: string) {
+    return await this.userRepository.findAll(page, perPage, sort, search);
   }
 
   async getUserByEmailOrUsername(textSearch: string) {
