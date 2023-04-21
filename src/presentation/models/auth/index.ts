@@ -6,3 +6,5 @@ export * from './confirm-otp-request.model';
 export * from './confirm-otp-response.model';
 export * from './validate-otp-request.model';
 export * from './validate-otp-response.model';
+export * from './refresh-token-request.model';
+export * from './refresh-token-response.model';
