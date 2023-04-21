@@ -6,6 +6,7 @@ import {
   CreatePostCommand,
   RemovePostCommand,
   UpdatePostCommand,
+  UpdatePostTrendingCommand,
   UpdateViewPostCommand,
 } from '../commands';
 import {
@@ -24,6 +25,7 @@ export class PostDomainService {
     private updateViewCommand: UpdateViewPostCommand,
     private postQuery: PostQuery,
     private updatePostCommand: UpdatePostCommand,
+    private updatePostTrendingCommand: UpdatePostTrendingCommand,
   ) {}
 
   async createPost(input: CreatePostInputModel): Promise<boolean> {
@@ -45,6 +47,7 @@ export class PostDomainService {
       pageable.sort,
       pageable.username,
       pageable.topicId,
+      pageable.search,
     );
   }
 
@@ -92,5 +95,13 @@ export class PostDomainService {
 
   async updatePost(input: UpdatePostInputModel) {
     return await this.updatePostCommand.execute(input);
+  }
+
+  async updateTrending() {
+    return await this.updatePostTrendingCommand.execute(null);
+  }
+
+  async getTrending() {
+    return await this.postQuery.getPostTrending();
   }
 }

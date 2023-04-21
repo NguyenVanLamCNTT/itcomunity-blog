@@ -23,6 +23,7 @@ export class UserService {
       req.page,
       req.perPage,
       req.sort,
+      req.search,
     );
 
     return new GetAllUserResponseModel({

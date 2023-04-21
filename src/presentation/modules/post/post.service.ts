@@ -270,4 +270,24 @@ export class PostService {
       },
     });
   }
+
+  async updateTrending() {
+    await this.postDomainService.updateTrending();
+    return { success: true };
+  }
+
+  async getTrending() {
+    const data = await this.postDomainService.getTrending();
+    return data.map((item) => {
+      return new PostResponse({
+        ...item,
+        author: {
+          id: item.author.id,
+          avatar: item.author.avatar,
+          fullName: item.author.fullName,
+          username: item.author.username,
+        },
+      });
+    });
+  }
 }

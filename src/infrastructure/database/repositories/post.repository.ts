@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
-import { In, Repository } from 'typeorm';
+import { Any, ILike, In, Like, Repository } from 'typeorm';
 import { PostEntity } from '../entities';
 
 export class PostRepository {
@@ -23,12 +23,44 @@ export class PostRepository {
     sort: string,
     username?: string,
     topicId?: number,
+    search?: string,
   ) {
     let query = {};
+    let option = [];
     if (username) {
       query = {
+        ...query,
         author: { username },
       };
+    }
+    if (topicId) {
+      query = {
+        ...query,
+        topicPost: { topic: { id: topicId } },
+      };
+    }
+
+    option = [
+      {
+        isDeleted: false,
+        ...query,
+        status: 'PUBLISH',
+      },
+    ];
+    if (search) {
+      option = [
+        {
+          isDeleted: false,
+          ...query,
+          status: 'PUBLISH',
+          name: Like(`%${search}%`),
+        },
+        {
+          isDeleted: false,
+          ...query,
+          status: 'PUBLISH',
+        },
+      ];
     }
     const sortBy = sort ? sort.split(',')[0] : 'created';
     const sortDir = sort
@@ -44,12 +76,7 @@ export class PostRepository {
         limit: perPage,
       },
       {
-        where: {
-          isDeleted: false,
-          ...query,
-          status: 'PUBLISH',
-          topicPost: { topic: { id: topicId } },
-        },
+        where: option,
         relations: ['author', 'topicPost'],
         order: { [sortBy]: sortDir.toLocaleUpperCase() },
       },
@@ -154,5 +181,16 @@ export class PostRepository {
         order: { [sortBy]: sortDir.toLocaleUpperCase() },
       },
     );
+  }
+
+  async findTop10PostTrending() {
+    return await this.postRepository.find({
+      take: 10,
+      order: { viewNumber: 'DESC' },
+    });
+  }
+
+  async unTrending() {
+    await this.postRepository.update({}, { isTrending: false });
   }
 }

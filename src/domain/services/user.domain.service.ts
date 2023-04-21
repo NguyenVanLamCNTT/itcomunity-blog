@@ -24,8 +24,13 @@ export class UserDomainService {
     private unfollowUserCommand: UnfollowUserCommand,
   ) {}
 
-  async getAllUser(page: number, perPage: number, sort: string) {
-    return await this.userQuery.getAll(page, perPage, sort);
+  async getAllUser(
+    page: number,
+    perPage: number,
+    sort: string,
+    search?: string,
+  ) {
+    return await this.userQuery.getAll(page, perPage, sort, search);
   }
 
   async createUser(

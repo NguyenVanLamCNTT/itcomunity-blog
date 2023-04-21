@@ -30,8 +30,20 @@ export class QuestionDomainService {
     return result.success;
   }
 
-  async getAll(page: number, perPage: number, sort: string, username: string) {
-    return await this.questionQuery.getAll(page, perPage, sort, username);
+  async getAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    username: string,
+    search?: string,
+  ) {
+    return await this.questionQuery.getAll(
+      page,
+      perPage,
+      sort,
+      username,
+      search,
+    );
   }
 
   async createAnswer(input: CreateAnswerInputModel) {

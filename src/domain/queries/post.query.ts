@@ -23,6 +23,7 @@ export class PostQuery {
     sort: string,
     username: string,
     topicId: number,
+    search?: string,
   ) {
     return await this.postRepository.findAll(
       page,
@@ -30,6 +31,7 @@ export class PostQuery {
       sort,
       username,
       topicId,
+      search,
     );
   }
 
@@ -80,5 +82,9 @@ export class PostQuery {
     sort: string,
   ) {
     return this.postRepository.findByAuthor(userId, page, perPage, sort);
+  }
+
+  async getPostTrending() {
+    return await this.postRepository.findTop10PostTrending();
   }
 }

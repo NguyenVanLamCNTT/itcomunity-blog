@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { PostEntity, UserEntity } from '../entities';
 import { paginate } from 'nestjs-typeorm-paginate';
 
@@ -9,7 +9,25 @@ export class UserRepository {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  async findAll(page: number, perPage: number, sort: string) {
+  async findAll(page: number, perPage: number, sort: string, search?: string) {
+    let option = [];
+    option = [
+      {
+        isDeleted: false,
+      },
+    ];
+    if (search) {
+      option = [
+        {
+          fullName: Like(`%${search}%`),
+          isDeleted: false,
+        },
+        {
+          username: Like(`%${search}%`),
+          isDeleted: false,
+        },
+      ];
+    }
     const sortBy = sort ? sort.split(',')[0] : 'created';
     const sortDir = sort
       ? sort.split(',')[1] === 'asc'
@@ -23,9 +41,7 @@ export class UserRepository {
         limit: perPage,
       },
       {
-        where: {
-          isDeleted: false,
-        },
+        where: option,
         order: { [sortBy]: sortDir.toLocaleUpperCase() },
       },
     );
