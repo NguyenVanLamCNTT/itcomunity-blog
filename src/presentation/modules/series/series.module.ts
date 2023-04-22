@@ -4,6 +4,7 @@ import {
   AddNewSeriesCommand,
   CreatePostCommand,
   RemovePostCommand,
+  RemoveSeriesCommand,
   UpdateBookmarkCommand,
   UpdatePostCommand,
   UpdatePostFromSeriesCommand,
@@ -81,6 +82,7 @@ import { SeriesService } from './series.service';
     BookMarkQuery,
     BookmarkDomainService,
     UpdatePostTrendingCommand,
+    RemoveSeriesCommand,
   ],
   exports: [TypeOrmModule],
 })

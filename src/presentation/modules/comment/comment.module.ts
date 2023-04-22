@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AddCommentCommand } from 'src/domain/commands';
+import {
+  AddCommentCommand,
+  RemoveAnswerCommand,
+  RemoveCommentCommand,
+  UpdateCommentCommand,
+} from 'src/domain/commands';
 import { CommentDomainService } from 'src/domain/services';
 import {
   AnswerEntity,
@@ -41,6 +46,8 @@ import { CommentQuery } from 'src/domain/queries';
     CommentRepository,
     CommentQuery,
     AnswerRepository,
+    RemoveCommentCommand,
+    UpdateCommentCommand,
   ],
   exports: [TypeOrmModule],
 })

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import {
   AddNewSeriesCommand,
+  RemoveSeriesCommand,
   UpdatePostFromSeriesCommand,
   UpdateSeriesCommand,
 } from '../commands';
@@ -18,6 +19,7 @@ export class SeriesDomainService {
     private seriesQuery: SeriesQuery,
     private updateSeriesCommand: UpdateSeriesCommand,
     private updatePostFromSeriesCommand: UpdatePostFromSeriesCommand,
+    private removeSeriesCommand: RemoveSeriesCommand,
   ) {}
 
   async create(input: AddNewSeriesInputModel) {
@@ -43,5 +45,9 @@ export class SeriesDomainService {
 
   async updatePostFromSeries(input: UpdatePostFromSeriesInputModel) {
     return await this.updatePostFromSeriesCommand.execute(input);
+  }
+
+  async remove(id: number) {
+    return this.removeSeriesCommand.execute({ id });
   }
 }

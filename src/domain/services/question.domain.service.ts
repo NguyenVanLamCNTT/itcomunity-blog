@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import {
   CreateAnswerCommand,
   CreateQuestionCommand,
+  RemoveAnswerCommand,
+  RemoveQuestionCommand,
   UpdateAnswerCommand,
   UpdateQuestionCommand,
   UpdateViewQuestionCommand,
@@ -23,6 +25,8 @@ export class QuestionDomainService {
     private updateViewQuestionCommand: UpdateViewQuestionCommand,
     private updateQuestionCommand: UpdateQuestionCommand,
     private updateAnswerCommand: UpdateAnswerCommand,
+    private removeQuestionCommand: RemoveQuestionCommand,
+    private removeAnswerCommand: RemoveAnswerCommand,
   ) {}
 
   async create(input: CreateQuestionInputModel) {
@@ -78,5 +82,13 @@ export class QuestionDomainService {
       userId,
       approved,
     });
+  }
+
+  async remove(id: number) {
+    return await this.removeQuestionCommand.execute({ id });
+  }
+
+  async removeAnswer(id: number) {
+    return await this.removeAnswerCommand.execute({ id });
   }
 }

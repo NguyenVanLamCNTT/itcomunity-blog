@@ -10,6 +10,8 @@ import { QuestionService } from './question.service';
 import {
   CreateAnswerCommand,
   CreateQuestionCommand,
+  RemoveAnswerCommand,
+  RemoveQuestionCommand,
   UpdateAnswerCommand,
   UpdateQuestionCommand,
   UpdateViewQuestionCommand,
@@ -41,6 +43,8 @@ import { AnswerQuery, QuestionQuery } from 'src/domain/queries';
     UpdateViewQuestionCommand,
     UpdateAnswerCommand,
     UpdateQuestionCommand,
+    RemoveQuestionCommand,
+    RemoveAnswerCommand,
   ],
   exports: [],
 })

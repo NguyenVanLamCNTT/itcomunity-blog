@@ -8,6 +8,7 @@ import {
   GetAllSeriesRequestModel,
   GetAllSeriesResponseModel,
   GetDetailSeriesResponseModel,
+  RemovePostResponseModel,
   SeriesResponse,
   UpdatePostFromSeriesRequestModel,
   UpdateSeriesRequestModel,
@@ -180,6 +181,14 @@ export class SeriesService {
     return new CreateSeriesResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: result,
+    });
+  }
+
+  async remove(id: number) {
+    const data = await this.seriesDomainService.remove(id);
+    return new RemovePostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
     });
   }
 }

@@ -1,19 +1,23 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   AddCommentRequestModel,
   AddCommentResponseModel,
   GetAllCommentRequestModel,
+  RemovePostResponseModel,
+  UpdateCommentRequestModel,
 } from 'src/presentation/models';
 import { JwtAuthGuard } from '../auth/auth.guard';
 import { CommentService } from './comment.service';
@@ -47,5 +51,34 @@ export class CommentController {
   })
   async getByPostId(@Query() query: GetAllCommentRequestModel) {
     return await this.service.getAll(query);
+  }
+
+  @Delete(':id')
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: RemovePostResponseModel,
+    isArray: false,
+  })
+  async remove(@Param('id') id: number) {
+    return await this.service.remove(id);
+  }
+
+  @Put(':id')
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: RemovePostResponseModel,
+    isArray: false,
+  })
+  async update(
+    @Param('id') id: number,
+    @Body() body: UpdateCommentRequestModel,
+  ) {
+    return await this.service.update(body, id);
   }
 }
