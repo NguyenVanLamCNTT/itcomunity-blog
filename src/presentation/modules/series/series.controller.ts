@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -17,6 +18,7 @@ import {
   CreateSeriesRequestModel,
   CreateSeriesResponseModel,
   GetDetailSeriesResponseModel,
+  RemovePostResponseModel,
   UpdatePostFromSeriesRequestModel,
   UpdateSeriesRequestModel,
 } from 'src/presentation/models';
@@ -141,5 +143,18 @@ export class SeriesController {
   ) {
     const userId = req.user['userId'];
     return this.service.getBookmark(userId, pageable);
+  }
+
+  @Delete(':id')
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: RemovePostResponseModel,
+    isArray: false,
+  })
+  async remove(@Param('id') id: number) {
+    return await this.service.remove(id);
   }
 }

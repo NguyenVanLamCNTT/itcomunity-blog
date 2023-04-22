@@ -22,8 +22,9 @@ export class TopicDomainService {
     page: number,
     perPage: number,
     sort: string,
+    search?: string,
   ): Promise<Pagination<TopicEntity>> {
-    return await this.topicQuery.findAll(page, perPage, sort);
+    return await this.topicQuery.findAll(page, perPage, sort, search);
   }
 
   async addUserToTopic(input: AddUserToTopicInputModel) {

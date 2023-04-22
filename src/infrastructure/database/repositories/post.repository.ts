@@ -55,11 +55,6 @@ export class PostRepository {
           status: 'PUBLISH',
           name: Like(`%${search}%`),
         },
-        {
-          isDeleted: false,
-          ...query,
-          status: 'PUBLISH',
-        },
       ];
     }
     const sortBy = sort ? sort.split(',')[0] : 'created';

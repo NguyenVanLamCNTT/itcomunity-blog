@@ -7,3 +7,5 @@ export * from './comment';
 export * from './question';
 export * from './answer';
 export * from './bookmark';
+export * from './remove-input.model';
+export * from './remove-result.model';

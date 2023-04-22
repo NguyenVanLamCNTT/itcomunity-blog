@@ -17,6 +17,7 @@ import {
   GetAllQuestionResponseModel,
   GetDetailQuestionResponseModel,
   QuestionResponseModel,
+  RemovePostResponseModel,
   UpdateAnswerRequestModel,
   UpdateAnswerResponseModel,
   UpdateQuestionRequestModel,
@@ -173,6 +174,22 @@ export class QuestionService {
     return new UpdateAnswerResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: result,
+    });
+  }
+
+  async remove(id: number) {
+    const data = await this.questionDomainService.remove(id);
+    return new RemovePostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
+    });
+  }
+
+  async removeAnswer(id: number) {
+    const data = await this.questionDomainService.removeAnswer(id);
+    return new RemovePostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
     });
   }
 }

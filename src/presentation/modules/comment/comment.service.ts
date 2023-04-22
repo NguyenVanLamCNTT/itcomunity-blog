@@ -8,6 +8,8 @@ import {
   GetAllCommentRequestModel,
   GetAllCommentResponseData,
   GetAllCommentResponseModel,
+  RemovePostResponseModel,
+  UpdateCommentRequestModel,
 } from 'src/presentation/models';
 import { RequestCorrelation } from 'src/utility';
 
@@ -78,6 +80,22 @@ export class CommentService {
         totalItems: data.meta.totalItems,
         totalPages: data.meta.totalPages,
       }),
+    });
+  }
+
+  async remove(id: number) {
+    const data = await this.commentDomainService.remove(id);
+    return new RemovePostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
+    });
+  }
+
+  async update(req: UpdateCommentRequestModel, id: number) {
+    const data = await this.commentDomainService.update(id, req.content);
+    return new RemovePostResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
     });
   }
 }

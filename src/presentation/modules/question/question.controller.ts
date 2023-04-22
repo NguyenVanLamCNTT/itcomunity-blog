@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -23,6 +24,7 @@ import {
   GetAllAnswerResponseModel,
   GetAllCommentResponseModel,
   GetAllQuestionRequestModel,
+  RemovePostResponseModel,
   UpdateAnswerRequestModel,
   UpdateAnswerResponseModel,
   UpdateQuestionRequestModel,
@@ -147,5 +149,31 @@ export class QuestionController {
   ) {
     const userId = req.user['userId'];
     return await this.service.approvedAnswer(id, userId, body);
+  }
+
+  @Delete(':id')
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: RemovePostResponseModel,
+    isArray: false,
+  })
+  async remove(@Param('id') id: number) {
+    return await this.service.remove(id);
+  }
+
+  @Delete('answer/:id')
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: RemovePostResponseModel,
+    isArray: false,
+  })
+  async removeAnswer(@Param('id') id: number) {
+    return await this.service.removeAnswer(id);
   }
 }

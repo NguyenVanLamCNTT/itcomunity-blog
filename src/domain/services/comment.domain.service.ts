@@ -1,5 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { AddCommentCommand } from '../commands';
+import {
+  AddCommentCommand,
+  RemoveCommentCommand,
+  UpdateCommentCommand,
+} from '../commands';
 import { AddCommentInputModel } from '../models';
 import { CommentQuery } from '../queries';
 
@@ -8,6 +12,8 @@ export class CommentDomainService {
   constructor(
     private addCommentCommand: AddCommentCommand,
     private commentQuery: CommentQuery,
+    private removeCommentCommand: RemoveCommentCommand,
+    private updateCommentCommand: UpdateCommentCommand,
   ) {}
 
   async create(model: AddCommentInputModel) {
@@ -28,5 +34,16 @@ export class CommentDomainService {
       seriesId,
       answerId,
     );
+  }
+
+  async remove(id: number) {
+    return await this.removeCommentCommand.execute({ id });
+  }
+
+  async update(id: number, content: string) {
+    return await this.updateCommentCommand.execute({
+      id,
+      content,
+    });
   }
 }

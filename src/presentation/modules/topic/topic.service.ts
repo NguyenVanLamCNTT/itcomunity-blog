@@ -22,6 +22,7 @@ export class TopicService {
       requestModel.page,
       requestModel.perPage,
       requestModel.sort,
+      requestModel.search,
     );
     return new GetAllTopicResponseModel({
       id: RequestCorrelation.getRequestId(),
