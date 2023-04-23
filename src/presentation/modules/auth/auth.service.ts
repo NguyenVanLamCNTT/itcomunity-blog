@@ -54,7 +54,7 @@ export class AuthService {
     const user = await this.userDomainService.getUserByEmailOrUsername(
       request.username,
     );
-    if (!user) {
+    if (!user || user.isDeleted) {
       throw new UserNotExistException();
     }
 

@@ -1,9 +1,11 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
   Put,
   Query,
@@ -11,7 +13,12 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger/dist';
+import {
+  ApiBearerAuth,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger/dist';
 import { Request, Response } from 'express';
 import {
   GetAllUserRequestModel,
@@ -101,5 +108,18 @@ export class UserController {
   async followUser(@Req() req: any, @Body() body: FollowUserRequestModel) {
     const userId = req.user['userId'];
     return await this.userService.folowUser(body, userId);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @ApiResponse({
+    status: 200,
+    type: FollowUserResponseModel,
+    isArray: false,
+  })
+  async removeUser(@Req() req: any, @Param('id') id: number) {
+    return await this.userService.remove(id);
   }
 }

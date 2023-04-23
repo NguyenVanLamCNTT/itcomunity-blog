@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { QuestionEntity } from '../entities';
 import { paginate } from 'nestjs-typeorm-paginate';
 
@@ -29,7 +29,7 @@ export class QuestionRepository {
     if (search) {
       query = {
         ...query,
-        title: Like(`%${search}%`),
+        title: ILike(`%${search}%`),
       };
     }
     const sortBy = sort ? sort.split(',')[0] : 'created';

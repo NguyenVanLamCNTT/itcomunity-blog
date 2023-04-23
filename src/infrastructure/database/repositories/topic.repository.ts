@@ -1,6 +1,6 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { paginate } from 'nestjs-typeorm-paginate';
-import { Like, Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { TopicEntity } from '../entities';
 
 export class TopicRepository {
@@ -17,7 +17,7 @@ export class TopicRepository {
       if (search) {
         option = {
           ...option,
-          name: Like(`%${search}%`),
+          name: ILike(`%${search}%`),
         };
       }
       return await paginate<TopicEntity>(
