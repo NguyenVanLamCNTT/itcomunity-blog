@@ -39,6 +39,7 @@ import { GPTUtil } from 'src/infrastructure/utilities/gpt.util';
 import configuration from 'src/presentation/configurations/configuration';
 import { PostController } from './post.controller';
 import { PostService } from './post.service';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
@@ -56,6 +57,7 @@ import { PostService } from './post.service';
     ConfigModule.forRoot({
       load: [configuration],
     }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [PostController],
   providers: [

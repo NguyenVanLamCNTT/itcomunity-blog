@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Cron } from '@nestjs/schedule';
 import { CreatePostInputModel, RemovePostInputModel } from 'src/domain/models';
 import { BookmarkDomainService, PostDomainService } from 'src/domain/services';
 import { GPTUtil } from 'src/infrastructure/utilities';
@@ -271,6 +272,7 @@ export class PostService {
     });
   }
 
+  @Cron('* * 24 * * *')
   async updateTrending() {
     await this.postDomainService.updateTrending();
     return { success: true };
