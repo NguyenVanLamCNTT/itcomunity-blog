@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   FollowUserCommand,
   RegisterUserCommand,
+  RemoveUserCommand,
   UnfollowUserCommand,
   UpdateConfirmEmailUserCommand,
   UpdateInfoUserCommand,
@@ -43,6 +44,7 @@ import { UserService } from './user.service';
     UnfollowUserCommand,
     AuthorFollowerRepository,
     TopicUserRepository,
+    RemoveUserCommand,
   ],
   exports: [TypeOrmModule],
 })

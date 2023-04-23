@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   FollowUserCommand,
   RegisterUserCommand,
+  RemoveUserCommand,
   UnfollowUserCommand,
   UpdateConfirmEmailUserCommand,
   UpdateInfoUserCommand,
@@ -22,6 +23,7 @@ export class UserDomainService {
     private updateInfoUserCommand: UpdateInfoUserCommand,
     private followUserCommand: FollowUserCommand,
     private unfollowUserCommand: UnfollowUserCommand,
+    private removeUserCommand: RemoveUserCommand,
   ) {}
 
   async getAllUser(
@@ -86,5 +88,9 @@ export class UserDomainService {
 
   async getAuthorByFollowerId(userId: number) {
     return await this.userQuery.getAuthorByFollowerId(userId);
+  }
+
+  async removeUser(id: number) {
+    return await this.removeUserCommand.execute({ id });
   }
 }

@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { ILike, Like, Repository } from 'typeorm';
 import { PostEntity, UserEntity } from '../entities';
 import { paginate } from 'nestjs-typeorm-paginate';
 
@@ -19,11 +19,11 @@ export class UserRepository {
     if (search) {
       option = [
         {
-          fullName: Like(`%${search}%`),
+          fullName: ILike(`%${search}%`),
           isDeleted: false,
         },
         {
-          username: Like(`%${search}%`),
+          username: ILike(`%${search}%`),
           isDeleted: false,
         },
       ];

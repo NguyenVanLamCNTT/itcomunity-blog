@@ -130,4 +130,12 @@ export class UserService {
       data: { success: true },
     });
   }
+
+  async remove(id: number) {
+    const data = await this.userDomainService.removeUser(id);
+    return new FollowUserResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data: { success: true },
+    });
+  }
 }

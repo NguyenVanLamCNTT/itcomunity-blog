@@ -48,14 +48,10 @@ export class PostRepository {
       },
     ];
     if (search) {
-      option = [
-        {
-          isDeleted: false,
-          ...query,
-          status: 'PUBLISH',
-          name: Like(`%${search}%`),
-        },
-      ];
+      query = {
+        ...query,
+        name: ILike(`%${search}%`),
+      };
     }
     const sortBy = sort ? sort.split(',')[0] : 'created';
     const sortDir = sort
@@ -71,7 +67,11 @@ export class PostRepository {
         limit: perPage,
       },
       {
-        where: option,
+        where: {
+          isDeleted: false,
+          ...query,
+          status: 'PUBLISH',
+        },
         relations: ['author', 'topicPost'],
         order: { [sortBy]: sortDir.toLocaleUpperCase() },
       },

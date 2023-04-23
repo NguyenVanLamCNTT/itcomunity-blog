@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   FollowUserCommand,
   RegisterUserCommand,
+  RemoveUserCommand,
   UnfollowUserCommand,
   UpdateConfirmEmailUserCommand,
   UpdateInfoUserCommand,
@@ -109,6 +110,7 @@ import { JwtStrategy } from './auth.strategy';
     UnfollowUserCommand,
     AuthorFollowerRepository,
     TopicUserRepository,
+    RemoveUserCommand,
   ],
   exports: [TypeOrmModule],
 })
