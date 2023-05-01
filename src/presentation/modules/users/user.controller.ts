@@ -122,4 +122,11 @@ export class UserController {
   async removeUser(@Req() req: any, @Param('id') id: number) {
     return await this.userService.remove(id);
   }
+
+  @Get('/dashboard/summary')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  async getAllSummary() {
+    return this.userService.getAllSummary();
+  }
 }

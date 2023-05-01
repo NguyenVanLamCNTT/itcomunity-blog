@@ -138,4 +138,12 @@ export class UserService {
       data: { success: true },
     });
   }
+
+  async getAllSummary() {
+    const data = await this.userDomainService.getAllSummary();
+    return data.map((item) => {
+      delete item.password;
+      return item;
+    });
+  }
 }

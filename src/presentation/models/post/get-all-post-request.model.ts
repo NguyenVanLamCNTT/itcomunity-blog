@@ -8,4 +8,6 @@ export class GetAllPostRequestModel extends BaseFilterGetListModel {
   topicId?: number;
   @ApiProperty({ required: false })
   search?: string;
+  @ApiProperty({ required: false })
+  status: string;
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
+  ChangePasswordCommand,
   FollowUserCommand,
   RegisterUserCommand,
   RemoveUserCommand,
@@ -8,6 +9,7 @@ import {
   UpdateInfoUserCommand,
 } from '../commands';
 import {
+  ChangePasswordCommandInputModel,
   RegisterUserCommandInputModel,
   UpdateConfirmEmailUserInputModel,
   UpdateInfoUserInputModel,
@@ -24,6 +26,7 @@ export class UserDomainService {
     private followUserCommand: FollowUserCommand,
     private unfollowUserCommand: UnfollowUserCommand,
     private removeUserCommand: RemoveUserCommand,
+    private changePasswordCommand: ChangePasswordCommand,
   ) {}
 
   async getAllUser(
@@ -92,5 +95,13 @@ export class UserDomainService {
 
   async removeUser(id: number) {
     return await this.removeUserCommand.execute({ id });
+  }
+
+  async getAllSummary() {
+    return await this.userQuery.findAllSummary();
+  }
+
+  async changePassword(input: ChangePasswordCommandInputModel) {
+    return await this.changePasswordCommand.execute(input);
   }
 }

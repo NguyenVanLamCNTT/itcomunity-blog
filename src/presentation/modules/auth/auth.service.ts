@@ -8,6 +8,7 @@ import {
 import { UserDomainService } from 'src/domain/services';
 import { JwtUtil } from 'src/infrastructure/utilities';
 import {
+  ChangePasswordRequestModel,
   ConfirmOTPRequestModel,
   ConfirmOTPResponseModel,
   LoginUserRequestModel,
@@ -133,6 +134,24 @@ export class AuthService {
     return new RefreshTokenResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: { accessToken, refreshToken },
+    });
+  }
+
+  async changePassword(req: ChangePasswordRequestModel, userId: number) {
+    const newPassword = await this.jwtUtil.generatePassword(req.newPassword);
+
+    const user = await this.userDomainService.getById(userId);
+    const isMatch = await bcrypt.compare(req.oldPassword, user.password);
+    if (!isMatch) {
+      throw new IncorrectPassword();
+    }
+    const data = await this.userDomainService.changePassword({
+      newPassword,
+      userId,
+    });
+    return new ValidateOTPResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
     });
   }
 }

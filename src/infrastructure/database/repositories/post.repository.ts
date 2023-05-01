@@ -24,9 +24,9 @@ export class PostRepository {
     username?: string,
     topicId?: number,
     search?: string,
+    status?: string,
   ) {
     let query = {};
-    let option = [];
     if (username) {
       query = {
         ...query,
@@ -40,13 +40,6 @@ export class PostRepository {
       };
     }
 
-    option = [
-      {
-        isDeleted: false,
-        ...query,
-        status: 'PUBLISH',
-      },
-    ];
     if (search) {
       query = {
         ...query,
@@ -70,7 +63,7 @@ export class PostRepository {
         where: {
           isDeleted: false,
           ...query,
-          status: 'PUBLISH',
+          status: status || 'PUBLISH',
         },
         relations: ['author', 'topicPost'],
         order: { [sortBy]: sortDir.toLocaleUpperCase() },
