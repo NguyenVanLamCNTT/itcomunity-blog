@@ -24,6 +24,7 @@ export class PostQuery {
     username: string,
     topicId: number,
     search?: string,
+    status?: string,
   ) {
     return await this.postRepository.findAll(
       page,
@@ -32,6 +33,7 @@ export class PostQuery {
       username,
       topicId,
       search,
+      status,
     );
   }
 

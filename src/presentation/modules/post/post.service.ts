@@ -272,7 +272,7 @@ export class PostService {
     });
   }
 
-  @Cron('* * * 1 * *')
+  // @Cron('* * * 1 * *')
   async updateTrending() {
     await this.postDomainService.updateTrending();
     return { success: true };

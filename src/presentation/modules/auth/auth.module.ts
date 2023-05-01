@@ -5,6 +5,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
+  ChangePasswordCommand,
   FollowUserCommand,
   RegisterUserCommand,
   RemoveUserCommand,
@@ -111,6 +112,7 @@ import { JwtStrategy } from './auth.strategy';
     AuthorFollowerRepository,
     TopicUserRepository,
     RemoveUserCommand,
+    ChangePasswordCommand,
   ],
   exports: [TypeOrmModule],
 })

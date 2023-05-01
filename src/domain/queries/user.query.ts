@@ -36,4 +36,8 @@ export class UserQuery {
   async getAuthorByFollowerId(userId: number) {
     return await this.authorFollowerRepository.findByFollowerId(userId);
   }
+
+  async findAllSummary() {
+    return this.userRepository.getAllSummary();
+  }
 }

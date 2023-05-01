@@ -66,4 +66,8 @@ export class UserRepository {
       where: { id },
     });
   }
+
+  async getAllSummary() {
+    return await this.usersRepository.find();
+  }
 }

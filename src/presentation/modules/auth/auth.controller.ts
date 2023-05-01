@@ -1,7 +1,11 @@
-import { Body, Controller, HttpCode } from '@nestjs/common';
-import { Post } from '@nestjs/common/decorators/http/request-mapping.decorator';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, HttpCode, Req, UseGuards } from '@nestjs/common';
 import {
+  Patch,
+  Post,
+} from '@nestjs/common/decorators/http/request-mapping.decorator';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ChangePasswordRequestModel,
   ConfirmOTPRequestModel,
   ConfirmOTPResponseModel,
   LoginUserRequestModel,
@@ -14,6 +18,7 @@ import {
   refreshTokenRequestModel,
 } from 'src/presentation/models';
 import { AuthService } from './auth.service';
+import { JwtAuthGuard } from './auth.guard';
 
 @ApiTags('api/auth')
 @Controller('api/auth')
@@ -73,5 +78,17 @@ export class AuthController {
   })
   async refreshToken(@Body() req: refreshTokenRequestModel) {
     return await this.authService.refreshToken(req);
+  }
+
+  @Patch('change-password')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @ApiBearerAuth()
+  async changePassword(
+    @Req() req: any,
+    @Body() body: ChangePasswordRequestModel,
+  ) {
+    const userId = req.user['userId'];
+    return this.authService.changePassword(body, userId);
   }
 }
