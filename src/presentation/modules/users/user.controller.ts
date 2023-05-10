@@ -46,7 +46,7 @@ export class UserController {
     type: GetAllUserResponseModel,
     isArray: false,
   })
-  async getUserDeltail(
+  async getUsers(
     @Req() req: Request,
     @Res() res: Response,
     @Query() query: GetAllUserRequestModel,

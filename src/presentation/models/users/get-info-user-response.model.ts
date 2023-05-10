@@ -25,6 +25,12 @@ class InfoData {
   avatar: string;
   @ApiProperty()
   about: string;
+  @ApiProperty()
+  seriesNumber?: number;
+  @ApiProperty()
+  questionNumber?: number;
+  @ApiProperty()
+  totalTopicFollow?: number;
   @ApiProperty({ type: Number, isArray: true })
   followerIds?: number[];
   @ApiProperty({ type: Number, isArray: true })
