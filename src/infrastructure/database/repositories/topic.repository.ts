@@ -10,33 +10,30 @@ export class TopicRepository {
   ) {}
 
   async findAll(page: number, perPage: number, sort: string, search?: string) {
-    if (sort) {
-      const filed = sort.split(',')[0];
-      const direction = sort.split(',')[1] === 'asc' ? 'ASC' : 'DESC';
-      let option = {};
-      if (search) {
-        option = {
-          ...option,
-          name: ILike(`%${search}%`),
-        };
-      }
-      return await paginate<TopicEntity>(
-        this.topicRepository,
-        { page, limit: perPage },
-        {
-          where: {
-            ...option,
-            isDeleted: false,
-          },
-          relations: ['childComment'],
-          order: { [filed]: direction },
-        },
-      );
+    const filed = sort ? sort.split(',')[0] : 'created';
+    const direction = sort
+      ? sort.split(',')[1] === 'asc'
+        ? 'ASC'
+        : 'DESC'
+      : 'DESC';
+    let option = {};
+    if (search) {
+      option = {
+        ...option,
+        name: ILike(`%${search}%`),
+      };
     }
-
-    const query = this.topicRepository.createQueryBuilder('topic');
-
-    return await paginate<TopicEntity>(query, { page, limit: perPage });
+    return await paginate<TopicEntity>(
+      this.topicRepository,
+      { page, limit: perPage },
+      {
+        where: {
+          ...option,
+          isDeleted: false,
+        },
+        order: { [filed]: direction },
+      },
+    );
   }
 
   async findById(id: number) {

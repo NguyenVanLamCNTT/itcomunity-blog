@@ -99,6 +99,10 @@ export class UserService {
       await this.userDomainService.getFollowerByAuthor(user.id)
     ).map((item) => item.follower.id);
 
+    const totalTopic = (
+      await this.userDomainService.getTopicUserByUserId(user.id)
+    ).length;
+
     return new GetInfoUserResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: {
@@ -114,6 +118,9 @@ export class UserService {
         postsNumber: user.postsNumber,
         username: user.username,
         followerIds,
+        seriesNumber: user.seriesNumber,
+        questionNumber: user.questionsNumber,
+        totalTopicFollow: totalTopic,
       },
     });
   }
