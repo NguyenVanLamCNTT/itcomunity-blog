@@ -4,6 +4,7 @@ import { TopicEntity } from 'src/infrastructure/database/entities';
 import {
   AddUserToTopicCommand,
   CreateTopicCommand,
+  RemoveTopicCommand,
   RemoveUserToTopicCommand,
 } from '../commands';
 import { AddUserToTopicInputModel, CreateTopicInputModel } from '../models';
@@ -16,6 +17,7 @@ export class TopicDomainService {
     private addUserToTopicCommand: AddUserToTopicCommand,
     private createTopicCommand: CreateTopicCommand,
     private removeUserToTopicCommand: RemoveUserToTopicCommand,
+    private removeTopic: RemoveTopicCommand,
   ) {}
 
   async findAll(
@@ -37,5 +39,9 @@ export class TopicDomainService {
 
   async removeUserToTopic(model: AddUserToTopicInputModel) {
     return await this.removeUserToTopicCommand.execute(model);
+  }
+
+  async remove(id: number) {
+    return await this.removeTopic.execute({ id });
   }
 }

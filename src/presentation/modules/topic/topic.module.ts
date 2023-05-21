@@ -3,6 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   AddUserToTopicCommand,
   CreateTopicCommand,
+  RemoveTopicCommand,
   RemoveUserToTopicCommand,
 } from 'src/domain/commands';
 import { TopicQuery } from 'src/domain/queries';
@@ -35,6 +36,7 @@ import { TopicService } from './topic.service';
     UserRepository,
     CreateTopicCommand,
     RemoveUserToTopicCommand,
+    RemoveTopicCommand,
   ],
   exports: [],
 })

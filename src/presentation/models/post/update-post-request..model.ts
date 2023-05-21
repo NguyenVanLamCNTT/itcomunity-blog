@@ -9,4 +9,6 @@ export class UpdatePostRequestModel {
   content: string;
   @ApiProperty()
   status: string;
+  @ApiProperty({ type: Number, isArray: true })
+  topics: number[];
 }

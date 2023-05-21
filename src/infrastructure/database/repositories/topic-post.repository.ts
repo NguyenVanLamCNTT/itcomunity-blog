@@ -19,4 +19,15 @@ export class TopicPostRepository {
       where: { topic: { id: In(topicIds) } },
     });
   }
+
+  async findByPostIds(postId: number) {
+    return await this.topicPostRepository.find({
+      relations: ['topic', 'post'],
+      where: { post: { id: postId } },
+    });
+  }
+
+  async remove(entity: TopicPostEntity) {
+    await this.topicPostRepository.remove(entity);
+  }
 }

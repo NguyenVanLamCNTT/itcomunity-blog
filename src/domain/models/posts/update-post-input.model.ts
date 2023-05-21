@@ -4,4 +4,5 @@ export class UpdatePostInputModel {
   content: string;
   keywords: string[];
   status: string;
+  topics: number[];
 }
