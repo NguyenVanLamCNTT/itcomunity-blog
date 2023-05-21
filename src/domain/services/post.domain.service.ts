@@ -105,4 +105,8 @@ export class PostDomainService {
   async getTrending() {
     return await this.postQuery.getPostTrending();
   }
+
+  async getTopicByPost(postId: number) {
+    return await this.postQuery.getTopicsByPost(postId);
+  }
 }
