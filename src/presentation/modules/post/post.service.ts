@@ -91,12 +91,18 @@ export class PostService {
       isBookmark = await this.bookmarkDomainService.isBookmarkPost(userId, id);
     }
     const data = await this.postDomainService.findById(id);
+    const topics = [];
+    const topicPost = await this.postDomainService.getTopicByPost(id);
+    for (const item of topicPost) {
+      topics.push(item.topic.id);
+    }
 
     return new GetDetailPostResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: {
         ...data,
         isBookmark,
+        topicIds: topics,
         author: {
           id: data.author.id,
           avatar: data.author.avatar,

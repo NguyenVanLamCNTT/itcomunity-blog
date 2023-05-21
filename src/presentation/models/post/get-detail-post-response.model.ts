@@ -45,6 +45,8 @@ export class PostDetail {
   author: Author;
   @ApiProperty()
   isBookmark?: boolean;
+  @ApiProperty()
+  topicIds: number[];
 }
 export class GetDetailPostResponseModel extends ResponseModel<PostDetail> {
   @ApiProperty()

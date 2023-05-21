@@ -89,4 +89,8 @@ export class PostQuery {
   async getPostTrending() {
     return await this.postRepository.findTop10PostTrending();
   }
+
+  async getTopicsByPost(postId: number) {
+    return await this.topicPostRepository.findByPostIds(postId);
+  }
 }
