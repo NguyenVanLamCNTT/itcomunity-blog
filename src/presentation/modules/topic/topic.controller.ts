@@ -1,14 +1,16 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
+  Param,
   Post,
   Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import {
   AddTopicToUserRequestModel,
   AddTopicToUserResponseMode,
@@ -79,5 +81,18 @@ export class TopicController {
   ) {
     const userId = req.user['userId'];
     return await this.topicService.removeUserToTopic(body, userId);
+  }
+
+  @Delete(':id')
+  @HttpCode(200)
+  @ApiParam({ name: 'id', required: true })
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    status: 200,
+    type: CreateTopicResponseModel,
+    isArray: false,
+  })
+  async remove(@Param('id') id: number) {
+    return await this.topicService.removeTopic(id);
   }
 }
