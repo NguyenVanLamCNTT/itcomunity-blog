@@ -10,6 +10,8 @@ export class DMSService {
   async upload(file: any) {
     await this.firebaseUtil.uploadFile(file);
     const fileName = this.firebaseUtil.getUrlUpload(file.originalname);
+    console.log('fileName: ' + fileName);
+
     return new UploadDMSResponseModel({
       id: RequestCorrelation.getRequestId(),
       data: { fileName },
