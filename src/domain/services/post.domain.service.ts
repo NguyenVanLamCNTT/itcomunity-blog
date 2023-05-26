@@ -49,6 +49,7 @@ export class PostDomainService {
       pageable.topicId,
       pageable.search,
       pageable.status,
+      pageable.isDeleted,
     );
   }
 

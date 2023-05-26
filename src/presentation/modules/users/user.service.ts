@@ -24,6 +24,7 @@ export class UserService {
       req.perPage,
       req.sort,
       req.search,
+      req.isDeleted,
     );
 
     return new GetAllUserResponseModel({

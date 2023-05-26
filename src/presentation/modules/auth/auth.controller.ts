@@ -13,6 +13,7 @@ import {
   RefreshTokenResponseModel,
   RegisterUserRequestModel,
   RegisterUserResponseModel,
+  RevertDeletedRequestModel,
   ValidateOTPRequestModel,
   ValidateOTPResponseModel,
   refreshTokenRequestModel,
@@ -90,5 +91,13 @@ export class AuthController {
   ) {
     const userId = req.user['userId'];
     return this.authService.changePassword(body, userId);
+  }
+
+  @Patch('revert-deleted')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(200)
+  @ApiBearerAuth()
+  async revertDelted(@Req() req: any, @Body() body: RevertDeletedRequestModel) {
+    return this.authService.revertDeleted(body);
   }
 }

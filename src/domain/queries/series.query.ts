@@ -5,8 +5,20 @@ import { SeriesRepository } from 'src/infrastructure/database/repositories';
 export class SeriesQuery {
   constructor(private seriesRepository: SeriesRepository) {}
 
-  async getAll(page: number, perPage: number, sort: string, username: string) {
-    return await this.seriesRepository.findAll(page, perPage, sort, username);
+  async getAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    username: string,
+    isDeleted: boolean,
+  ) {
+    return await this.seriesRepository.findAll(
+      page,
+      perPage,
+      sort,
+      username,
+      isDeleted,
+    );
   }
 
   async getById(id: number) {

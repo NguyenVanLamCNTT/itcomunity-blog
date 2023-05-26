@@ -25,6 +25,7 @@ export class PostQuery {
     topicId: number,
     search?: string,
     status?: string,
+    isDeleted?: boolean,
   ) {
     return await this.postRepository.findAll(
       page,
@@ -34,6 +35,7 @@ export class PostQuery {
       topicId,
       search,
       status,
+      isDeleted,
     );
   }
 

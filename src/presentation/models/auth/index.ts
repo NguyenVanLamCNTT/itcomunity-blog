@@ -9,3 +9,4 @@ export * from './validate-otp-response.model';
 export * from './refresh-token-request.model';
 export * from './refresh-token-response.model';
 export * from './change-password-request.model';
+export * from './revert-deleted-request.model';

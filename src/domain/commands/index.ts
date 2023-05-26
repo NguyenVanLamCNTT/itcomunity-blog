@@ -7,3 +7,4 @@ export * from './comment';
 export * from './question';
 export * from './answer';
 export * from './bookmark';
+export * from './revert-deleted.command';

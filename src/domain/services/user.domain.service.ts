@@ -34,8 +34,9 @@ export class UserDomainService {
     perPage: number,
     sort: string,
     search?: string,
+    isDeleted?: boolean,
   ) {
-    return await this.userQuery.getAll(page, perPage, sort, search);
+    return await this.userQuery.getAll(page, perPage, sort, search, isDeleted);
   }
 
   async createUser(

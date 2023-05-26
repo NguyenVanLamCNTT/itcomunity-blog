@@ -9,3 +9,5 @@ export * from './answer';
 export * from './bookmark';
 export * from './remove-input.model';
 export * from './remove-result.model';
+export * from './revert-deleted-command-input.model';
+export * from './revert-deleted-command-result.model';

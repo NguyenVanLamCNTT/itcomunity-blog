@@ -25,6 +25,7 @@ export class PostRepository {
     topicId?: number,
     search?: string,
     status?: string,
+    isDeleted?: boolean,
   ) {
     let query = {};
     if (username) {
@@ -61,7 +62,7 @@ export class PostRepository {
       },
       {
         where: {
-          isDeleted: false,
+          isDeleted: isDeleted ? isDeleted : false,
           ...query,
           status: status || 'PUBLISH',
         },

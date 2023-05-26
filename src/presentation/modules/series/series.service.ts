@@ -42,6 +42,7 @@ export class SeriesService {
       pageable.perPage,
       pageable.sort,
       pageable.username,
+      pageable.isDeleted,
     );
 
     return new GetAllSeriesResponseModel({

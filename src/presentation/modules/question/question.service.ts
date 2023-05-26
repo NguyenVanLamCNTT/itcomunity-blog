@@ -50,6 +50,7 @@ export class QuestionService {
       request.sort,
       request.username,
       request.search,
+      request.isDeleted,
     );
 
     return new GetAllQuestionResponseModel({

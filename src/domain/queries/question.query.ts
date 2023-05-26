@@ -11,6 +11,7 @@ export class QuestionQuery {
     sort: string,
     username: string,
     search?: string,
+    isDeleted?: boolean,
   ) {
     return this.questionRepository.getAll(
       page,
@@ -18,6 +19,7 @@ export class QuestionQuery {
       sort,
       username,
       search,
+      isDeleted,
     );
   }
 

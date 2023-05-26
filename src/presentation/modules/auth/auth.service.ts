@@ -16,6 +16,7 @@ import {
   RefreshTokenResponseModel,
   RegisterUserRequestModel,
   RegisterUserResponseModel,
+  RevertDeletedRequestModel,
   ValidateOTPRequestModel,
   ValidateOTPResponseModel,
   refreshTokenRequestModel,
@@ -25,6 +26,7 @@ import * as bcrypt from 'bcrypt';
 import { MailerService } from '@nestjs-modules/mailer/dist';
 import { Cache } from 'cache-manager';
 import { SendEmailConstants } from 'src/domain/constants';
+import { RevertDeletedCommand } from 'src/domain/commands';
 
 @Injectable({})
 export class AuthService {
@@ -32,6 +34,7 @@ export class AuthService {
     private jwtUtil: JwtUtil,
     private userDomainService: UserDomainService,
     private mailerService: MailerService,
+    private revertDeletedCommand: RevertDeletedCommand,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
@@ -149,6 +152,14 @@ export class AuthService {
       newPassword,
       userId,
     });
+    return new ValidateOTPResponseModel({
+      id: RequestCorrelation.getRequestId(),
+      data,
+    });
+  }
+
+  async revertDeleted(requestModel: RevertDeletedRequestModel) {
+    const data = await this.revertDeletedCommand.execute(requestModel);
     return new ValidateOTPResponseModel({
       id: RequestCorrelation.getRequestId(),
       data,

@@ -6,4 +6,6 @@ export class GetAllQuestionRequestModel extends BaseFilterGetListModel {
   username?: string;
   @ApiProperty({ required: false })
   search?: string;
+  @ApiProperty({ required: false })
+  isDeleted?: boolean;
 }

@@ -9,7 +9,13 @@ export class TopicRepository {
     private topicRepository: Repository<TopicEntity>,
   ) {}
 
-  async findAll(page: number, perPage: number, sort: string, search?: string) {
+  async findAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    search?: string,
+    isDeleted?: boolean,
+  ) {
     const filed = sort ? sort.split(',')[0] : 'created';
     const direction = sort
       ? sort.split(',')[1] === 'asc'
@@ -29,7 +35,7 @@ export class TopicRepository {
       {
         where: {
           ...option,
-          isDeleted: false,
+          isDeleted: isDeleted ? isDeleted : false,
         },
         order: { [filed]: direction },
       },

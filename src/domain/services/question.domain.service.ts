@@ -40,6 +40,7 @@ export class QuestionDomainService {
     sort: string,
     username: string,
     search?: string,
+    isDeleted?: boolean,
   ) {
     return await this.questionQuery.getAll(
       page,
@@ -47,6 +48,7 @@ export class QuestionDomainService {
       sort,
       username,
       search,
+      isDeleted,
     );
   }
 

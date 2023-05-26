@@ -4,4 +4,6 @@ import { BaseFilterGetListModel } from '../base-filter-get-list.model';
 export class GetAllTopicRequestModel extends BaseFilterGetListModel {
   @ApiProperty({ required: false })
   search?: string;
+  @ApiProperty({ required: false })
+  isDeleted?: boolean;
 }

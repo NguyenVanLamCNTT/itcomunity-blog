@@ -10,4 +10,6 @@ export class GetAllPostRequestModel extends BaseFilterGetListModel {
   search?: string;
   @ApiProperty({ required: false })
   status: string;
+  @ApiProperty({ required: false })
+  isDeleted: boolean;
 }

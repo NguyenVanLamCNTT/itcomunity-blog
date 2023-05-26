@@ -19,6 +19,7 @@ export class QuestionRepository {
     sort: string,
     username: string,
     search?: string,
+    isDeleted?: boolean,
   ) {
     let query = {};
     if (username) {
@@ -46,7 +47,7 @@ export class QuestionRepository {
       },
       {
         where: {
-          isDeleted: false,
+          isDeleted: isDeleted ? isDeleted : false,
           ...query,
         },
         relations: ['author'],
