@@ -9,11 +9,17 @@ export class UserRepository {
     private usersRepository: Repository<UserEntity>,
   ) {}
 
-  async findAll(page: number, perPage: number, sort: string, search?: string) {
+  async findAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    search?: string,
+    isDeleted?: boolean,
+  ) {
     let option = [];
     option = [
       {
-        isDeleted: false,
+        isDeleted: isDeleted ? isDeleted : false,
       },
     ];
     if (search) {

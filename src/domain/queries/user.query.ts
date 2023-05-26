@@ -13,8 +13,20 @@ export class UserQuery {
     private topicUserRepository: TopicUserRepository,
   ) {}
 
-  async getAll(page: number, perPage: number, sort: string, search?: string) {
-    return await this.userRepository.findAll(page, perPage, sort, search);
+  async getAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    search?: string,
+    isDeleted?: boolean,
+  ) {
+    return await this.userRepository.findAll(
+      page,
+      perPage,
+      sort,
+      search,
+      isDeleted,
+    );
   }
 
   async getUserByEmailOrUsername(textSearch: string) {

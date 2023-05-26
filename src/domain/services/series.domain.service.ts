@@ -27,8 +27,20 @@ export class SeriesDomainService {
     return result.success;
   }
 
-  async getAll(page: number, perPage: number, sort: string, username: string) {
-    return await this.seriesQuery.getAll(page, perPage, sort, username);
+  async getAll(
+    page: number,
+    perPage: number,
+    sort: string,
+    username: string,
+    isDeleted: boolean,
+  ) {
+    return await this.seriesQuery.getAll(
+      page,
+      perPage,
+      sort,
+      username,
+      isDeleted,
+    );
   }
 
   async getId(id: number) {

@@ -18,10 +18,13 @@ export class SeriesRepository {
     perPage: number,
     sort: string,
     username?: string,
+    isDeleted?: boolean,
   ) {
     const query = this.seriesRepository
       .createQueryBuilder('series')
-      .where('series.isDeleted = :delete', { delete: false })
+      .where('series.isDeleted = :delete', {
+        delete: isDeleted ? isDeleted : false,
+      })
       .andWhere('series.status = :status', { status: 'PUBLISH' })
       .innerJoin('series.author', 'user')
       .addSelect('user.id')

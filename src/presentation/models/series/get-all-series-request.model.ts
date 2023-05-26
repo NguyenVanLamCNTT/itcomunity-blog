@@ -4,4 +4,6 @@ import { BaseFilterGetListModel } from '../base-filter-get-list.model';
 export class GetAllSeriesRequestModel extends BaseFilterGetListModel {
   @ApiProperty({ required: false })
   username: string;
+  @ApiProperty({ required: false })
+  isDeleted?: boolean;
 }

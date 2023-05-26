@@ -25,8 +25,15 @@ export class TopicDomainService {
     perPage: number,
     sort: string,
     search?: string,
+    isDeleted?: boolean,
   ): Promise<Pagination<TopicEntity>> {
-    return await this.topicQuery.findAll(page, perPage, sort, search);
+    return await this.topicQuery.findAll(
+      page,
+      perPage,
+      sort,
+      search,
+      isDeleted,
+    );
   }
 
   async addUserToTopic(input: AddUserToTopicInputModel) {

@@ -9,6 +9,7 @@ import {
   FollowUserCommand,
   RegisterUserCommand,
   RemoveUserCommand,
+  RevertDeletedCommand,
   UnfollowUserCommand,
   UpdateConfirmEmailUserCommand,
   UpdateInfoUserCommand,
@@ -17,11 +18,19 @@ import { UserQuery } from 'src/domain/queries';
 import { UserDomainService } from 'src/domain/services';
 import {
   AuthorFollowersEntity,
+  PostEntity,
+  QuestionEntity,
+  SeriesEntity,
+  TopicEntity,
   TopicUserEntity,
   UserEntity,
 } from 'src/infrastructure/database/entities';
 import {
   AuthorFollowerRepository,
+  PostRepository,
+  QuestionRepository,
+  SeriesRepository,
+  TopicRepository,
   TopicUserRepository,
   UserRepository,
 } from 'src/infrastructure/database/repositories';
@@ -41,6 +50,10 @@ import { JwtStrategy } from './auth.strategy';
       UserEntity,
       AuthorFollowersEntity,
       TopicUserEntity,
+      PostEntity,
+      SeriesEntity,
+      TopicEntity,
+      QuestionEntity,
     ]),
     PassportModule,
     ConfigModule.forRoot({
@@ -113,6 +126,11 @@ import { JwtStrategy } from './auth.strategy';
     TopicUserRepository,
     RemoveUserCommand,
     ChangePasswordCommand,
+    RevertDeletedCommand,
+    TopicRepository,
+    PostRepository,
+    SeriesRepository,
+    QuestionRepository,
   ],
   exports: [TypeOrmModule],
 })
